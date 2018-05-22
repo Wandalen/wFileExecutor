@@ -2096,11 +2096,6 @@ var Composes =
 
   pathTranslator : new wPathTranslator({ realCurrentDirPath : _.pathRefine( __dirname ) }),
 
-  // currentDirPath : _.pathRefine( __dirname ),
-  // virtualRootPath : '/',
-  // realRootPath : '/',
-  // realRelativePath : '/',
-
   warnBigFiles : 1 << 19,
   debug : 0,
   verbosity : 1,
