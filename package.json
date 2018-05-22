@@ -21,7 +21,9 @@
     "url": "https://github.com/Wandalen/wFileExecutor/issues"
   },
   "dependencies": {
-    "wTools": ""
+    "wTools": "",
+    "wpathtranslator": "",
+    "wFiles": ""
   },
   "devDependencies": {
     "wTesting": "",
