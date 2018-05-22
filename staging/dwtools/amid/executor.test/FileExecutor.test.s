@@ -389,7 +389,7 @@ samples.normalCase2 =
 samples.severalSamfIncludeToolss =
 {
   description : 'several same includes',
-  path : 'severalSamfIncludeToolss/**',
+  path : 'severalSameIncludes/**',
   allowIncludingChildren : 1,
   usedFiles :
   {
