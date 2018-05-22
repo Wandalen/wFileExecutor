@@ -461,7 +461,7 @@ function _includeAct( o )
 
   includeFrame.resolveOptions
   =
-  self.fileProvider._filesFindMasksSupplement( includeFrame.resolveOptions,resolveOptions );
+  self.fileProvider._filesFilterMasksSupplement( includeFrame.resolveOptions,resolveOptions );
 
   // console.log( 'resolveOptions.globPath2',resolveOptions.globPath2 );
   // if( resolveOptions.globPath2 === '/common.external/Underscore.js' )
