@@ -1,6 +1,6 @@
 ( function _FileExecutor_s_() {
 
-'use strict'; /*aaa*/
+'use strict';
 
 if( typeof module !== 'undefined' )
 {
@@ -375,9 +375,9 @@ function includeFrameEnd( includeFrame )
 
   _.arrayRemoveOnceStrictly( self.includeFrames,includeFrame );
 
-  debugger;
   if( !includeFrame.userIncludeFrame )
   {
+    debugger;
     self.session = null;
     _.assert( self.includeFrames.length === 0 );
   }
@@ -453,7 +453,9 @@ function _includeAct( o )
   =
   self.fileProvider._filesFilterMasksSupplement( includeFrame.resolveOptions,resolveOptions );
 
+  // debugger; // aaa
   includeFrame.files = self.fileProvider.filesResolve2( includeFrame.resolveOptions );
+  // debugger; // aaa
 
   if( !includeFrame.files.length && !o.optional )
   {
@@ -480,7 +482,6 @@ function _includeAct( o )
 
   includeFrame.consequence.ifNoErrorThen( function _includeSecondAfter( arg )
   {
-    debugger;
     if( self.verbosity > 2 )
     logger.log( '_includeAct.end',o.path );
     _.assert( session === self.session );
@@ -489,7 +490,7 @@ function _includeAct( o )
 
   includeFrame.consequence.doThen( function _includeSecondAfter( err,arg )
   {
-    debugger;
+    // debugger;
     if( err )
     {
       o.syncExternal.give( err,arg );
@@ -815,8 +816,6 @@ function fileExecute( o )
   fileFrame.consequence.doThen( function _fileExecuteAfter( err,arg )
   {
 
-    // debugger;
-
     if( err )
     fileFrame.error = err;
 
@@ -1015,12 +1014,6 @@ function fileFrameFor( fileFrame )
   var includeFrame = fileFrame.includeFrame;
   var session = includeFrame.session;
 
-  // if( !fileFrame.session )
-  // {
-  //   debugger;
-  //   fileFrame.session = includeFrame
-  // }
-
   _.assert( arguments.length === 1 );
   _.assert( session );
   _.assert( includeFrame );
@@ -1122,12 +1115,6 @@ function chunkExecute( o )
 
   /* */
 
-  // o.syncInternal.got( function( err,arg )
-  // {
-  //   debugger;
-  //   this.give( err,arg );
-  // });
-
   o.syncInternal.ifNoErrorThen( function chunkExecuteAfter( result )
   {
 
@@ -1143,7 +1130,6 @@ function chunkExecute( o )
     o.resultRaw = result;
     o.result = result;
 
-    // debugger;
     return self._chunkConcat( o );
   });
 
@@ -1205,20 +1191,10 @@ function _chunkExecute( o )
     execution.externals = o.externals;
     execution.defaultLanguage = 'ecma';
 
-    // if( execution.externals )
-    // execution.externals = _.mapExtend( null,execution.externals );
-    // for( var ex in execution.externals )
-    // execution.externals[ ex ] = _.routineJoin( o.fileFrame.context,execution.externals[ ex ] );
-
     execution.code = o.chunk.code;
     o.execution = execution;
 
-    // debugger;
     self.scriptExecute( execution );
-
-    // _.assert( _.strIs( execution.result ) );
-    // if( !_.strIs( execution.result ) )
-    // debugger;
 
     return execution.result;
   }
@@ -1356,12 +1332,6 @@ function _chunkConcat( chunkFrame )
   _.assert( chunkFrame.usedFileFrames.length === 0 );
   _.assert( arguments.length === 1 );
 
-  // debugger;
-  // if( chunkFrame.fileFrame.file.relative.indexOf( 'index.hht' ) !== -1 )
-  // debugger;
-  // if( chunkFrame.usedIncludeFrames.length )
-  // debugger;
-
   /* */
 
   for( var i = 0 ; i < chunkFrame.usedIncludeFrames.length ; i += 1 )
@@ -1429,16 +1399,10 @@ function _chunkConcat( chunkFrame )
 
   /* */
 
-  // if( chunkFrame.usedIncludeFrames.length )
-  // debugger;
-
   con
   .give()
   .ifNoErrorThen( function()
   {
-    // if( chunkFrame.usedIncludeFrames.length )
-    // debugger;
-
     if( result.length )
     chunkFrame.result = result.join( '' ) + chunkFrame.result;
     return chunkFrame.result;
@@ -1451,7 +1415,6 @@ function _chunkConcat( chunkFrame )
   })
   .ifNoErrorThen( function( arg )
   {
-    // debugger;
     _.assert( _.strIs( arg ) );
     return arg;
   })
@@ -1459,8 +1422,6 @@ function _chunkConcat( chunkFrame )
 
   /* */
 
-  // if( chunkFrame.usedIncludeFrames.length )
-  // debugger;
   return con;
 }
 
@@ -1519,9 +1480,6 @@ function categoriesForFile( fileFrame )
     }
   }
 
-  // if( fileFrame.file.absolute.indexOf( 'simplify-js' ) !== -1 )
-  // debugger;
-
   /* file categories */
 
   for( var c in self.fileCategorizers )
@@ -1564,6 +1522,8 @@ function _categoriesForLink( o )
 
   /* link categories */
 
+  if( _.mapKeys( self.linkCategorizers ).length )
+  debugger;
   for( var c in self.linkCategorizers )
   {
     var categorizer = self.linkCategorizers[ c ];
@@ -1617,22 +1577,12 @@ function formattersApply( o )
 
   _.assert( arguments.length === 1 );
 
+  // debugger; // aaa
+
   if( !o.categories.length )
   return con;
 
   o.executor = self;
-
-  // if( !_.construction.isLike( o.frame,ChunkFrame ) )
-  // debugger;
-  // if( !_.construction.isLike( o.frame,ChunkFrame ) )
-  // _.diagnosticWatchFields
-  // ({
-  //   dst : o.frame,
-  //   names : 'result',
-  // });
-
-  // if( o.frame.user && o.frame.user.file.relative.indexOf( '.html' ) !== -1 )
-  // debugger;
 
   for( var f = 0 ; f < o.formatters.length ; f++ ) ( function()
   {
@@ -1646,30 +1596,8 @@ function formattersApply( o )
 
   })();
 
-  // if( !_.construction.isLike( o.frame,ChunkFrame ) )
-  // debugger;
-
-  // con.got( function( err,arg )
-  // {
-  //
-  //   if( o.frame.user && o.frame.user.file.relative.indexOf( '.html' ) !== -1 )
-  //   debugger;
-  //
-  //   // if( !_.construction.isLike( o.frame,ChunkFrame ) )
-  //   // debugger;
-  //
-  //   this.give( err,arg );
-  // });
-
   con.ifNoErrorThen( function( arg )
   {
-
-    // if( !_.construction.isLike( o.frame,ChunkFrame ) )
-    // debugger;
-
-    // if( o.frame.user && o.frame.user.file.relative.indexOf( '.html' ) !== -1 )
-    // debugger;
-
     return o.frame.result;
   });
 
@@ -1684,9 +1612,6 @@ function formatterTry( o )
 
   _.assert( arguments.length === 1 );
   _.assert( o.formatter );
-
-  // if( o.frame.fileFrame && o.frame.fileFrame.file.absolute.indexOf( 'index.hht' ) !== -1 )
-  // debugger;
 
   if( !self._categoriesCheck( o.categories,o.formatter ) )
   return;
@@ -1794,6 +1719,8 @@ function linkFormat( o )
 {
   var self = this;
 
+  // debugger; // aaa
+
   if( !o.link )
   o.link = self.linkFor( o.userChunkFrame,o.usedFileFrame );
 
@@ -1815,9 +1742,6 @@ function linkFormat( o )
     o.link.used.file.relative
   );
 
-  // if( o.link.user.file.relative.indexOf( '.html' ) !== -1 )
-  // debugger;
-
   var formatted = self.formattersApply
   ({
     formatters : self.linkFormatters,
@@ -1827,24 +1751,12 @@ function linkFormat( o )
 
   var got = formatted;
 
-  // formatted.got( function( err,arg )
-  // {
-  //   this.give( err,arg );
-  // });
-
-  // var got = wConsequence.from( o.link.result );
-
   got.got( function( err,arg )
   {
     _.assert( _.strIs( arg ),'expects string' );
     o.link.result = arg;
-    // if( o.link.user.file.relative.indexOf( '.html' ) !== -1 )
-    // debugger;
     this.give( err,arg );
   });
-
-  // if( _.consequenceIs( formatted ) )
-  // got.andThen( formatted );
 
   if( o.usedIncludeFrame.includeOptions.onIncludeFromat )
   {
@@ -1877,6 +1789,8 @@ function linkFormatExplicit( o )
 {
   var self = this;
 
+  debugger;
+
   if( !o.filePath )
   o.filePath = _.pathJoin( o.formatter.frame.fileFrame.file.dir,o.formatter.frame.fileFrame.file.name + '.manual.js' );
   var joinedFile = o.formatter.frame.fileFrame.file.clone( o.filePath );
@@ -1900,13 +1814,11 @@ function linkFormatExplicit( o )
 
   formatted.ifNoErrorThen( function _formatReplaceByFileAfter( arg )
   {
-    // debugger;
     _.assert( _.strIs( arg ) );
     o.formatter.frame.result += arg;
     return arg;
   });
 
-  // debugger;
   return formatted;
 }
 
@@ -1942,7 +1854,7 @@ function _fileCategorizersChanged()
   var categorizers = self[ fileCategorizersSymbol ];
 
   _.assert( arguments.length === 0 );
-  _.assert( _.objectIs( categorizers ),'expects object (-categorizers-)' );
+  _.assert( _.objectIs( categorizers ),'expects map {-categorizers-}' );
 
   for( var c in categorizers )
   {
@@ -1950,6 +1862,7 @@ function _fileCategorizersChanged()
 
     if( _.strIs( categorizer ) )
     categorizer = [ categorizer ];
+
     if( _.arrayIs( categorizer ) ) ( function()
     {
       var exts = categorizer;
