@@ -123,7 +123,7 @@ function scriptExecute( o )
 scriptExecute.defaults =
 {
   language : null,
-  defaultLanguage : null,
+  defaultLanguage : 'ecma',
   code : null,
   filePath : null,
   name : null,
@@ -461,7 +461,7 @@ function _includeAct( o )
 
   includeFrame.resolveOptions
   =
-  self.fileProvider._filesFindMasksSupplement( includeFrame.resolveOptions,resolveOptions );
+  self.fileProvider._filesFilterMasksSupplement( includeFrame.resolveOptions,resolveOptions );
 
   // console.log( 'resolveOptions.globPath2',resolveOptions.globPath2 );
   // if( resolveOptions.globPath2 === '/common.external/Underscore.js' )
@@ -694,6 +694,8 @@ function filesExecute( o )
   var session = o.includeFrame.session;
   var files = o.includeFrame.files;
 
+  debugger;
+
   _.routineOptions( filesExecute,o );
   _.assert( arguments.length === 1 );
   _.assert( _.construction.isLike( o.includeFrame,IncludeFrame ) );
@@ -853,6 +855,8 @@ function fileExecute( o )
         // self.archive.dependencyAdd( file,fileFrame.usedFiles );
         //
         // self.archive.contentUpdate( file,fileFrame.result );
+
+        debugger;
 
         self.fileProvider.fileWrite
         ({
@@ -2153,6 +2157,23 @@ var Statics =
 {
 }
 
+var Forbids =
+{
+  conChunkBegin : 'conChunkBegin',
+  conChunkEnd : 'conChunkEnd',
+  prefix : 'prefix',
+  postfix : 'postfix',
+  currentDirPath : 'currentDirPath',
+  virtualRootPath : 'virtualRootPath',
+  realRootPath : 'realRootPath',
+  realRelativePath : 'realRelativePath',
+}
+
+var Accessors =
+{
+  fileCategorizers : 'fileCategorizers',
+}
+
 // --
 // prototype
 // --
@@ -2238,6 +2259,8 @@ var Proto =
   Associates : Associates,
   Restricts : Restricts,
   Statics : Statics,
+  Forbids : Forbids,
+  Accessors : Accessors,
 
 }
 
@@ -2251,46 +2274,6 @@ _.classMake
 });
 
 _.Copyable.mixin( Self );
-
-//
-
-_.accessor
-({
-  object : Self.prototype,
-  names :
-  {
-    fileCategorizers : 'fileCategorizers',
-  },
-})
-
-//
-
-// _.accessorReadOnly
-// ({
-//   object : Self.prototype,
-//   names :
-//   {
-//     context : 'context',
-//   },
-// })
-
-//
-
-_.accessorForbid
-({
-  object : Self.prototype,
-  names :
-  {
-    conChunkBegin : 'conChunkBegin',
-    conChunkEnd : 'conChunkEnd',
-    prefix : 'prefix',
-    postfix : 'postfix',
-    currentDirPath : 'currentDirPath',
-    virtualRootPath : 'virtualRootPath',
-    realRootPath : 'realRootPath',
-    realRelativePath : 'realRelativePath',
-  },
-});
 
 // --
 // export
