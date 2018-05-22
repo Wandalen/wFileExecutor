@@ -622,6 +622,7 @@ function include( o )
   if( self.verbosity > 1 )
   logger.log( 'include',o.path );
 
+  debugger;
   _.routineOptions( include,o );
   _.assert( arguments.length === 1 );
   _.assert( self.session === null,'attempt to relaunch executor during execution' );
