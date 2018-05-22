@@ -4,7 +4,7 @@
   "description": "Exectue files",
   "author": "Kostiantyn Wandalen <wtory.net@domainsbyproxy.com>",
   "license": "MIT",
-  "main": "staging/dwtools/amid/path/FileExecutor.s",
+  "main": "staging/dwtools/amid/executor/FileExecutor.s",
   "files": [
     "staging/dwtools/amid",
     "production"
@@ -23,7 +23,8 @@
   "dependencies": {
     "wTools": "",
     "wpathtranslator": "",
-    "wFiles": ""
+    "wFiles": "",
+    "wFilesArchive": ""
   },
   "devDependencies": {
     "wTesting": "",
