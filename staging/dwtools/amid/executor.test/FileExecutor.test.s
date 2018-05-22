@@ -38,6 +38,25 @@ var _ = wTools;
 if( typeof __dirname === 'undefined' )
 return;
 
+function onSuitBegin()
+{
+  var self = this;
+
+  self.templateTreePath = _.pathJoin( __dirname, './TemplateTree.s' );
+  self.templateTree = _.fileProvider.fileReadJs( self.templateTreePath );
+  self.templateTreeProvider = _.FileProvider.Extract({ filesTree : self.templateTree, protocols : [ 'extract' ] });
+
+
+}
+
+//
+
+function onSuitEnd()
+{
+  var self = this;
+  self.fileProvider.filesDelete( self.dstPath );
+}
+
 // --
 // tests
 // --
@@ -494,12 +513,13 @@ function executorMakeFor( path )
   var dstPath = _.pathsJoin( context.dstPath, _.pathSplit( path )[ 0 ] );
   var srcPath = _.pathsJoin( context.srcPath, _.pathSplit( path )[ 0 ] );
 
-  context.fileProvider.filesCopy
+  context.templateTreeProvider.readToProvider
   ({
-    dst : dstPath,
-    src : srcPath,
+    dstProvider : context.fileProvider,
+    dstPath : context.dstPath,
+    allowWrite : 1,
     allowDelete : 1,
-    verbosity : 0,
+    sameTime : 1,
   });
 
   context.executor = new wFileExecutor();
@@ -973,6 +993,9 @@ var Self =
   // verbosity : 7,
   silencing : 1,
 
+  onSuitBegin : onSuitBegin,
+  onSuitEnd : onSuitEnd,
+
   context :
   {
     executorMakeFor : executorMakeFor,
@@ -980,6 +1003,8 @@ var Self =
     executor : null,
     dstPath : null,
     srcPath : null,
+    templateTreePath : null,
+    templateTreeProvider : null,
     samples : samples,
   },
 
