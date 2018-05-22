@@ -11,7 +11,7 @@ include( 'c/**' );
 include.ifAny = 'style';
 include( './c/**',function( o )
 {
-  o.result = `var style = ` + _.toJstruct( o.result ) + `;`
+  o.result = `var style = ` + _.toJs( o.result ) + `;`
 });
 
 return `// a`

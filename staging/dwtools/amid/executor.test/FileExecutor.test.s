@@ -685,7 +685,7 @@ function chunksSplit( test )
     ]
   }
 
-  /*logger.log( _.toJstruct( chunks ) );*/
+  /*logger.log( _.toJs( chunks ) );*/
 
   test.identical( chunks,expected );
 
@@ -702,7 +702,7 @@ function chunksSplit( test )
     ]
   }
 
-  /*logger.log( _.toJstruct( chunks ) );*/
+  /*logger.log( _.toJs( chunks ) );*/
 
   test.identical( chunks,expected );
 
@@ -729,7 +729,7 @@ function chunksSplit( test )
     ]
   }
 
-  /*logger.log( _.toJstruct( chunks ) );*/
+  /*logger.log( _.toJs( chunks ) );*/
   test.identical( chunks,expected );
 
   test.description = 'single code chunk with text chunk before'; //
@@ -756,7 +756,7 @@ function chunksSplit( test )
     ]
   }
 
-  /*logger.log( _.toJstruct( chunks ) );*/
+  /*logger.log( _.toJs( chunks ) );*/
   test.identical( chunks,expected );
 
   test.description = 'single code chunk with text chunk after'; //
@@ -783,7 +783,7 @@ function chunksSplit( test )
     ]
   }
 
-  /*logger.log( _.toJstruct( chunks ) );*/
+  /*logger.log( _.toJs( chunks ) );*/
   test.identical( chunks,expected );
 
   test.description = 'two code chunks'; //
@@ -820,7 +820,7 @@ function chunksSplit( test )
     ]
   }
 
-  /*logger.log( _.toJstruct( chunks ) );*/
+  /*logger.log( _.toJs( chunks ) );*/
   test.identical( chunks,expected );
 
   test.description = 'two code chunks with text chunks'; //
@@ -860,7 +860,7 @@ function chunksSplit( test )
     ]
   }
 
-  /*logger.log( _.toJstruct( chunks ) );*/
+  /*logger.log( _.toJs( chunks ) );*/
   test.identical( chunks,expected );
 
   debugger;
@@ -926,14 +926,16 @@ function samplesTest( test )
         {
           usedFiles[ used1[ u ] ] = used2[ u ];
         }
-        logger.log( 'usedFiles',_.toJstruct( usedFiles ) );
+        logger.log( 'usedFiles',_.toJs( usedFiles ) );
         test.identical( usedFiles,sample.usedFiles );
       }
 
       if( sample.asyncFormatterCallCounter !== undefined )
       test.identical( _global_.asyncFormatterCallCounter , sample.asyncFormatterCallCounter );
 
-      var got = context.fileProvider.filesTreeRead( checkPath );
+
+      var got = _.FileProvider.Extract.filesTreeRead({ globIn : checkPath, srcProvider : context.fileProvider });
+
       test.identical( got,expected );
       logger.log( 'filesTreeRead',checkPath );
       logger.log( _.toJson( got ) );
