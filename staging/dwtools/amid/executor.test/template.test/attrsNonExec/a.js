@@ -13,7 +13,7 @@ debugger;
 include( './c/**',function( o )
 {
   debugger;
-  o.result = `var style = ` + _.toJstruct( o.result ) + `;`
+  o.result = `var style = ` + _.toJs( o.result ) + `;`
 });
 
 return `// a`
