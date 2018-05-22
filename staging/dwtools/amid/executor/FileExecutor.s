@@ -1,6 +1,6 @@
 ( function _FileExecutor_s_() {
 
-'use strict';
+'use strict'; /*aaa*/
 
 if( typeof module !== 'undefined' )
 {
@@ -694,8 +694,6 @@ function filesExecute( o )
   var session = o.includeFrame.session;
   var files = o.includeFrame.files;
 
-  debugger;
-
   _.routineOptions( filesExecute,o );
   _.assert( arguments.length === 1 );
   _.assert( _.construction.isLike( o.includeFrame,IncludeFrame ) );
@@ -812,7 +810,9 @@ function fileExecute( o )
   fileFrame.executed = 0;
   fileFrame.executing = 1;
 
+  debugger;
   self._fileExecute( fileFrame );
+  debugger;
 
   /* write */
 
@@ -834,6 +834,8 @@ function fileExecute( o )
 
   fileFrame.consequence.doThen( function _fileExecuteAfter( err,arg )
   {
+
+    debugger;
 
     if( err )
     fileFrame.error = err;
