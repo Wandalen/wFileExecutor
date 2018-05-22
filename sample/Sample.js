@@ -1,8 +1,7 @@
 
 if( typeof module !== 'undefined' )
 {
-  // require( 'wfileexecutor' );
-  require( '..' );
+  require( 'wfileexecutor' );
 }
 
 var _ = wTools;
