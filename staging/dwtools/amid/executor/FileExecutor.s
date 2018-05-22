@@ -267,18 +267,13 @@ function coffeeExecute( o )
   o.filePath = self.fileProvider.pathNativize( o.filePath );
 
   logger.log( 'coffeeExecute',o.filePath );
-  // if( o.filePath.indexOf( 'electron' ) !== -1 )
-  // debugger;
 
-  // o.code = this.coffeeCompile( o );
   var optionsForCompile = _.mapScreen( this.coffeeCompile.defaults,o );
   optionsForCompile.baring = o.isConfig;
   o.code = this.coffeeCompile( optionsForCompile );
-  // o.code = _.routineTolerantCall( this, this.coffeeCompile , o );
   o.prependingReturn = 1;
 
   var result = this.ecmaExecute( o );
-  // debugger;
 
   return result;
 }
@@ -380,6 +375,7 @@ function includeFrameEnd( includeFrame )
 
   _.arrayRemoveOnceStrictly( self.includeFrames,includeFrame );
 
+  debugger;
   if( !includeFrame.userIncludeFrame )
   {
     self.session = null;
@@ -400,14 +396,10 @@ function _includeAct( o )
   _.assert( session );
   _.assert( o.pathTranslator );
 
-  // debugger;
-
   if( self.verbosity > 2 )
   logger.log( '_includeAct.begin',o.path );
 
-  // var maskTerminal = new _.RegexpObject( rdescriptor.includeMask,_.RegexpObject.Names.includeAny );
   var maskTerminal = new _.RegexpObject( [],_.RegexpObject.Names.includeAny );
-  // _.RegexpObject.shrink( maskTerminal,_.pathRegexpMakeSafe() );
   var maskTerminal2 = _.regexpMakeObject
   ({
     excludeAny :
@@ -419,8 +411,6 @@ function _includeAct( o )
 
   maskTerminal = _.RegexpObject.shrink( maskTerminal,maskTerminal2 );
 
-  // debugger;
-  // console.log( '_includeAct',o.path,_.pathIsGlob( o.path ) );
   if( !o.withManual && _.pathIsGlob( o.path ) )
   {
     _.RegexpObject.shrink( maskTerminal,wRegexpObject({ excludeAny : /\.(manual)($|\.|\/)/ }) );
@@ -463,12 +453,7 @@ function _includeAct( o )
   =
   self.fileProvider._filesFilterMasksSupplement( includeFrame.resolveOptions,resolveOptions );
 
-  // console.log( 'resolveOptions.globPath2',resolveOptions.globPath2 );
-  // if( resolveOptions.globPath2 === '/common.external/Underscore.js' )
-  // debugger;
-  // debugger;
   includeFrame.files = self.fileProvider.filesResolve2( includeFrame.resolveOptions );
-  // debugger;
 
   if( !includeFrame.files.length && !o.optional )
   {
@@ -478,7 +463,6 @@ function _includeAct( o )
 
   /* */
 
-  // debugger;
   if( !o.syncExternal )
   o.syncExternal = new _.Consequence().give();
   includeFrame.consequence = new _.Consequence();
@@ -496,6 +480,7 @@ function _includeAct( o )
 
   includeFrame.consequence.ifNoErrorThen( function _includeSecondAfter( arg )
   {
+    debugger;
     if( self.verbosity > 2 )
     logger.log( '_includeAct.end',o.path );
     _.assert( session === self.session );
@@ -504,7 +489,7 @@ function _includeAct( o )
 
   includeFrame.consequence.doThen( function _includeSecondAfter( err,arg )
   {
-
+    debugger;
     if( err )
     {
       o.syncExternal.give( err,arg );
@@ -647,7 +632,6 @@ function include( o )
   if( !o.session )
   o.session = self.sessionMake( _.mapScreen( self.sessionMake.defaults, o ) );
   self.session = o.session;
-  // debugger;
 
   /* */
 
@@ -731,11 +715,6 @@ function filesExecute( o )
     con.ifNoErrorThen( _.routineSeal( self,self.fileExecute,[{ file : file, includeFrame : o.includeFrame }] ) );
   }
 
-  // con.got( function( err,arg ) {
-  //   debugger;
-  //   this.give( err,arg );
-  // });
-
   return con;
 }
 
@@ -811,9 +790,9 @@ function fileExecute( o )
   fileFrame.executed = 0;
   fileFrame.executing = 1;
 
-  debugger;
+  // debugger;
   self._fileExecute( fileFrame );
-  debugger;
+  // debugger;
 
   /* write */
 
@@ -836,7 +815,7 @@ function fileExecute( o )
   fileFrame.consequence.doThen( function _fileExecuteAfter( err,arg )
   {
 
-    debugger;
+    // debugger;
 
     if( err )
     fileFrame.error = err;
@@ -858,8 +837,7 @@ function fileExecute( o )
         // self.archive.dependencyAdd( file,fileFrame.usedFiles );
         //
         // self.archive.contentUpdate( file,fileFrame.result );
-
-        debugger;
+        // debugger;
 
         self.fileProvider.fileWrite
         ({
