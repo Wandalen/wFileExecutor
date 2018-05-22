@@ -128,7 +128,7 @@ samples.inlcudeManyDynamic =
   },
   expected :
   {
-    "." : "(function() {\n\ndebugger;\nconsole.log( 'b:before' );\n\n//\n(function() {\n\ndebugger;\nconsole.log( 'a:before' );\n\n//\n\nconsole.log( \"./a.js\" );\n//\n\ndebugger;\nconsole.log( 'a:after' );\n\n});\n(function() {\n\ndebugger;\nconsole.log( 'c:before' );\n\n//\nconsole.log( '0 1 2 3 4 5 6 7 8 ' );\n//\n\ndebugger;\nconsole.log( 'c:after' );\n\n});\n// last line\n//\n\ndebugger;\nconsole.log( 'b:after' );\n\n});\n"
+    "." : "(function() {\n\ndebugger;\nconsole.log( 'b:before' );\n\n//\n(function() {\n\ndebugger;\nconsole.log( 'a:before' );\n\n//\n\nconsole.log( \'./a.js\' );\n//\n\ndebugger;\nconsole.log( 'a:after' );\n\n});\n(function() {\n\ndebugger;\nconsole.log( 'c:before' );\n\n//\nconsole.log( '0 1 2 3 4 5 6 7 8 ' );\n//\n\ndebugger;\nconsole.log( 'c:after' );\n\n});\n// last line\n//\n\ndebugger;\nconsole.log( 'b:after' );\n\n});\n"
   }
 }
 
@@ -274,7 +274,7 @@ samples.chunkFromatter =
   expected :
   {
     "a.js" : "(function() {\n\nconsole.log( 'a:before' );\n\n//\n(function() {\n\nconsole.log( 'c1:before' );\n\n//\n// c1\n//\n\nconsole.log( 'c1:after' );\n\n});\n(function() {\n\nconsole.log( 'c3:before' );\n\n//\n// c3\n//\n\nconsole.log( 'c3:after' );\n\n});\nvar style = `\\n// c4\\n\\nbody > div\\n{\\n  font-size : 2em;\\n}\\n`;var style = `\\n// c5\\n\\nbody > div\\n{\\n  font-size : 2em;\\n}\\n`;// a\n//\n\nconsole.log( 'a:after' );\n\n});\n",
-    "b.html" : "<html>\n\n  \n  /*\n  script\n  /pro/web/Dave/app/builder/include/dwtools/amid/executor/template.tmp/chunkFormatter/c/c1.s\n  /pro/web/Dave/app/builder/include/dwtools/amid/executor/template.tmp/chunkFormatter/c/c3.ss\n  */\n  \n  /*\n  style\n  /pro/web/Dave/app/builder/include/dwtools/amid/executor/template.tmp/chunkFormatter/c/c4.less\n  /pro/web/Dave/app/builder/include/dwtools/amid/executor/template.tmp/chunkFormatter/c/c5.less\n  */\n  <script src=\"/b.manual.js\" type=\"text/javascript\" ></script>\n\n</html>\n",
+    "b.html" : `<html>\n\n  \n  /*\n  script\n  ${_.pathJoin( __dirname, 'template.tmp/chunkFormatter/c/c1.s')}\n  ${_.pathJoin( __dirname, 'template.tmp/chunkFormatter/c/c3.ss')}\n  */\n  \n  /*\n  style\n  ${_.pathJoin( __dirname, 'template.tmp/chunkFormatter/c/c4.less')}\n  ${_.pathJoin( __dirname, 'template.tmp/chunkFormatter/c/c5.less')}\n  */\n  <script src=\"/b.manual.js\" type=\"text/javascript\" ></script>\n\n</html>\n`,
     "c" :
     {
       "c1.s" : "(function() {\n\nconsole.log( 'c1:before' );\n\n//\n// c1\n//\n\nconsole.log( 'c1:after' );\n\n});\n",
@@ -389,7 +389,7 @@ samples.normalCase2 =
 samples.severalSamfIncludeToolss =
 {
   description : 'several same includes',
-  path : 'severalSamfIncludeToolss/**',
+  path : 'severalSameIncludes/**',
   allowIncludingChildren : 1,
   usedFiles :
   {
@@ -933,8 +933,12 @@ function samplesTest( test )
       if( sample.asyncFormatterCallCounter !== undefined )
       test.identical( _global_.asyncFormatterCallCounter , sample.asyncFormatterCallCounter );
 
-
       var got = _.FileProvider.Extract.filesTreeRead({ globIn : checkPath, srcProvider : context.fileProvider });
+
+      if( _.strIs( got ) )
+      {
+        expected = expected[ '.' ]
+      }
 
       test.identical( got,expected );
       logger.log( 'filesTreeRead',checkPath );
@@ -967,6 +971,7 @@ var Self =
 
   name : 'wTools.FileExecutor',
   // verbosity : 7,
+  silencing : 1,
 
   context :
   {
