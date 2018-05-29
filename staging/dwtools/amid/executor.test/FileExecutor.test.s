@@ -980,7 +980,7 @@ function samplesTest( test )
   return con;
 }
 
-samplesTest.timeOut = 90000;
+samplesTest.timeOut = 60000;
 
 // --
 // proto
