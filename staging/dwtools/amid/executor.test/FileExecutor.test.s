@@ -1,6 +1,6 @@
 ( function _FileExecutor_s_( ) {
 
-'use strict';
+'use strict'; /*aaa*/
 
 var isBrowser = true;
 
@@ -42,7 +42,7 @@ function onSuitBegin()
 {
   var self = this;
 
-  self.templateTreePath = _.pathJoin( __dirname, './TemplateTree.s' );
+  self.templateTreePath = _.pathJoin( __dirname, './TemplateTree.debug.s' );
   self.templateTree = _.fileProvider.fileReadJs( self.templateTreePath );
   self.templateTreeProvider = _.FileProvider.Extract({ filesTree : self.templateTree, protocols : [ 'extract' ] });
 
