@@ -28,6 +28,8 @@ if( typeof module !== 'undefined' )
   var _ = _global_.wTools;
 
   _.include( 'wTesting' );
+  _.include( 'wExecTools' );
+  _.include( 'wFiles' );
 
   require( '../executor/FileExecutor.s' );
 
