@@ -1,6 +1,6 @@
 ( function _FileExecutor_s_( ) {
 
-'use strict'; 
+'use strict';
 
 var isBrowser = true;
 
@@ -990,8 +990,8 @@ var Self =
 {
 
   name : 'wTools.FileExecutor',
-  // verbosity : 7,
   silencing : 1,
+  // verbosity : 7,
 
   onSuitBegin : onSuitBegin,
   onSuitEnd : onSuitEnd,
