@@ -1473,7 +1473,7 @@ function categoriesForFile( fileFrame )
     }
     if( category )
     {
-      _.assert( _.atomicIs( category ) );
+      _.assert( _.primitiveIs( category ) );
       if( !_.strIs( category ) )
       category = c;
       result.push( category );
@@ -1489,7 +1489,7 @@ function categoriesForFile( fileFrame )
     var category = categorizer.call( self,file );
     if( category )
     {
-      _.assert( _.atomicIs( category ) );
+      _.assert( _.primitiveIs( category ) );
       if( !_.strIs( category ) )
       category = c;
       result.push( category );
@@ -1531,7 +1531,7 @@ function _categoriesForLink( o )
     var category = categorizer.call( self,o );
     if( category )
     {
-      _.assert( _.atomicIs( category ) );
+      _.assert( _.primitiveIs( category ) );
       if( !_.strIs( category ) )
       category = c;
       _.arrayAppendOnce( result,category );
