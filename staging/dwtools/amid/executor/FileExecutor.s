@@ -1327,7 +1327,7 @@ function _chunkConcat( chunkFrame )
   var con = new _.Consequence();
   var chunkFormatterOptions = Object.create( null );
 
-  _.assert( _.strIs( chunkFrame.result ) );
+  _.assert( _.strIs( chunkFrame.result ) );
   _.assert( _.arrayIs( chunkFrame.usedIncludeFrames ) );
   _.assert( chunkFrame.usedFileFrames.length === 0 );
   _.assert( arguments.length === 1 );
