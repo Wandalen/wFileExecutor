@@ -454,7 +454,7 @@ function _includeAct( o )
   self.fileProvider._filesFilterMasksSupplement( includeFrame.resolveOptions,resolveOptions );
 
   // debugger; // aaa
-  includeFrame.files = self.fileProvider.filesResolve2( includeFrame.resolveOptions );
+  includeFrame.files = self.fileProvider.filesResolve( includeFrame.resolveOptions );
   // debugger; // aaa
 
   if( !includeFrame.files.length && !o.optional )
