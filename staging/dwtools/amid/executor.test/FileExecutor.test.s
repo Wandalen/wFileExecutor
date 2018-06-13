@@ -40,7 +40,7 @@ var _ = wTools;
 if( typeof __dirname === 'undefined' )
 return;
 
-function onSuitBegin()
+function onSuiteBegin()
 {
   var self = this;
 
@@ -53,7 +53,7 @@ function onSuitBegin()
 
 //
 
-function onSuitEnd()
+function onSuiteEnd()
 {
   var self = this;
   self.fileProvider.filesDelete( self.dstPath );
@@ -985,7 +985,7 @@ function samplesTest( test )
 samplesTest.timeOut = 60000;
 
 // --
-// proto
+// define class
 // --
 
 var Self =
@@ -995,8 +995,8 @@ var Self =
   silencing : 1,
   // verbosity : 7,
 
-  onSuitBegin : onSuitBegin,
-  onSuitEnd : onSuitEnd,
+  onSuiteBegin : onSuiteBegin,
+  onSuiteEnd : onSuiteEnd,
 
   context :
   {
@@ -1020,7 +1020,7 @@ var Self =
 
 //
 
-Self = wTestSuit( Self );
+Self = wTestSuite( Self );
 if( typeof module !== 'undefined' && !module.parent )
 _.Tester.test( Self.name );
 
