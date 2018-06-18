@@ -377,7 +377,7 @@ function includeFrameEnd( includeFrame )
 
   if( !includeFrame.userIncludeFrame )
   {
-    debugger;
+    // debugger;
     self.session = null;
     _.assert( self.includeFrames.length === 0 );
   }
@@ -441,7 +441,7 @@ function _includeAct( o )
 
   var resolveOptions =
   {
-    globPath2 : includeFrame.pathTranslator.virtualFor( o.path || '.' ),
+    globPath : includeFrame.pathTranslator.virtualFor( o.path || '.' ),
     ends : o.ends,
     pathTranslator : includeFrame.pathTranslator,
     maskTerminal : maskTerminal,
@@ -453,6 +453,7 @@ function _includeAct( o )
   =
   self.fileProvider._filesFilterMasksSupplement( includeFrame.resolveOptions,resolveOptions );
 
+  // if( resolveOptions.globPath === '/common/**' )
   // debugger; // aaa
   includeFrame.files = self.fileProvider.filesResolve( includeFrame.resolveOptions );
   // debugger; // aaa
@@ -460,7 +461,7 @@ function _includeAct( o )
   if( !includeFrame.files.length && !o.optional )
   {
     debugger;
-    throw _.err( '\nnone file found for',includeFrame.resolveOptions.globPath2,'\n' );
+    throw _.err( '\nnone file found for',includeFrame.resolveOptions.globPath,'\n' );
   }
 
   /* */
@@ -497,7 +498,7 @@ function _includeAct( o )
       throw _.err( err );
     }
 
-    // logger.log( 'includeFrameEnd\n',_.entitySelect( self.includeFrames,'*.includeOptions.globPath2' ) );
+    // logger.log( 'includeFrameEnd\n',_.entitySelect( self.includeFrames,'*.includeOptions.globPath' ) );
 
     self.includeFrameEnd( includeFrame );
 
@@ -531,7 +532,7 @@ function _includeFromChunk( bound,o,o2 )
 {
   var self = this;
   var chunkFrame = bound.chunkFrame;
-  var include = bound.include;
+  var includeFile = bound.includeFile;
   var session = chunkFrame.fileFrame.includeFrame.session;
 
   if( _.strIs( o ) )
@@ -545,8 +546,8 @@ function _includeFromChunk( bound,o,o2 )
     _.mapExtend( o,o2 );
   }
 
-  _.assertMapHasOnly( include,_includeFromChunk.parameters );
-  var o3 = _.mapScreen( _includeFromChunk.defaults,include );
+  _.assertMapHasOnly( includeFile,_includeFromChunk.parameters );
+  var o3 = _.mapScreen( _includeFromChunk.defaults,includeFile );
 
   _.mapSupplement( o,o3 );
 
@@ -563,11 +564,6 @@ function _includeFromChunk( bound,o,o2 )
   _.assert( o.pathTranslator );
   _.assert( session );
   _.assert( _.construction.isLike( included,IncludeFrame ) );
-
-  // included.consequence.got( function( err,arg )
-  // {
-  //   this.give( err,arg );
-  // });
 
   _.assert( included.files.length === included.fileFrames.length );
 
@@ -1233,11 +1229,11 @@ function _chunkExpose( chunkFrame )
   if( session.exposingInclude )
   {
 
-    _.assert( externals.include === undefined );
+    _.assert( externals.includeFile === undefined );
     var bound = Object.create( null );
-    externals.include = _.routineJoin( self,self._includeFromChunk,[ bound ] );
+    externals.includeFile = _.routineJoin( self,self._includeFromChunk,[ bound ] );
     bound.chunkFrame = chunkFrame;
-    bound.include = externals.include;
+    bound.includeFile = externals.includeFile;
 
   }
 
