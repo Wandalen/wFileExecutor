@@ -453,8 +453,8 @@ function _includeAct( o )
   =
   self.fileProvider._filesFilterMasksSupplement( includeFrame.resolveOptions,resolveOptions );
 
-  // if( resolveOptions.globPath === '/common/**' )
-  // debugger; // aaa
+  if( resolveOptions.globPath === '/common*/**' )
+  debugger; // aaa
   includeFrame.files = self.fileProvider.filesResolve( includeFrame.resolveOptions );
   // debugger; // aaa
 
@@ -604,7 +604,6 @@ function include( o )
   if( self.verbosity > 1 )
   logger.log( 'include',o.path );
 
-  debugger;
   _.routineOptions( include,o );
   _.assert( arguments.length === 1 );
   _.assert( self.session === null,'attempt to relaunch executor during execution' );
@@ -1018,7 +1017,7 @@ function fileFrameFor( fileFrame )
   logger.log( 'fileFrameFor',fileFrame.file.absolute );
 
   var equ = ( e ) => e.file.absolute;
-  var fileFrameFound = _.arrayLeft( session.fileFrames , fileFrame.file.absolute , equ ).element;
+  var fileFrameFound = _.arrayLeft( session.fileFrames , fileFrame , equ ).element;
   if( fileFrameFound )
   {
     _.arrayAppendOnce( fileFrameFound.includeFrames , includeFrame );
