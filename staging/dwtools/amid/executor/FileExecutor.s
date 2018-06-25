@@ -411,6 +411,9 @@ function _includeAct( o )
 
   maskTerminal = _.RegexpObject.shrink( maskTerminal,maskTerminal2 );
 
+  if( o.pathTranslator.virtualFor( o.path || '.' ) === '/index/**' )
+  debugger;
+
   if( !o.withManual && _.pathIsGlob( o.path ) )
   {
     _.RegexpObject.shrink( maskTerminal,wRegexpObject({ excludeAny : /\.(manual)($|\.|\/)/ }) );
@@ -453,8 +456,7 @@ function _includeAct( o )
   =
   self.fileProvider._filesFilterMasksSupplement( includeFrame.resolveOptions,resolveOptions );
 
-  if( resolveOptions.globPath === '/common*/**' )
-  debugger; // aaa
+  // debugger; // aaa
   includeFrame.files = self.fileProvider.filesResolve( includeFrame.resolveOptions );
   // debugger; // aaa
 
@@ -1787,7 +1789,7 @@ function linkFormatExplicit( o )
   debugger;
 
   if( !o.filePath )
-  o.filePath = _.pathJoin( o.formatter.frame.fileFrame.file.dir,o.formatter.frame.fileFrame.file.name + '.manual.js' );
+  o.filePath = _.pathJoin( o.formatter.frame.fileFrame.file.dir, o.formatter.frame.fileFrame.file.name + '.manual.js' );
   var joinedFile = o.formatter.frame.fileFrame.file.clone( o.filePath );
 
   var fileFrame = self.fileFrameFor
