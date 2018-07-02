@@ -101,7 +101,7 @@ function languageFromFilePath( filePath )
 function scriptExecute( o )
 {
 
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
   _.routineOptions( scriptExecute,o );
 
   if( !o.language )
@@ -143,7 +143,7 @@ function ecmaExecute( o )
   var result;
 
   _.routineOptions( ecmaExecute,o );
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( _.strIs( o.code ) );
 
   var execOptions =
@@ -218,7 +218,7 @@ function coffeeCompile( o )
   var self = this;
   var result = '';
 
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
   _.routineOptions( coffeeCompile,o );
 
   if( !_.strIs( o.code ) )
@@ -258,7 +258,7 @@ function coffeeExecute( o )
   o = { code : code };
 
   _.routineOptions( coffeeExecute,o );
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
 
   if( !o.name )
   o.name = o.filePath ? _.pathName( o.filePath ) : 'unknown';
@@ -297,7 +297,7 @@ function sessionMake( o )
   var self = this;
 
   _.routineOptions( sessionMake,o );
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
 
   var session = Object.create( null );
   session.rootIncludeFrame = null;
@@ -333,7 +333,7 @@ function includeFrameBegin( o )
   var self = this;
 
   _.routineOptions( includeFrameBegin,o );
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
 
   var includeFrame = IncludeFrame.constructor();
 
@@ -369,7 +369,7 @@ function includeFrameEnd( includeFrame )
   if( self.verbosity > 1 )
   logger.log( 'includeFrameEnd',includeFrame.includeOptions.path );
 
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( includeFrame.session === self.session );
   _.assert( _.construction.isLike( includeFrame,IncludeFrame ) );
 
@@ -392,7 +392,7 @@ function _includeAct( o )
   var session = o.session;
 
   _.routineOptions( _includeAct,o );
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( session );
   _.assert( o.pathTranslator );
 
@@ -607,7 +607,7 @@ function include( o )
   logger.log( 'include',o.path );
 
   _.routineOptions( include,o );
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( self.session === null,'attempt to relaunch executor during execution' );
 
   if( !o.pathTranslator )
@@ -678,7 +678,7 @@ function filesExecute( o )
   var files = o.includeFrame.files;
 
   _.routineOptions( filesExecute,o );
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( _.construction.isLike( o.includeFrame,IncludeFrame ) );
   _.assert( o.includeFrame );
   _.assert( o.includeFrame.files );
@@ -739,7 +739,7 @@ function fileExecute( o )
 
   _.assert( fileFrame.includeFrames.indexOf( includeFrame ) !== -1,'expects same includeFrame' );
   _.routineOptions( fileExecute,o );
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( session );
   _.assert( _.construction.isLike( fileFrame,FileFrame ) );
 
@@ -884,7 +884,7 @@ function _fileExecute( o )
   if( _.strIs( o ) )
   o = { code : o }
 
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( o.file instanceof _.FileRecord );
   _.assert( _.construction.isLike( o,FileFrame ) );
   _.assert( !o.consequence );
@@ -956,7 +956,7 @@ function filesFilter( includeFrame )
   var self = this;
   var io = includeFrame.includeOptions;
 
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( _.construction.isLike( includeFrame,IncludeFrame ) );
 
   if( !io.ifAny && !io.ifAll && !io.ifNone )
@@ -1011,7 +1011,7 @@ function fileFrameFor( fileFrame )
   var includeFrame = fileFrame.includeFrame;
   var session = includeFrame.session;
 
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( session );
   _.assert( includeFrame );
 
@@ -1058,7 +1058,7 @@ function fileFrameFor( fileFrame )
 
 function chunkFrameFor( o )
 {
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( _.mapIs( o ) );
   o = ChunkFrame.constructor( o );
   return o;
@@ -1071,7 +1071,7 @@ function chunkExecute( o )
   var self = this;
   var includeFrame = o.fileFrame.includeFrame;
 
-  // _.assert( arguments.length === 1 );
+  // _.assert( arguments.length === 1, 'expects single argument' );
   o = chunkFrameFor( o );
 
   if( self.verbosity > 2 )
@@ -1156,7 +1156,7 @@ function _chunkExecute( o )
   var session = o.fileFrame.includeFrame.session;
 
   _.assert( session );
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( _.strIs( o.chunk.text ) || _.strIs( o.chunk.code ) );
   _.assert( _.construction.isLike( o,ChunkFrame ) );
 
@@ -1222,7 +1222,7 @@ function _chunkExpose( chunkFrame )
   var file = fileFrame.file;
   var session = fileFrame.includeFrame.session;
 
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( _.construction.isLike( chunkFrame,ChunkFrame ) );
 
   /* exposing */
@@ -1275,7 +1275,7 @@ function _chunkTabulate( chunkFrame )
 {
   var self = this;
 
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
 
   if( chunkFrame.chunk.kind !== 'dynamic' )
   return;
@@ -1327,7 +1327,7 @@ function _chunkConcat( chunkFrame )
   _.assert( _.strIs( chunkFrame.result ) );
   _.assert( _.arrayIs( chunkFrame.usedIncludeFrames ) );
   _.assert( chunkFrame.usedFileFrames.length === 0 );
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
 
   /* */
 
@@ -1428,7 +1428,7 @@ function _chunkFormat( chunkFrame,text )
 {
   var self = this;
 
-  _.assert( arguments.length === 2 );
+  _.assert( arguments.length === 2, 'expects exactly two argument' );
 
   return self.formattersApply
   ({
@@ -1449,7 +1449,7 @@ function categoriesForFile( fileFrame )
   var result = [];
   var file = fileFrame.file;
 
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( _.construction.isLike( fileFrame,FileFrame ) );
   _.assert( file instanceof _.FileRecord );
 
@@ -1503,7 +1503,7 @@ function _categoriesForLink( o )
   var self = this;
   var result = [];
 
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
 
   /* file categories */
 
@@ -1548,7 +1548,7 @@ function _categoriesCheck( categories,filter )
 {
   var self = this;
 
-  _.assert( arguments.length === 2 );
+  _.assert( arguments.length === 2, 'expects exactly two argument' );
 
   if( filter.ifAny )
   if( !_.arrayHasAny( categories,filter.ifAny ) )
@@ -1572,7 +1572,7 @@ function formattersApply( o )
   var self = this;
   var con = new _.Consequence().give( o.frame.result );
 
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
 
   // debugger; // aaa
 
@@ -1607,7 +1607,7 @@ function formatterTry( o )
 {
   var self = this;
 
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( o.formatter );
 
   if( !self._categoriesCheck( o.categories,o.formatter ) )
@@ -1622,7 +1622,7 @@ function formatterApply( o )
 {
   var self = this;
 
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( o.formatter );
 
   if( !o.usedFileFrames )
@@ -1672,7 +1672,7 @@ function linkFor( userChunkFrame,usedFileFrame )
 {
   var self = this;
 
-  _.assert( arguments.length === 2 );
+  _.assert( arguments.length === 2, 'expects exactly two argument' );
   _.assert( _.construction.isLike( userChunkFrame,ChunkFrame ) );
   _.assert( _.construction.isLike( usedFileFrame,FileFrame ) || usedFileFrame instanceof _.FileRecord );
 
@@ -1725,7 +1725,7 @@ function linkFormat( o )
   o.usedIncludeFrame = o.link.used.includeFrame;
 
   _.assert( o.usedIncludeFrame );
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( _.construction.isLike( o.usedIncludeFrame,IncludeFrame ) );
 
   if( self.verbosity > 2 )
@@ -1833,7 +1833,7 @@ function _fileCategorizersSet( categorizers )
 {
   var self = this;
 
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( _.objectIs( categorizers ),'expects object (-categorizers-)' );
 
   self[ fileCategorizersSymbol ] = categorizers;
@@ -1903,7 +1903,7 @@ function includesUsedInherit( includeFrame,fileFrame )
 {
   var self = this;
 
-  _.assert( arguments.length === 2 );
+  _.assert( arguments.length === 2, 'expects exactly two argument' );
 
   _.arrayAppendArray( includeFrame.usedIncludeFrames , fileFrame.usedIncludeFrames );
 

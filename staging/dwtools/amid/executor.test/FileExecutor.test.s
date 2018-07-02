@@ -991,7 +991,7 @@ samplesTest.timeOut = 60000;
 var Self =
 {
 
-  name : 'wTools.FileExecutor',
+  name : 'Tools/amid/FileExecutor',
   silencing : 1,
   // verbosity : 7,
 
