@@ -268,7 +268,7 @@ function coffeeExecute( o )
 
   logger.log( 'coffeeExecute',o.filePath );
 
-  var optionsForCompile = _.mapScreen( this.coffeeCompile.defaults,o );
+  var optionsForCompile = _.mapOnly( o, this.coffeeCompile.defaults );
   optionsForCompile.baring = o.isConfig;
   o.code = this.coffeeCompile( optionsForCompile );
   o.prependingReturn = 1;
@@ -548,8 +548,8 @@ function _includeFromChunk( bound,o,o2 )
     _.mapExtend( o,o2 );
   }
 
-  _.assertMapHasOnly( includeFile,_includeFromChunk.parameters );
-  var o3 = _.mapScreen( _includeFromChunk.defaults,includeFile );
+  _.assertMapHasOnly( includeFile, _includeFromChunk.parameters );
+  var o3 = _.mapOnly( includeFile, _includeFromChunk.defaults );
 
   _.mapSupplement( o,o3 );
 
@@ -562,7 +562,7 @@ function _includeFromChunk( bound,o,o2 )
 
   _.assert( _.consequenceIs( o.syncExternal ) );
   _.assert( o2 === undefined || _.objectIs( o2 ) );
-  _.assert( arguments.length === 2 || arguments.length === 3 );
+  _.assert( arguments.length === 2 || arguments.length === 3, 'expects two or three arguments' );
   _.assert( o.pathTranslator );
   _.assert( session );
   _.assert( _.construction.isLike( included,IncludeFrame ) );
@@ -628,12 +628,12 @@ function include( o )
   }
 
   if( !o.session )
-  o.session = self.sessionMake( _.mapScreen( self.sessionMake.defaults, o ) );
+  o.session = self.sessionMake( _.mapOnly( o, self.sessionMake.defaults ) );
   self.session = o.session;
 
   /* */
 
-  var includeFrame = self._includeAct( _.mapScreen( self._includeAct.defaults, o ) );
+  var includeFrame = self._includeAct( _.mapOnly( o, self._includeAct.defaults ) );
 
   /* */
 
@@ -918,7 +918,7 @@ function _fileExecute( o )
 
   /* chunks */
 
-  var chunks = self._chunksSplit( o.code,_.mapScreen( _chunksSplit.defaults,o ) );
+  var chunks = self._chunksSplit( o.code,_.mapOnly( o, _chunksSplit.defaults ) );
   if( chunks.error )
   o.error = _.err( errorPrefix,chunks.error,'\n' );
   o.chunks = chunks.chunks;
@@ -1177,7 +1177,7 @@ function _chunkExecute( o )
 
     /* */
 
-    var execution = _.mapScreen( ecmaExecute.defaults,o );
+    var execution = _.mapOnly( o, ecmaExecute.defaults );
     execution.language = self.languageFromFilePath( o.fileFrame.file.absolute );
     execution.filePath = o.fileFrame.file.absolute + '{' + o.chunk.line + '-' + ( o.chunk.line + o.chunk.lines.length ) + '}';
 

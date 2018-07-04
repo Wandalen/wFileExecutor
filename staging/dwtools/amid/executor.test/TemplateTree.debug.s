@@ -4,11 +4,11 @@
   "f2.js" : `(function() {\n\ndebugger;\nconsole.log( 'f2:before' );\n\n/**///>-->//  return \`console.log( 'x' );\`;  //<--<///**/\n\ndebugger;\nconsole.log( 'f2:after' );\n\n});\n`,
   "attrs" :
   {
-    "a.js" : `(function() {\n\nconsole.log( 'a:before' );\n\n//\n//>-->//\n\ninclude( 'c/c1.s' );\ninclude( 'c/c2.js' );\ninclude( 'c/c3.ss' );\n\nreturn \`// a\`\n//<--<//\n//\n\nconsole.log( 'a:after' );\n\n});\n`,
-    "b1.js" : `(function() {\n\ndebugger;\nconsole.log( 'b:before' );\n\n//\n//>-->//\n\ninclude( '/a.js' );\n\nreturn '';\n//<--<//\n//\n\ndebugger;\nconsole.log( 'b:after' );\n\n});\n`,
-    "b2.js" : `(function() {\n\ndebugger;\nconsole.log( 'b:before' );\n\n//\n//>-->//\n\ninclude( './a.js' );\n\nreturn '';\n//<--<//\n//\n\ndebugger;\nconsole.log( 'b:after' );\n\n});\n`,
-    "c1.html" : `<html>\n//>-->//\n\ninclude( '/a.js' );\n\nreturn '';\n//<--<//\n</html>\n`,
-    "c2.html" : `<html>\n//>-->//\n\ninclude( './a.js' );\ninclude( './b1.js' );\ninclude( './b2.js' );\n\nreturn '';\n//<--<//\n</html>\n`,
+    "a.js" : `(function() {\n\nconsole.log( 'a:before' );\n\n//\n//>-->//\n\nincludeFile( 'c/c1.s' );\nincludeFile( 'c/c2.js' );\nincludeFile( 'c/c3.ss' );\n\nreturn \`// a\`\n//<--<//\n//\n\nconsole.log( 'a:after' );\n\n});\n`,
+    "b1.js" : `(function() {\n\ndebugger;\nconsole.log( 'b:before' );\n\n//\n//>-->//\n\nincludeFile( '/a.js' );\n\nreturn '';\n//<--<//\n//\n\ndebugger;\nconsole.log( 'b:after' );\n\n});\n`,
+    "b2.js" : `(function() {\n\ndebugger;\nconsole.log( 'b:before' );\n\n//\n//>-->//\n\nincludeFile( './a.js' );\n\nreturn '';\n//<--<//\n//\n\ndebugger;\nconsole.log( 'b:after' );\n\n});\n`,
+    "c1.html" : `<html>\n//>-->//\n\nincludeFile( '/a.js' );\n\nreturn '';\n//<--<//\n</html>\n`,
+    "c2.html" : `<html>\n//>-->//\n\nincludeFile( './a.js' );\nincludeFile( './b1.js' );\nincludeFile( './b2.js' );\n\nreturn '';\n//<--<//\n</html>\n`,
     "c" :
     {
       "c1.s" : `(function() {\n\nconsole.log( 'c1:before' );\n\n//\n//>-->//\nreturn \`// c1\`;\n//<--<//\n//\n\nconsole.log( 'c1:after' );\n\n});\n`,
@@ -18,8 +18,8 @@
   },
   "attrsIf" :
   {
-    "a.js" : `(function() {\n\nconsole.log( 'a:before' );\n\n//\n//>-->//\n\ninclude\n({\n  ifAny : 'script.server',\n  path : 'c/**',\n});\n\nreturn \`// a\`\n//<--<//\n//\n\nconsole.log( 'a:after' );\n\n});\n`,
-    "b.html" : `<html>\n//>-->//\n\ninclude\n({\n  ifAny : 'script.server',\n  path : 'c/**',\n});\n\nreturn '';\n//<--<//\n</html>\n`,
+    "a.js" : `(function() {\n\nconsole.log( 'a:before' );\n\n//\n//>-->//\n\nincludeFile\n({\n  ifAny : 'script.server',\n  path : 'c/**',\n});\n\nreturn \`// a\`\n//<--<//\n//\n\nconsole.log( 'a:after' );\n\n});\n`,
+    "b.html" : `<html>\n//>-->//\n\nincludeFile\n({\n  ifAny : 'script.server',\n  path : 'c/**',\n});\n\nreturn '';\n//<--<//\n</html>\n`,
     "c" :
     {
       "c1.s" : `(function() {\n\nconsole.log( 'c1:before' );\n\n//\n//>-->//\nreturn \`// c1\`;\n//<--<//\n//\n\nconsole.log( 'c1:after' );\n\n});\n`,
@@ -29,8 +29,8 @@
   },
   "attrsNonExec" :
   {
-    "a.js" : `(function() {\n\nconsole.log( 'a:before' );\n\n//\n//>-->//\n\ninclude.ifAny = 'script.server';\ninclude( 'c/**' );\n\ninclude.ifAny = 'style';\ndebugger;\ninclude( './c/**',function( o )\n{\n  debugger;\n  o.result = \`var style = \` + _.toJs( o.result ) + \`;\`\n});\n\nreturn \`// a\`\n//<--<//\n//\n\nconsole.log( 'a:after' );\n\n});\n`,
-    "b.html" : `<html>\n\n  //>-->//\n\n  include.ifAny = 'script.server';\n  include( 'c/**' );\n\n  include.ifAny = 'style';\n  include( 'c/**' );\n\n  return '';\n  //<--<//\n\n</html>\n`,
+    "a.js" : `(function() {\n\nconsole.log( 'a:before' );\n\n//\n//>-->//\n\nincludeFile.ifAny = 'script.server';\nincludeFile( 'c/**' );\n\nincludeFile.ifAny = 'style';\ndebugger;\nincludeFile( './c/**',function( o )\n{\n  debugger;\n  o.result = \`var style = \` + _.toJs( o.result ) + \`;\`\n});\n\nreturn \`// a\`\n//<--<//\n//\n\nconsole.log( 'a:after' );\n\n});\n`,
+    "b.html" : `<html>\n\n  //>-->//\n\n  includeFile.ifAny = 'script.server';\n  includeFile( 'c/**' );\n\n  includeFile.ifAny = 'style';\n  includeFile( 'c/**' );\n\n  return '';\n  //<--<//\n\n</html>\n`,
     "c" :
     {
       "c1.s" : `(function() {\n\nconsole.log( 'c1:before' );\n\n//\n//>-->//\nreturn \`// c1\`;\n//<--<//\n//\n\nconsole.log( 'c1:after' );\n\n});\n`,
@@ -41,8 +41,8 @@
   },
   "attrsPreferences" :
   {
-    "a.js" : `(function() {\n\nconsole.log( 'a:before' );\n\n//\n//>-->//\n\ninclude.ifAny = 'script.server';\ninclude( 'c/**' );\n\nreturn \`// a\`\n//<--<//\n//\n\nconsole.log( 'a:after' );\n\n});\n`,
-    "b.html" : `<html>\n//>-->//\n\ninclude.ifAny = 'script.server';\ninclude( 'c/**' );\n\nreturn '';\n//<--<//\n</html>\n`,
+    "a.js" : `(function() {\n\nconsole.log( 'a:before' );\n\n//\n//>-->//\n\nincludeFile.ifAny = 'script.server';\nincludeFile( 'c/**' );\n\nreturn \`// a\`\n//<--<//\n//\n\nconsole.log( 'a:after' );\n\n});\n`,
+    "b.html" : `<html>\n//>-->//\n\nincludeFile.ifAny = 'script.server';\nincludeFile( 'c/**' );\n\nreturn '';\n//<--<//\n</html>\n`,
     "c" :
     {
       "c1.s" : `(function() {\n\nconsole.log( 'c1:before' );\n\n//\n//>-->//\nreturn \`// c1\`;\n//<--<//\n//\n\nconsole.log( 'c1:after' );\n\n});\n`,
@@ -52,8 +52,8 @@
   },
   "chunkFormatter" :
   {
-    "a.js" : `(function() {\n\nconsole.log( 'a:before' );\n\n//\n//>-->//\n\ninclude.ifAny = 'script.server';\ninclude( 'c/**' );\n\ninclude.ifAny = 'style';\ninclude( './c/**',function( o )\n{\n  o.result = \`var style = \` + _.toJs( o.result ) + \`;\`\n});\n\nreturn \`// a\`\n//<--<//\n//\n\nconsole.log( 'a:after' );\n\n});\n`,
-    "b.html" : `<html>\n\n  //>-->//\n\n  include.ifAny = 'script.server';\n  include( 'c/**' );\n\n  include.ifAny = 'style';\n  include( 'c/**' );\n\n  return '';\n  //<--<//\n\n</html>\n`,
+    "a.js" : `(function() {\n\nconsole.log( 'a:before' );\n\n//\n//>-->//\n\nincludeFile.ifAny = 'script.server';\nincludeFile( 'c/**' );\n\nincludeFile.ifAny = 'style';\nincludeFile( './c/**',function( o )\n{\n  o.result = \`var style = \` + _.toJs( o.result ) + \`;\`\n});\n\nreturn \`// a\`\n//<--<//\n//\n\nconsole.log( 'a:after' );\n\n});\n`,
+    "b.html" : `<html>\n\n  //>-->//\n\n  includeFile.ifAny = 'script.server';\n  includeFile( 'c/**' );\n\n  includeFile.ifAny = 'style';\n  includeFile( 'c/**' );\n\n  return '';\n  //<--<//\n\n</html>\n`,
     "c" :
     {
       "c1.s" : `(function() {\n\nconsole.log( 'c1:before' );\n\n//\n//>-->//\nreturn \`// c1\`;\n//<--<//\n//\n\nconsole.log( 'c1:after' );\n\n});\n`,
@@ -65,11 +65,11 @@
   },
   "delays" :
   {
-    "a.js" : `(function() {\n\nconsole.log( 'a:before' );\n\n//\n//>-->//\n\ninclude( 'b/b1.js' );\ninclude( 'b/b2.js' );\ninclude( 'b/b3.js' );\n\nreturn \`// a\`\n//<--<//\n//\n\nconsole.log( 'a:after' );\n\n});\n`,
+    "a.js" : `(function() {\n\nconsole.log( 'a:before' );\n\n//\n//>-->//\n\nincludeFile( 'b/b1.js' );\nincludeFile( 'b/b2.js' );\nincludeFile( 'b/b3.js' );\n\nreturn \`// a\`\n//<--<//\n//\n\nconsole.log( 'a:after' );\n\n});\n`,
     "b" :
     {
       "b1.js" : `(function() {\n\nconsole.log( 'b1:before' );\n\n//\n//>-->//\nreturn _.timeOut( 1000,() => \`// b1\` );\n//<--<//\n//\n\nconsole.log( 'b1:after' );\n\n});\n`,
-      "b2.js" : `(function() {\n\nconsole.log( 'b2:before' );\n\n//\n//>-->//\n\ninclude( '../c/c1.js2' );\ninclude( '../c/c2.js2' );\ninclude( '../c/c3.js2' );\n\nreturn \`// b2\`\n//<--<//\n//\n\nconsole.log( 'b2:after' );\n\n});\n`,
+      "b2.js" : `(function() {\n\nconsole.log( 'b2:before' );\n\n//\n//>-->//\n\nincludeFile( '../c/c1.js2' );\nincludeFile( '../c/c2.js2' );\nincludeFile( '../c/c3.js2' );\n\nreturn \`// b2\`\n//<--<//\n//\n\nconsole.log( 'b2:after' );\n\n});\n`,
       "b3.js" : `(function() {\n\nconsole.log( 'b3:before' );\n\n//\n//>-->//\nreturn _.timeOut( 1000,() => \`// b3\` );\n//<--<//\n//\n\nconsole.log( 'b3:after' );\n\n});\n`
     },
     "c" :
@@ -81,8 +81,8 @@
   },
   "ends" :
   {
-    "a1.s" : `(function() {\n\nconsole.log( 'a1:before' );\n\n//\n//>-->//\n\ninclude({ ends : '.s', path : 'b/**' });\n\nreturn \`// a1\`;\n//<--<//\n//\n\nconsole.log( 'a1:after' );\n\n});\n`,
-    "a2.s" : `(function() {\n\nconsole.log( 'a2:before' );\n\n//\n//>-->//\n\ninclude({ ends : [ '.s', '.js' ], path : 'b/**' });\n\nreturn \`// a2\`;\n//<--<//\n//\n\nconsole.log( 'a2:after' );\n\n});\n`,
+    "a1.s" : `(function() {\n\nconsole.log( 'a1:before' );\n\n//\n//>-->//\n\nincludeFile({ ends : '.s', path : 'b/**' });\n\nreturn \`// a1\`;\n//<--<//\n//\n\nconsole.log( 'a1:after' );\n\n});\n`,
+    "a2.s" : `(function() {\n\nconsole.log( 'a2:before' );\n\n//\n//>-->//\n\nincludeFile({ ends : [ '.s', '.js' ], path : 'b/**' });\n\nreturn \`// a2\`;\n//<--<//\n//\n\nconsole.log( 'a2:after' );\n\n});\n`,
     "b" :
     {
       "b1.s" : `(function() {\n\nconsole.log( 'b1:before' );\n\n//\n//>-->//\nreturn \`// b1\`;\n//<--<//\n//\n\nconsole.log( 'b1:after' );\n\n});\n`,
@@ -93,27 +93,27 @@
   "f2" :
   {
     "f1.js" : `(function() {\n\ndebugger;\nconsole.log( 'f1:before' );\n\n//\n//>-->//\n\nvar result = '';\nfor( var i = 0 ; i < 9 ; i++ )\nresult += i + ' ';\n\nreturn \`console.log( '\${result}' );\`;\n\n//<--<//\n//\n\ndebugger;\nconsole.log( 'f1:after' );\n\n});\n`,
-    "f2.js" : `(function() {\n\ndebugger;\nconsole.log( 'f2:before' );\n\n//\n//>-->//\n\ninclude( 'f1.js' ); \n\nreturn '';\n//<--<//\n//\n\ndebugger;\nconsole.log( 'f2:after' );\n\n});\n`
+    "f2.js" : `(function() {\n\ndebugger;\nconsole.log( 'f2:before' );\n\n//\n//>-->//\n\nincludeFile( 'f1.js' ); \n\nreturn '';\n//<--<//\n//\n\ndebugger;\nconsole.log( 'f2:after' );\n\n});\n`
   },
   "f3" :
   {
     "a.js" : `(function() {\n\ndebugger;\nconsole.log( 'a:before' );\n\n//\n//>-->//\n\nreturn \`\nconsole.log( \${_.toStr( __file.relative )} );\n\`\n\n//<--<//\n//\n\ndebugger;\nconsole.log( 'a:after' );\n\n});\n`,
-    "b.js" : `(function() {\n\ndebugger;\nconsole.log( 'b:before' );\n\n//\n//>-->//\n\ninclude( 'a.js' );\ninclude( 'c.js' );\n\nreturn '// last line';\n//<--<//\n//\n\ndebugger;\nconsole.log( 'b:after' );\n\n});\n`,
+    "b.js" : `(function() {\n\ndebugger;\nconsole.log( 'b:before' );\n\n//\n//>-->//\n\nincludeFile( 'a.js' );\nincludeFile( 'c.js' );\n\nreturn '// last line';\n//<--<//\n//\n\ndebugger;\nconsole.log( 'b:after' );\n\n});\n`,
     "c.js" : `(function() {\n\ndebugger;\nconsole.log( 'c:before' );\n\n//\n//>-->//\n\nvar result = '';\nfor( var i = 0 ; i < 9 ; i++ )\nresult += i + ' ';\n\nreturn \`console.log( '\${result}' );\`;\n\n//<--<//\n//\n\ndebugger;\nconsole.log( 'c:after' );\n\n});\n`
   },
   "f3static" :
   {
     "a.js" : `(function() {\n\nconsole.log( 'a.js' );\n\n});\n`,
-    "b.js" : `(function() {\n\ndebugger;\nconsole.log( 'b:before' );\n\n//\n//>-->//\n\ninclude( 'a.js' );\ninclude( 'c.js' );\n\nreturn '// last line';\n//<--<//\n//\n\ndebugger;\nconsole.log( 'b:after' );\n\n});\n`,
+    "b.js" : `(function() {\n\ndebugger;\nconsole.log( 'b:before' );\n\n//\n//>-->//\n\nincludeFile( 'a.js' );\nincludeFile( 'c.js' );\n\nreturn '// last line';\n//<--<//\n//\n\ndebugger;\nconsole.log( 'b:after' );\n\n});\n`,
     "c.js" : `(function() {\n\nconsole.log( 'c.js' );\n\n});\n`
   },
   "includeError" :
   {
-    "a.js" : `(function() {\n\nconsole.log( 'a:before' );\n\n//\n//>-->//\n\ninclude( 'b/b1.js' );\ninclude( 'b/b2.js' );\ninclude( 'b/b3.js' );\n\nreturn \`// a\`\n//<--<//\n//\n\nconsole.log( 'a:after' );\n\n});\n`,
+    "a.js" : `(function() {\n\nconsole.log( 'a:before' );\n\n//\n//>-->//\n\nincludeFile( 'b/b1.js' );\nincludeFile( 'b/b2.js' );\nincludeFile( 'b/b3.js' );\n\nreturn \`// a\`\n//<--<//\n//\n\nconsole.log( 'a:after' );\n\n});\n`,
     "b" :
     {
       "b1.js" : `(function() {\n\nconsole.log( 'b1:before' );\n\n//\n//>-->//\nreturn \`// b1\`\n//<--<//\n//\n\nconsole.log( 'b1:after' );\n\n});\n`,
-      "b2.js" : `(function() {\n\nconsole.log( 'b2:before' );\n\n//\n//>-->//\n\ninclude( '../c/c1.js' );\ninclude( '../c/c2.js' );\ninclude( '../c/c3.js' );\n\nreturn \`// b2\`\n//<--<//\n//\n\nconsole.log( 'b2:after' );\n\n});\n`,
+      "b2.js" : `(function() {\n\nconsole.log( 'b2:before' );\n\n//\n//>-->//\n\nincludeFile( '../c/c1.js' );\nincludeFile( '../c/c2.js' );\nincludeFile( '../c/c3.js' );\n\nreturn \`// b2\`\n//<--<//\n//\n\nconsole.log( 'b2:after' );\n\n});\n`,
       "b3.js" : `(function() {\n\nconsole.log( 'b3:before' );\n\n//\n//>-->//\nreturn;\nreturn \`// b3\`;\n//<--<//\n//\n\nconsole.log( 'b3:after' );\n\n});\n`
     },
     "c" :
@@ -125,11 +125,11 @@
   },
   "normal" :
   {
-    "a.js" : `(function() {\n\nconsole.log( 'a:before' );\n\n//\n//>-->//\n\ninclude( 'b/b1.js' );\ninclude( 'b/b2.js' );\ninclude( 'b/b3.js' );\n\nreturn \`// a\`\n//<--<//\n//\n\nconsole.log( 'a:after' );\n\n});\n`,
+    "a.js" : `(function() {\n\nconsole.log( 'a:before' );\n\n//\n//>-->//\n\nincludeFile( 'b/b1.js' );\nincludeFile( 'b/b2.js' );\nincludeFile( 'b/b3.js' );\n\nreturn \`// a\`\n//<--<//\n//\n\nconsole.log( 'a:after' );\n\n});\n`,
     "b" :
     {
       "b1.js" : `(function() {\n\nconsole.log( 'b1:before' );\n\n//\n//>-->//\nreturn \`// b1\`\n//<--<//\n//\n\nconsole.log( 'b1:after' );\n\n});\n`,
-      "b2.js" : `(function() {\n\nconsole.log( 'b2:before' );\n\n//\n//>-->//\n\ninclude( '../c/c1.js' );\ninclude( '../c/c2.js' );\ninclude( '../c/c3.js' );\n\nreturn \`// b2\`\n//<--<//\n//\n\nconsole.log( 'b2:after' );\n\n});\n`,
+      "b2.js" : `(function() {\n\nconsole.log( 'b2:before' );\n\n//\n//>-->//\n\nincludeFile( '../c/c1.js' );\nincludeFile( '../c/c2.js' );\nincludeFile( '../c/c3.js' );\n\nreturn \`// b2\`\n//<--<//\n//\n\nconsole.log( 'b2:after' );\n\n});\n`,
       "b3.js" : `(function() {\n\nconsole.log( 'b3:before' );\n\n//\n//>-->//\nreturn \`// b3\`\n//<--<//\n//\n\nconsole.log( 'b3:after' );\n\n});\n`
     },
     "c" :
@@ -142,12 +142,12 @@
   "normal2" :
   {
     "a1.js" : `(function() {\n\nconsole.log( 'a1:before' );\n\n//\n//>-->//\nreturn \`// a1\`\n//<--<//\n//\n\nconsole.log( 'a1:after' );\n\n});\n`,
-    "a2.js" : `(function() {\n\nconsole.log( 'a2:before' );\n\n//\n//>-->//\n\ninclude( 'a1.js' );\n\nreturn \`// a2\`\n//<--<//\n//\n\nconsole.log( 'a2:after' );\n\n});\n`,
-    "b.js" : `(function() {\n\nconsole.log( 'b:before' );\n\n//\n//>-->//\n\ninclude( 'a2.js' );\n\ninclude( 'c/c1.js' );\ninclude( 'c/c2.js' );\ninclude( 'c/c3.js' );\n\nreturn \`// b\`\n//<--<//\n//\n\nconsole.log( 'b:after' );\n\n});\n`,
+    "a2.js" : `(function() {\n\nconsole.log( 'a2:before' );\n\n//\n//>-->//\n\nincludeFile( 'a1.js' );\n\nreturn \`// a2\`\n//<--<//\n//\n\nconsole.log( 'a2:after' );\n\n});\n`,
+    "b.js" : `(function() {\n\nconsole.log( 'b:before' );\n\n//\n//>-->//\n\nincludeFile( 'a2.js' );\n\nincludeFile( 'c/c1.js' );\nincludeFile( 'c/c2.js' );\nincludeFile( 'c/c3.js' );\n\nreturn \`// b\`\n//<--<//\n//\n\nconsole.log( 'b:after' );\n\n});\n`,
     "c" :
     {
       "c1.js" : `(function() {\n\nconsole.log( 'c1:before' );\n\n//\n//>-->//\nreturn \`// c1\`\n//<--<//\n//\n\nconsole.log( 'c1:after' );\n\n});\n`,
-      "c2.js" : `(function() {\n\nconsole.log( 'c2:before' );\n\n//\n//>-->//\n\ninclude( '../d/d1.js' );\ninclude( '../d/d2.js' );\ninclude( '../d/d3.js' );\n\nreturn \`// c2\`\n//<--<//\n//\n\nconsole.log( 'c2:after' );\n\n});\n`,
+      "c2.js" : `(function() {\n\nconsole.log( 'c2:before' );\n\n//\n//>-->//\n\nincludeFile( '../d/d1.js' );\nincludeFile( '../d/d2.js' );\nincludeFile( '../d/d3.js' );\n\nreturn \`// c2\`\n//<--<//\n//\n\nconsole.log( 'c2:after' );\n\n});\n`,
       "c3.js" : `(function() {\n\nconsole.log( 'c3:before' );\n\n//\n//>-->//\nreturn \`// c3\`\n//<--<//\n//\n\nconsole.log( 'c3:after' );\n\n});\n`
     },
     "d" :
@@ -159,7 +159,7 @@
   },
   "normalSimplified" :
   {
-    "a.js" : `(function() {\n\nconsole.log( 'a:before' );\n\n//\n//>-->//\n\ninclude( 'b/b1.js' );\ninclude( 'b/b2.js' );\ninclude( 'b/b3.js' );\n\nreturn \`// a\`\n//<--<//\n//\n\nconsole.log( 'a:after' );\n\n});\n`,
+    "a.js" : `(function() {\n\nconsole.log( 'a:before' );\n\n//\n//>-->//\n\nincludeFile( 'b/b1.js' );\nincludeFile( 'b/b2.js' );\nincludeFile( 'b/b3.js' );\n\nreturn \`// a\`\n//<--<//\n//\n\nconsole.log( 'a:after' );\n\n});\n`,
     "b" :
     {
       "b1.js" : `(function() {\n\nconsole.log( 'b1:before' );\n\n//\n//>-->//\nreturn \`// b1\`\n//<--<//\n//\n\nconsole.log( 'b1:after' );\n\n});\n`,
@@ -170,7 +170,7 @@
   "rooter" :
   {
     "a.js" : `(function() {\n\nconsole.log( 'a.js' );\n\n});\n`,
-    "b.js" : `(function() {\n\ndebugger;\nconsole.log( 'b:before' );\n\n//\n//>-->//\n\ninclude( 'folder/d.js' );\ninclude( '/folder/e.js' );\n\nreturn '// last line';\n//<--<//\n//\n\ndebugger;\nconsole.log( 'b:after' );\n\n});\n`,
+    "b.js" : `(function() {\n\ndebugger;\nconsole.log( 'b:before' );\n\n//\n//>-->//\n\nincludeFile( 'folder/d.js' );\nincludeFile( '/folder/e.js' );\n\nreturn '// last line';\n//<--<//\n//\n\ndebugger;\nconsole.log( 'b:after' );\n\n});\n`,
     "c.js" : `(function() {\n\nconsole.log( 'c.js' );\n\n});\n`,
     "folder" :
     {
@@ -180,10 +180,10 @@
   },
   "severalSameIncludes" :
   {
-    "a.js" : `(function() {\n\nconsole.log( 'a:before' );\n\n//\n//>-->//\n\ninclude( 'b/b1.js' );\ninclude( 'b/b2.js' );\ninclude( 'b/b3.js' );\ninclude( 'b/b2.js' );\n\nreturn \`// a\`\n//<--<//\n//\n\nconsole.log( 'a:after' );\n\n});\n`,
+    "a.js" : `(function() {\n\nconsole.log( 'a:before' );\n\n//\n//>-->//\n\nincludeFile( 'b/b1.js' );\nincludeFile( 'b/b2.js' );\nincludeFile( 'b/b3.js' );\nincludeFile( 'b/b2.js' );\n\nreturn \`// a\`\n//<--<//\n//\n\nconsole.log( 'a:after' );\n\n});\n`,
     "b" :
     {
-      "b1.js" : `(function() {\n\nconsole.log( 'b1:before' );\n\n//\n//>-->//\n\ninclude( 'b3.js' );\ninclude( 'b3.js' );\n\nreturn \`// b1\`\n//<--<//\n//\n\nconsole.log( 'b1:after' );\n\n});\n`,
+      "b1.js" : `(function() {\n\nconsole.log( 'b1:before' );\n\n//\n//>-->//\n\nincludeFile( 'b3.js' );\nincludeFile( 'b3.js' );\n\nreturn \`// b1\`\n//<--<//\n//\n\nconsole.log( 'b1:after' );\n\n});\n`,
       "b2.js" : `(function() {\n\nconsole.log( 'b2:before' );\n\n//\n//>-->//\nreturn \`// b2\`\n//<--<//\n//\n\nconsole.log( 'b2:after' );\n\n});\n`,
       "b3.js" : `(function() {\n\nconsole.log( 'b3:before' );\n\n//\n//>-->//\nreturn \`// b3\`\n//<--<//\n//\n\nconsole.log( 'b3:after' );\n\n});\n`
     }
