@@ -2,7 +2,7 @@
   "name": "wfileexecutor",
   "version": "0.3.39",
   "description": "Exectue files",
-  "author": "Kostiantyn Wandalen <wtory.net@domainsbyproxy.com>",
+  "author": "Kostiantyn Wandalen <wanalen@willbe.so>",
   "license": "MIT",
   "main": "staging/dwtools/amid/executor/FileExecutor.s",
   "files": [
