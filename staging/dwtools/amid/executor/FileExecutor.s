@@ -1,6 +1,6 @@
 ( function _FileExecutor_s_() {
 
-'use strict'; /**/
+'use strict';
 
 if( typeof module !== 'undefined' )
 {
@@ -79,7 +79,7 @@ function init( o )
   self.fileProvider = new _.FileFilter.Archive({ archive : self.archive });
 
   // if( self.fileProvider === null )
-  // self.fileProvider = new _.FileProvider.Default/**/();
+  // self.fileProvider = new _.FileProvider.Default/**//**//**//**/();
 
   return self;
 }
