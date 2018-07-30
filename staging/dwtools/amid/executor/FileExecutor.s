@@ -56,7 +56,7 @@ var Self = function wFileExecutor( o )
   return Self.prototype.init.apply( this,arguments );
 }
 
-Self.nameShort = 'FileExecutor';
+Self.shortName = 'FileExecutor';
 
 //
 
@@ -1996,7 +1996,7 @@ chunkFrameFor.defaults = ChunkFrame;
 chunkExecute.defaults = ChunkFrame;
 
 // --
-// relationships
+// relations
 // --
 
 var fileCategorizersSymbol = Symbol.for( 'fileCategorizers' );
@@ -2137,7 +2137,7 @@ var Proto =
   includesUsedInherit : includesUsedInherit,
 
 
-  /* relationships */
+  /* relations */
 
   constructor : Self,
   Composes : Composes,
@@ -2167,6 +2167,6 @@ _.Copyable.mixin( Self );
 
 if( typeof module !== 'undefined' && module !== null )
 module[ 'exports' ] = Self;
-_global_[ Self.name ] = _[ Self.nameShort ] = Self;
+_global_[ Self.name ] = _[ Self.shortName ] = Self;
 
 })();
