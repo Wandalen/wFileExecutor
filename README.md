@@ -8,3 +8,4 @@ Experimental. Class to execute a collection of templates with inlined JavaScript
 npm install
 node sample/Sample.s
 ```
+
