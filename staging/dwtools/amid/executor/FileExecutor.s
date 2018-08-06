@@ -2,6 +2,14 @@
 
 'use strict';
 
+/**
+  @module Tools/amid/Executor - Experimental. Class to execute a collection of templates with inlined JavaScript code to instantiate it. A collection of templates could be co-dependent in which case FileExecutor deduce dependencies and correct order of templates executions.
+*/
+
+/**
+ * @file FileExecutor.s.
+ */
+
 if( typeof module !== 'undefined' )
 {
 
@@ -107,7 +115,7 @@ function scriptExecute( o )
   if( !o.language )
   o.language = languageFromFilePath( o.filePath );
   if( !o.name )
-  o.name = _.pathName( o.filePath );
+  o.name = _.path.pathName( o.filePath );
 
   if( !o.language && o.defaultLanguage )
   o.language = o.defaultLanguage;
@@ -261,7 +269,7 @@ function coffeeExecute( o )
   _.assert( arguments.length === 1, 'expects single argument' );
 
   if( !o.name )
-  o.name = o.filePath ? _.pathName( o.filePath ) : 'unknown';
+  o.name = o.filePath ? _.path.pathName( o.filePath ) : 'unknown';
 
   var optionsForCompile = _.mapExtend( null,o );
   o.filePath = self.fileProvider.pathNativize( o.filePath );
@@ -393,8 +401,8 @@ function _includeAct( o )
 
   _.routineOptions( _includeAct,o );
   _.assert( arguments.length === 1, 'expects single argument' );
-  _.assert( session );
-  _.assert( o.pathTranslator );
+  _.assert( _.objectIs( session ) );
+  _.assert( _.objectIs( o.pathTranslator ) );
 
   if( self.verbosity > 2 )
   logger.log( '_includeAct.begin',o.path );
@@ -414,7 +422,7 @@ function _includeAct( o )
   if( o.pathTranslator.virtualFor( o.path || '.' ) === '/index/**' )
   debugger;
 
-  if( !o.withManual && _.pathIsGlob( o.path ) )
+  if( !o.withManual && _.path.pathIsGlob( o.path ) )
   {
     _.RegexpObject.shrink( maskTerminal,wRegexpObject({ excludeAny : /\.(manual)($|\.|\/)/ }) );
   }
@@ -563,8 +571,8 @@ function _includeFromChunk( bound,o,o2 )
   _.assert( _.consequenceIs( o.syncExternal ) );
   _.assert( o2 === undefined || _.objectIs( o2 ) );
   _.assert( arguments.length === 2 || arguments.length === 3, 'expects two or three arguments' );
-  _.assert( o.pathTranslator );
-  _.assert( session );
+  _.assert( _.objectIs( o.pathTranslator ) );
+  _.assert( _.objectIs( session ) );
   _.assert( _.construction.isLike( included,IncludeFrame ) );
 
   _.assert( included.files.length === included.fileFrames.length );
@@ -613,7 +621,7 @@ function include( o )
   if( !o.pathTranslator )
   {
     o.pathTranslator = self.pathTranslator.clone();
-    var realRootPath = _.strIs( o.path ) ? _.pathDir( o.path ) : _.pathCommon( o.path );
+    var realRootPath = _.strIs( o.path ) ? _.path.pathDir( o.path ) : _.path.pathCommon( o.path );
     o.pathTranslator.realRootPath = realRootPath;
   }
 
@@ -680,9 +688,9 @@ function filesExecute( o )
   _.routineOptions( filesExecute,o );
   _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( _.construction.isLike( o.includeFrame,IncludeFrame ) );
-  _.assert( o.includeFrame );
-  _.assert( o.includeFrame.files );
-  _.assert( session );
+  _.assert( _.objectIs( o.includeFrame ) );
+  _.assert( _.arrayIs( o.includeFrame.files ) );
+  _.assert( _.objectIs( session ) );
 
   /* prepare */
 
@@ -740,7 +748,7 @@ function fileExecute( o )
   _.assert( fileFrame.includeFrames.indexOf( includeFrame ) !== -1,'expects same includeFrame' );
   _.routineOptions( fileExecute,o );
   _.assert( arguments.length === 1, 'expects single argument' );
-  _.assert( session );
+  _.assert( _.objectIs( session ) );
   _.assert( _.construction.isLike( fileFrame,FileFrame ) );
 
   if( !file.stat )
@@ -1012,7 +1020,7 @@ function fileFrameFor( fileFrame )
   var session = includeFrame.session;
 
   _.assert( arguments.length === 1, 'expects single argument' );
-  _.assert( session );
+  _.assert( _.objectIs( session ) );
   _.assert( includeFrame );
 
   if( self.verbosity > 4 )
@@ -1155,7 +1163,7 @@ function _chunkExecute( o )
   var self = this;
   var session = o.fileFrame.includeFrame.session;
 
-  _.assert( session );
+  _.assert( _.objectIs( session ) );
   _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( _.strIs( o.chunk.text ) || _.strIs( o.chunk.code ) );
   _.assert( _.construction.isLike( o,ChunkFrame ) );
@@ -1789,7 +1797,7 @@ function linkFormatExplicit( o )
   debugger;
 
   if( !o.filePath )
-  o.filePath = _.pathJoin( o.formatter.frame.fileFrame.file.dir, o.formatter.frame.fileFrame.file.name + '.manual.js' );
+  o.filePath = _.path.pathJoin( o.formatter.frame.fileFrame.file.dir, o.formatter.frame.fileFrame.file.name + '.manual.js' );
   var joinedFile = o.formatter.frame.fileFrame.file.clone( o.filePath );
 
   var fileFrame = self.fileFrameFor
@@ -2004,7 +2012,7 @@ var fileCategorizersSymbol = Symbol.for( 'fileCategorizers' );
 var Composes =
 {
 
-  pathTranslator : new wPathTranslator({ realCurrentDirPath : _.pathRefine( __dirname ) }),
+  pathTranslator : new wPathTranslator({ realCurrentDirPath : _.path.pathRefine( __dirname ) }),
 
   warnBigFiles : 1 << 19,
   debug : 0,
@@ -2077,7 +2085,6 @@ var Proto =
   coffeeCompile : coffeeCompile,
   coffeeExecute : coffeeExecute,
 
-
   /* include */
 
   sessionMake : sessionMake,
@@ -2089,7 +2096,6 @@ var Proto =
   _includeFromChunk : _includeFromChunk,
   include : include,
 
-
   /* file */
 
   filesExecute : filesExecute,
@@ -2099,7 +2105,6 @@ var Proto =
 
   filesFilter : filesFilter,
   fileFrameFor : fileFrameFor,
-
 
   /* chunk */
 
@@ -2111,7 +2116,6 @@ var Proto =
   _chunksSplit : _chunksSplit,
   _chunkConcat : _chunkConcat,
   _chunkFormat : _chunkFormat,
-
 
   /* etc */
 
@@ -2130,16 +2134,13 @@ var Proto =
   _fileCategorizersSet : _fileCategorizersSet,
   _fileCategorizersChanged : _fileCategorizersChanged,
 
-
   /* used */
 
   filesUsedGet : filesUsedGet,
   includesUsedInherit : includesUsedInherit,
 
-
   /* relations */
 
-  /* constructor * : * Self, */
   Composes : Composes,
   Aggregates : Aggregates,
   Associates : Associates,
