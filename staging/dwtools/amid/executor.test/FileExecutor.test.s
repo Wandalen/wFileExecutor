@@ -44,7 +44,7 @@ function onSuiteBegin()
 {
   var self = this;
 
-  self.templateTreePath = _.path.pathJoin( __dirname, './TemplateTree.debug.s' );
+  self.templateTreePath = _.path.join( __dirname, './TemplateTree.debug.s' );
   self.templateTree = _.fileProvider.fileReadJs( self.templateTreePath );
   self.templateTreeProvider = _.FileProvider.Extract({ filesTree : self.templateTree, protocols : [ 'extract' ] });
 
@@ -295,7 +295,7 @@ samples.chunkFromatter =
   expected :
   {
     "a.js" : "(function() {\n\nconsole.log( 'a:before' );\n\n//\n(function() {\n\nconsole.log( 'c1:before' );\n\n//\n// c1\n//\n\nconsole.log( 'c1:after' );\n\n});\n(function() {\n\nconsole.log( 'c3:before' );\n\n//\n// c3\n//\n\nconsole.log( 'c3:after' );\n\n});\nvar style = `\\n// c4\\n\\nbody > div\\n{\\n  font-size : 2em;\\n}\\n`;var style = `\\n// c5\\n\\nbody > div\\n{\\n  font-size : 2em;\\n}\\n`;// a\n//\n\nconsole.log( 'a:after' );\n\n});\n",
-    "b.html" : `<html>\n\n  \n  /*\n  script\n  ${_.path.pathJoin( __dirname, 'template.tmp/chunkFormatter/c/c1.s')}\n  ${_.path.pathJoin( __dirname, 'template.tmp/chunkFormatter/c/c3.ss')}\n  */\n  \n  /*\n  style\n  ${_.path.pathJoin( __dirname, 'template.tmp/chunkFormatter/c/c4.less')}\n  ${_.path.pathJoin( __dirname, 'template.tmp/chunkFormatter/c/c5.less')}\n  */\n  <script src=\"/b.manual.js\" type=\"text/javascript\" ></script>\n\n</html>\n`,
+    "b.html" : `<html>\n\n  \n  /*\n  script\n  ${_.path.join( __dirname, 'template.tmp/chunkFormatter/c/c1.s')}\n  ${_.path.join( __dirname, 'template.tmp/chunkFormatter/c/c3.ss')}\n  */\n  \n  /*\n  style\n  ${_.path.join( __dirname, 'template.tmp/chunkFormatter/c/c4.less')}\n  ${_.path.join( __dirname, 'template.tmp/chunkFormatter/c/c5.less')}\n  */\n  <script src=\"/b.manual.js\" type=\"text/javascript\" ></script>\n\n</html>\n`,
     "c" :
     {
       "c1.s" : "(function() {\n\nconsole.log( 'c1:before' );\n\n//\n// c1\n//\n\nconsole.log( 'c1:after' );\n\n});\n",
@@ -509,11 +509,11 @@ function executorMakeFor( path )
 
   _global_.asyncFormatterCallCounter = 0;
 
-  context.dstPath = _.path.pathJoin( __dirname,'./template.tmp' );
-  context.srcPath = _.path.pathJoin( __dirname,'./template.test' );
+  context.dstPath = _.path.join( __dirname,'./template.tmp' );
+  context.srcPath = _.path.join( __dirname,'./template.test' );
 
-  var dstPath = _.path.pathsJoin( context.dstPath, _.path.pathSplit( path )[ 0 ] );
-  var srcPath = _.path.pathsJoin( context.srcPath, _.path.pathSplit( path )[ 0 ] );
+  var dstPath = _.path.pathsJoin( context.dstPath, _.path.split( path )[ 0 ] );
+  var srcPath = _.path.pathsJoin( context.srcPath, _.path.split( path )[ 0 ] );
 
   context.templateTreeProvider.readToProvider
   ({
@@ -590,7 +590,7 @@ function executorMakeFor( path )
       format : function( o )
       {
         debugger;
-        o.frame.result = '<script src="' + o.frame.user.fileFrame.pathTranslator.virtualFor( o.frame.used.fileFrame.file.absolute ) + '" type="text/javascript" ></script>\n';
+        o.frame.result = '<script src="' + o.frame.user.fileFrame.translator.virtualFor( o.frame.used.fileFrame.file.absolute ) + '" type="text/javascript" ></script>\n';
       },
     },
     {
@@ -598,7 +598,7 @@ function executorMakeFor( path )
       ifNone : [ 'release' ],
       format : function( o )
       {
-        o.frame.result = '<link href="' + o.frame.user.fileFrame.pathTranslator.virtualFor( o.frame.used.fileFrame.file.absolute ) + '" rel="stylesheet" type="text/css" >\n';
+        o.frame.result = '<link href="' + o.frame.user.fileFrame.translator.virtualFor( o.frame.used.fileFrame.file.absolute ) + '" rel="stylesheet" type="text/css" >\n';
       },
     },
     {
@@ -664,7 +664,7 @@ function executorMakeFor( path )
       format : function( o )
       {
 
-        var joinedFilePath = _.path.pathJoin( o.frame.fileFrame.file.dir,o.frame.fileFrame.file.name + '.manual.js' );
+        var joinedFilePath = _.path.join( o.frame.fileFrame.file.dir,o.frame.fileFrame.file.name + '.manual.js' );
         // var joinedFile = o.frame.fileFrame.file.clone( joinedFilePath );
 
         var paths = _.entitySelect( o.usedFileFrames,'*.file.absolute' );
@@ -906,8 +906,8 @@ function samplesTest( test )
     var checkPath = path;
     if( sample.checkPath )
     checkPath = _.path.pathsJoin( context.dstPath, sample.checkPath );
-    var rootPath = sample.rootPath ? _.path.pathJoin( context.dstPath, sample.rootPath ) : undefined;
-    var virtualCurrentDirPath = sample.virtualCurrentDirPath ? _.path.pathJoin( context.dstPath, sample.virtualCurrentDirPath ) : undefined;
+    var rootPath = sample.rootPath ? _.path.join( context.dstPath, sample.rootPath ) : undefined;
+    var virtualCurrentDirPath = sample.virtualCurrentDirPath ? _.path.join( context.dstPath, sample.virtualCurrentDirPath ) : undefined;
 
     if( sample.throwingError )
     return test.shouldThrowErrorAsync( function()
@@ -923,7 +923,7 @@ function samplesTest( test )
     }).chokeThen();
     else
     {
-      var pathTranslator;
+      var translator;
       executed = context.executor.include
       ({
         path : path,

@@ -115,7 +115,7 @@ function scriptExecute( o )
   if( !o.language )
   o.language = languageFromFilePath( o.filePath );
   if( !o.name )
-  o.name = _.path.pathName( o.filePath );
+  o.name = _.path.name( o.filePath );
 
   if( !o.language && o.defaultLanguage )
   o.language = o.defaultLanguage;
@@ -269,10 +269,10 @@ function coffeeExecute( o )
   _.assert( arguments.length === 1, 'expects single argument' );
 
   if( !o.name )
-  o.name = o.filePath ? _.path.pathName( o.filePath ) : 'unknown';
+  o.name = o.filePath ? _.path.name( o.filePath ) : 'unknown';
 
   var optionsForCompile = _.mapExtend( null,o );
-  o.filePath = self.fileProvider.pathNativize( o.filePath );
+  o.filePath = self.fileProvider.nativize( o.filePath );
 
   logger.log( 'coffeeExecute',o.filePath );
 
@@ -402,7 +402,7 @@ function _includeAct( o )
   _.routineOptions( _includeAct,o );
   _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( _.objectIs( session ) );
-  _.assert( _.objectIs( o.pathTranslator ) );
+  _.assert( _.objectIs( o.translator ) );
 
   if( self.verbosity > 2 )
   logger.log( '_includeAct.begin',o.path );
@@ -419,10 +419,10 @@ function _includeAct( o )
 
   maskTerminal = _.RegexpObject.shrink( maskTerminal,maskTerminal2 );
 
-  if( o.pathTranslator.virtualFor( o.path || '.' ) === '/index/**' )
+  if( o.translator.virtualFor( o.path || '.' ) === '/index/**' )
   debugger;
 
-  if( !o.withManual && _.path.pathIsGlob( o.path ) )
+  if( !o.withManual && _.path.isGlob( o.path ) )
   {
     _.RegexpObject.shrink( maskTerminal,wRegexpObject({ excludeAny : /\.(manual)($|\.|\/)/ }) );
   }
@@ -442,7 +442,7 @@ function _includeAct( o )
   _.assert( _.construction.isLike( includeFrame,IncludeFrame ) );
 
   includeFrame.userChunkFrame = o.userChunkFrame;
-  includeFrame.pathTranslator = o.pathTranslator.clone();
+  includeFrame.translator = o.translator.clone();
   includeFrame.includeOptions = o;
   includeFrame.resolveOptions = o.resolveOptions || Object.create( null );
 
@@ -452,9 +452,9 @@ function _includeAct( o )
 
   var resolveOptions =
   {
-    globPath : includeFrame.pathTranslator.virtualFor( o.path || '.' ),
+    globPath : includeFrame.translator.virtualFor( o.path || '.' ),
     ends : o.ends,
-    pathTranslator : includeFrame.pathTranslator,
+    translator : includeFrame.translator,
     maskTerminal : maskTerminal,
     outputFormat : 'record',
     orderingExclusion : [ [ '.external','' ], [ '.pre', '', '.post' ] ],
@@ -530,7 +530,7 @@ _includeAct.defaults =
   ifNone : null,
   onIncludeFromat : null,
   session : null,
-  pathTranslator : null,
+  translator : null,
   userChunkFrame : null,
   resolveOptions : null,
   syncExternal : null,
@@ -562,7 +562,7 @@ function _includeFromChunk( bound,o,o2 )
   _.mapSupplement( o,o3 );
 
   o.session = session;
-  o.pathTranslator = chunkFrame.fileFrame.pathTranslator;
+  o.translator = chunkFrame.fileFrame.translator;
   o.syncExternal = chunkFrame.syncExternal;
   o.userChunkFrame = chunkFrame;
 
@@ -571,7 +571,7 @@ function _includeFromChunk( bound,o,o2 )
   _.assert( _.consequenceIs( o.syncExternal ) );
   _.assert( o2 === undefined || _.objectIs( o2 ) );
   _.assert( arguments.length === 2 || arguments.length === 3, 'expects two or three arguments' );
-  _.assert( _.objectIs( o.pathTranslator ) );
+  _.assert( _.objectIs( o.translator ) );
   _.assert( _.objectIs( session ) );
   _.assert( _.construction.isLike( included,IncludeFrame ) );
 
@@ -618,21 +618,21 @@ function include( o )
   _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( self.session === null,'attempt to relaunch executor during execution' );
 
-  if( !o.pathTranslator )
+  if( !o.translator )
   {
-    o.pathTranslator = self.pathTranslator.clone();
-    var realRootPath = _.strIs( o.path ) ? _.path.pathDir( o.path ) : _.path.pathCommon( o.path );
-    o.pathTranslator.realRootPath = realRootPath;
+    o.translator = self.translator.clone();
+    var realRootPath = _.strIs( o.path ) ? _.path.dir( o.path ) : _.path.common( o.path );
+    o.translator.realRootPath = realRootPath;
   }
 
   if( o.rootPath )
   {
-    o.pathTranslator.realRootPath = o.rootPath;
+    o.translator.realRootPath = o.rootPath;
   }
 
   if( o.virtualCurrentDirPath )
   {
-    o.pathTranslator.virtualCurrentDirPath = o.virtualCurrentDirPath;
+    o.translator.virtualCurrentDirPath = o.virtualCurrentDirPath;
   }
 
   if( !o.session )
@@ -1046,8 +1046,8 @@ function fileFrameFor( fileFrame )
   session.fileFrames.push( fileFrame );
 
   fileFrame.includeFrames.push( includeFrame );
-  fileFrame.pathTranslator = includeFrame.pathTranslator.clone();
-  fileFrame.pathTranslator.realCurrentDirPath = fileFrame.file.dir;
+  fileFrame.translator = includeFrame.translator.clone();
+  fileFrame.translator.realCurrentDirPath = fileFrame.file.dir;
 
   if( fileFrame.context === null )
   fileFrame.context = includeFrame.context;
@@ -1797,7 +1797,7 @@ function linkFormatExplicit( o )
   debugger;
 
   if( !o.filePath )
-  o.filePath = _.path.pathJoin( o.formatter.frame.fileFrame.file.dir, o.formatter.frame.fileFrame.file.name + '.manual.js' );
+  o.filePath = _.path.join( o.formatter.frame.fileFrame.file.dir, o.formatter.frame.fileFrame.file.name + '.manual.js' );
   var joinedFile = o.formatter.frame.fileFrame.file.clone( o.filePath );
 
   var fileFrame = self.fileFrameFor
@@ -1930,7 +1930,7 @@ var IncludeFrame = _.like()
 
   includeOptions : null,
   consequence : null,
-  pathTranslator : null,
+  translator : null,
 
   userChunkFrame : null,
   userIncludeFrame : null,
@@ -1956,7 +1956,7 @@ var FileFrame = _.like()
   includeFrames : [],
 
   file : null,
-  pathTranslator : null,
+  translator : null,
 
   usedIncludeFrames : [],
   usedFiles : null,
@@ -2012,7 +2012,7 @@ var fileCategorizersSymbol = Symbol.for( 'fileCategorizers' );
 var Composes =
 {
 
-  pathTranslator : new wPathTranslator({ realCurrentDirPath : _.path.pathRefine( __dirname ) }),
+  translator : new wPathTranslator({ realCurrentDirPath : _.path.refine( __dirname ) }),
 
   warnBigFiles : 1 << 19,
   debug : 0,
@@ -2025,9 +2025,9 @@ var Composes =
 var Aggregates =
 {
 
-  arbitraryCategorizers : Object.create( null ),
-  linkCategorizers : Object.create( null ),
-  fileCategorizers : Object.create( null ),
+  arbitraryCategorizers : _.define.own( {} ),
+  linkCategorizers : _.define.own( {} ),
+  fileCategorizers : _.define.own( {} ),
 
   linkFormatters : [],
   chunkFormatters : [],
@@ -2038,13 +2038,13 @@ var Associates =
 {
   fileProvider : null,
   archive : null,
-  context : Object.create( null ),
+  context : _.define.own( {} ),
 }
 
 var Restricts =
 {
   session : null,
-  includeFrames : [],
+  includeFrames : : _.define.own( [] ),,
 }
 
 var Statics =
@@ -2153,7 +2153,7 @@ var Proto =
 
 //
 
-_.classMake
+_.classDeclare
 ({
   cls : Self,
   parent : Parent,
