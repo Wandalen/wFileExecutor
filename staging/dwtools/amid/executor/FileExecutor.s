@@ -56,12 +56,7 @@ var _ = _global_.wTools;
 var Parent = null;
 var Self = function wFileExecutor( o )
 {
-  if( !( this instanceof Self ) )
-  if( o instanceof Self )
-  return o;
-  else
-  return new( _.routineJoin( Self, Self, arguments ) );
-  return Self.prototype.init.apply( this,arguments );
+  return _.instanceConstructor( Self, this, arguments );
 }
 
 Self.shortName = 'FileExecutor';
@@ -2012,7 +2007,7 @@ var fileCategorizersSymbol = Symbol.for( 'fileCategorizers' );
 var Composes =
 {
 
-  translator : new wPathTranslator({ realCurrentDirPath : _.path.refine( __dirname ) }),
+  translator : _.define.own( new wPathTranslator({ realCurrentDirPath : _.path.refine( __dirname ) }) ),
 
   warnBigFiles : 1 << 19,
   debug : 0,
@@ -2029,8 +2024,8 @@ var Aggregates =
   linkCategorizers : _.define.own( {} ),
   fileCategorizers : _.define.own( {} ),
 
-  linkFormatters : [],
-  chunkFormatters : [],
+  linkFormatters : _.define.own( [] ),
+  chunkFormatters : _.define.own( [] ),
 
 }
 
@@ -2044,7 +2039,7 @@ var Associates =
 var Restricts =
 {
   session : null,
-  includeFrames : : _.define.own( [] ),,
+  includeFrames : _.define.own( [] ),
 }
 
 var Statics =
