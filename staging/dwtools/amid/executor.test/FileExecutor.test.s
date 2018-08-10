@@ -985,7 +985,7 @@ function samplesTest( test )
 samplesTest.timeOut = 60000;
 
 // --
-// define class
+// declare
 // --
 
 var Self =
