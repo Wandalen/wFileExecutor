@@ -65,48 +65,6 @@ function onSuiteEnd()
 
 var samples = {}
 
-// samples.singleFile =
-// {
-//   description : 'single file',
-//   path : 'f1.js',
-//   expected :
-//   {
-//     "." : "(function() {\n\ndebugger;\nconsole.log( 'f1:before' );\n\n//\nconsole.log( '0 1 2 3 4 5 6 7 8 ' );\n//\n\ndebugger;\nconsole.log( 'f1:after' );\n\n});\n"
-//   },
-// }
-//
-// samples.singleFileWithSingleLine =
-// {
-//   description : 'single file with single line',
-//   path : 'f2.js',
-//   expected :
-//   {
-//     "." : "(function() {\n\ndebugger;\nconsole.log( 'f2:before' );\n\n/**/console.log( 'x' );/**/\n\ndebugger;\nconsole.log( 'f2:after' );\n\n});\n"
-//   },
-// }
-//
-// samples.environment =
-// {
-//   description : 'environment variables',
-//   path : 'env.js',
-//   expected :
-//   {
-//     "." : "(function() {\n\ndebugger;\nconsole.log( 'env:before' );\n\n//\n\nconsole.log( '__dirname : /pro/web/Dave/app/builder/include/dwtools/amid/executor/template.tmp' );\nconsole.log( '__filename : /pro/web/Dave/app/builder/include/dwtools/amid/executor/template.tmp/env.js' );\nconsole.log( \"./env.js\" );\nconsole.log( \"./env.js\" );\nconsole.log( \"./env.js\" );\n\n//\n\ndebugger;\nconsole.log( 'env:after' );\n\n});\n"
-//   },
-// }
-//
-// samples.environmentWithVirtualRoot =
-// {
-//   description : 'environment variables with virtual root',
-//   path : 'env.js',
-//   rootPath : '..',
-//   virtualCurrentDirPath : '/',
-//   expected :
-//   {
-//     "." : "(function() {\n\ndebugger;\nconsole.log( 'env:before' );\n\n//\n\nconsole.log( '__dirname : /pro/web/Dave/app/builder/include/dwtools/amid/executor/template.tmp' );\nconsole.log( '__filename : /pro/web/Dave/app/builder/include/dwtools/amid/executor/template.tmp/env.js' );\nconsole.log( \"./template.tmp/env.js\" );\nconsole.log( \"./template.tmp/env.js\" );\nconsole.log( \"./template.tmp/env.js\" );\n\n//\n\ndebugger;\nconsole.log( 'env:after' );\n\n});\n"
-//   },
-// }
-
 samples.inlcudeOne =
 {
   description : 'include one file from another',
@@ -955,7 +913,7 @@ function samplesTest( test )
       if( sample.asyncFormatterCallCounter !== undefined )
       test.identical( _global_.asyncFormatterCallCounter , sample.asyncFormatterCallCounter );
 
-      var got = _.FileProvider.Extract.filesTreeRead({ globIn : checkPath, srcProvider : context.fileProvider });
+      var got = _.FileProvider.Extract.filesTreeRead({ glob : checkPath, srcProvider : context.fileProvider });
 
       if( _.strIs( got ) )
       {
