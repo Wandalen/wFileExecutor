@@ -1016,7 +1016,7 @@ function fileFrameFor( fileFrame )
 
   _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( _.objectIs( session ) );
-  _.assert( includeFrame );
+  _.assert( _.objectIs( includeFrame ) );
 
   if( self.verbosity > 4 )
   logger.log( 'fileFrameFor',fileFrame.file.absolute );
