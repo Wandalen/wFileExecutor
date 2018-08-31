@@ -913,7 +913,14 @@ function samplesTest( test )
       if( sample.asyncFormatterCallCounter !== undefined )
       test.identical( _global_.asyncFormatterCallCounter , sample.asyncFormatterCallCounter );
 
-      var got = _.FileProvider.Extract.filesTreeRead({ glob : checkPath, srcProvider : context.fileProvider });
+      let filesTreeReadOptions = { srcProvider : context.fileProvider }
+
+      if( _.path.isGlob( checkPath ) )
+      filesTreeReadOptions.glob = checkPath;
+      else
+      filesTreeReadOptions.srcPath = checkPath;
+
+      var got = _.FileProvider.Extract.filesTreeRead( filesTreeReadOptions );
 
       if( _.strIs( got ) )
       {
