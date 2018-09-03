@@ -409,6 +409,7 @@ function _includeAct( o )
     [
       /(^|\/)\.(?!$|\/|\.)/,
       /(^|\/)-/,
+      /\.(raw)($|\.|\/)/,
     ],
   });
 
@@ -419,7 +420,7 @@ function _includeAct( o )
 
   if( !o.withManual && _.path.isGlob( o.path ) )
   {
-    _.RegexpObject.shrink( maskTerminal,wRegexpObject({ excludeAny : /\.(manual)($|\.|\/)/ }) );
+    _.RegexpObject.shrink( maskTerminal, wRegexpObject({ excludeAny : /\.(manual)($|\.|\/)/ }) );
   }
 
   // if( options.forTheDocument )
