@@ -267,7 +267,7 @@ function coffeeExecute( o )
   o.name = o.filePath ? _.path.name( o.filePath ) : 'unknown';
 
   var optionsForCompile = _.mapExtend( null,o );
-  o.filePath = self.fileProvider.pathNativize( o.filePath );
+  o.filePath = self.fileProvider.path.nativize( o.filePath );
 
   logger.log( 'coffeeExecute',o.filePath );
 
