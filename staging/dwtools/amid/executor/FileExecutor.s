@@ -454,11 +454,12 @@ function _includeAct( o )
     maskTerminal : maskTerminal,
     outputFormat : 'record',
     orderingExclusion : [ [ '.external','' ], [ '.pre', '', '.post' ] ],
+    includingDirectories_ : 0,
   }
 
   includeFrame.resolveOptions
   =
-  self.fileProvider._filesFilterMasksSupplement( includeFrame.resolveOptions,resolveOptions );
+  self.fileProvider._filesFilterMasksSupplement( includeFrame.resolveOptions, resolveOptions );
 
   // debugger; // aaa
   includeFrame.files = self.fileProvider.filesResolve( includeFrame.resolveOptions );
