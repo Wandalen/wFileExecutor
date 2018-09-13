@@ -618,7 +618,7 @@ function include( o )
   if( !o.translator )
   {
     o.translator = self.translator.clone();
-    var realRootPath = _.strIs( o.path ) ? _.path.dir( o.path ) : _.path.common( o.path );
+    var realRootPath = _.strIs( o.path ) ? _.path.dir( o.path ) : _.path.common.apply( _.path, o.path );
     o.translator.realRootPath = realRootPath;
   }
 
