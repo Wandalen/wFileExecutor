@@ -454,7 +454,7 @@ function _includeAct( o )
     maskTerminal : maskTerminal,
     outputFormat : 'record',
     orderingExclusion : [ [ '.external','' ], [ '.pre', '', '.post' ] ],
-    includingDirectories_ : 0,
+    includingDirectories : 0,
   }
 
   includeFrame.resolveOptions
