@@ -461,6 +461,11 @@ function _includeAct( o )
   =
   self.fileProvider._filesFilterMasksSupplement( includeFrame.resolveOptions, resolveOptions );
 
+  let filter = _.FileRecordFilter.TollerantMake( includeFrame.resolveOptions,{ fileProvider : self.fileProvider } );
+  includeFrame.resolveOptions.filter = filter;
+
+  includeFrame.resolveOptions = _.mapOnly( includeFrame.resolveOptions, self.fileProvider.filesResolve.defaults );
+
   // debugger; // aaa
   includeFrame.files = self.fileProvider.filesResolve( includeFrame.resolveOptions );
   // debugger; // aaa
