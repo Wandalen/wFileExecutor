@@ -1,4 +1,4 @@
-( function _FileExecutor_s_( ) {
+( function _FileExecutor_test_s_( ) {
 
 'use strict';
 
