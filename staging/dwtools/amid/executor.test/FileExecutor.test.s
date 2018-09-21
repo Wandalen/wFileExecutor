@@ -419,7 +419,7 @@ samples.specificEnd =
     {
       "b1.s" : "(function() {\n\nconsole.log( 'b1:before' );\n\n//\n// b1\n//\n\nconsole.log( 'b1:after' );\n\n});\n",
       "b2.js" : "(function() {\n\nconsole.log( 'b2:before' );\n\n//\n// b2\n//\n\nconsole.log( 'b2:after' );\n\n});\n",
-      "b3.ss" : "(function() {\n\nconsole.log( 'b3:before' );\n\n//\n//>-->//\nreturn `// b3`;\n//<--<//\n//\n\nconsole.log( 'b3:after' );\n\n});\n"
+      "b3.ss" : "(function() {\n\nconsole.log( 'b3:before' );\n\n//\n//>-" + "->//\nreturn `// b3`;\n//<-" + "-<//\n//\n\nconsole.log( 'b3:after' );\n\n});\n"
     }
   },
 }
@@ -699,11 +699,11 @@ function chunksSplit( test )
         line : 0,
         column : 0,
         index : 0,
-        prefix : `//>-->//`,
+        prefix : `//>-` + `->//`,
         code : `abc`,
         lines : [ `abc` ],
         tab : ``,
-        postfix : `//<--<//`,
+        postfix : `//<-` + `-<//`,
         kind : 'dynamic',
       }
     ]
@@ -726,11 +726,11 @@ function chunksSplit( test )
         line : 0,
         column : 2,
         index : 1,
-        prefix : `//>-->//`,
+        prefix : `//>-` + `->//`,
         code : `abc`,
         lines : [ `abc` ],
         tab : ``,
-        postfix : `//<--<//`,
+        postfix : `//<-` + `-<//`,
         kind : 'dynamic',
       }
     ]
@@ -752,11 +752,11 @@ function chunksSplit( test )
         line : 0,
         column : 0,
         index : 0,
-        prefix : `//>-->//`,
+        prefix : `//>-` + `->//`,
         code : `abc`,
         lines : [ `abc` ],
         tab : ``,
-        postfix : `//<--<//`,
+        postfix : `//<-` + `-<//`,
         kind : 'dynamic',
       },
       { line : 0, text : ` b`, index : 1, kind : 'static' }
@@ -779,22 +779,22 @@ function chunksSplit( test )
         line : 0,
         column : 0,
         index : 0,
-        prefix : `//>-->//`,
+        prefix : `//>-` + `->//`,
         code : `abc`,
         lines : [ `abc` ],
         tab : ``,
-        postfix : `//<--<//`,
+        postfix : `//<-` + `-<//`,
         kind : 'dynamic',
       },
       {
         line : 0,
         column : 0,
         index : 1,
-        prefix : `//>-->//`,
+        prefix : `//>-` + `->//`,
         code : `def`,
         lines : [ `def` ],
         tab : ``,
-        postfix : `//<--<//`,
+        postfix : `//<-` + `-<//`,
         kind : 'dynamic',
       }
     ]
@@ -817,11 +817,11 @@ function chunksSplit( test )
         line : 0,
         column : 1,
         index : 1,
-        prefix : `//>-->//`,
+        prefix : `//>-` + `->//`,
         code : `abc`,
         lines : [ `abc` ],
         tab : ``,
-        postfix : `//<--<//`,
+        postfix : `//<-` + `-<//`,
         kind : 'dynamic',
       },
       { line : 0, text : `bc`, index : 2, kind : 'static' },
@@ -829,11 +829,11 @@ function chunksSplit( test )
         line : 0,
         column : 3,
         index : 3,
-        prefix : `//>-->//`,
+        prefix : `//>-` + `->//`,
         code : `def`,
         lines : [ `def` ],
         tab : ``,
-        postfix : `//<--<//`,
+        postfix : `//<-` + `-<//`,
         kind : 'dynamic',
       },
       { line : 0, text : `d`, index : 4, kind : 'static' }
