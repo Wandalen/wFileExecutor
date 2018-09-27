@@ -31,7 +31,7 @@ if( typeof module !== 'undefined' )
   _.include( 'wExternalFundamentals' );
   _.include( 'wFiles' );
 
-  require( '../executor/FileExecutor.s' );
+  require( '../../l7/executor/FileExecutor.s' );
 
 }
 

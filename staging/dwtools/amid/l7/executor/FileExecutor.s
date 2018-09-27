@@ -15,7 +15,7 @@ if( typeof module !== 'undefined' )
 
   if( typeof _global_ === 'undefined' || !_global_.wBase )
   {
-    let toolsPath = '../../../dwtools/Base.s';
+    let toolsPath = '../../../../dwtools/Base.s';
     let toolsExternal = 0;
     try
     {
@@ -2009,12 +2009,14 @@ chunkExecute.defaults = ChunkFrame;
 // relations
 // --
 
+_.assert( !!_.PathTranslator );
+
 var fileCategorizersSymbol = Symbol.for( 'fileCategorizers' );
 
 var Composes =
 {
 
-  translator : _.define.own( new wPathTranslator({ realCurrentDirPath : _.path.refine( __dirname ) }) ),
+  translator : _.define.own( new _.PathTranslator({ realCurrentDirPath : _.path.refine( __dirname ) }) ),
 
   warnBigFiles : 1 << 19,
   debug : 0,
