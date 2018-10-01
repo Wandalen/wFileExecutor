@@ -420,7 +420,7 @@ function _includeAct( o )
 
   if( !o.withManual && _.path.isGlob( o.path ) )
   {
-    _.RegexpObject.And( maskTerminal, wRegexpObject({ excludeAny : /\.(manual)($|\.|\/)/ }) );
+    maskTerminal = _.RegexpObject.And( maskTerminal, wRegexpObject({ excludeAny : /\.(manual)($|\.|\/)/ }) );
   }
 
   // if( options.forTheDocument )
@@ -1368,7 +1368,7 @@ function _chunkConcat( chunkFrame )
       if( err && !fileFrame.consequence )
       return;
 
-      _.assert( fileFrame,'unexpected' );
+      _.assert( _.objectIs( fileFrame ), 'unexpected' );
 
       if( fileFrame.error )
       {
@@ -1618,7 +1618,7 @@ function formatterTry( o )
   var self = this;
 
   _.assert( arguments.length === 1, 'expects single argument' );
-  _.assert( o.formatter );
+  _.assert( _.objectIs( o.formatter ) );
 
   if( !self._categoriesCheck( o.categories,o.formatter ) )
   return;
@@ -1633,7 +1633,7 @@ function formatterApply( o )
   var self = this;
 
   _.assert( arguments.length === 1, 'expects single argument' );
-  _.assert( o.formatter );
+  _.assert( _.objectIs( o.formatter ) );
 
   if( !o.usedFileFrames )
   {
@@ -1734,7 +1734,7 @@ function linkFormat( o )
   if( !o.usedIncludeFrame )
   o.usedIncludeFrame = o.link.used.includeFrame;
 
-  _.assert( o.usedIncludeFrame );
+  _.assert( _.objectIs( o.usedIncludeFrame ) );
   _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( _.construction.isLike( o.usedIncludeFrame,IncludeFrame ) );
 
