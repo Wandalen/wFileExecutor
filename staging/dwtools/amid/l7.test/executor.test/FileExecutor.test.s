@@ -470,8 +470,8 @@ function executorMakeFor( path )
   context.dstPath = _.path.join( __dirname,'./template.tmp' );
   context.srcPath = _.path.join( __dirname,'./template.test' );
 
-  var dstPath = _.path.pathsJoin( context.dstPath, _.path.split( path )[ 0 ] );
-  var srcPath = _.path.pathsJoin( context.srcPath, _.path.split( path )[ 0 ] );
+  var dstPath = _.path.s.join( context.dstPath, _.path.split( path )[ 0 ] );
+  var srcPath = _.path.s.join( context.srcPath, _.path.split( path )[ 0 ] );
 
   context.templateTreeProvider.readToProvider
   ({
@@ -860,10 +860,10 @@ function samplesTest( test )
     context.executorMakeFor( sample.path );
     context.executor.context = sample.context || Object.create( null );
 
-    var path = _.path.pathsJoin( context.dstPath, sample.path );
+    var path = _.path.s.join( context.dstPath, sample.path );
     var checkPath = path;
     if( sample.checkPath )
-    checkPath = _.path.pathsJoin( context.dstPath, sample.checkPath );
+    checkPath = _.path.s.join( context.dstPath, sample.checkPath );
     var rootPath = sample.rootPath ? _.path.join( context.dstPath, sample.rootPath ) : undefined;
     var virtualCurrentDirPath = sample.virtualCurrentDirPath ? _.path.join( context.dstPath, sample.virtualCurrentDirPath ) : undefined;
 
