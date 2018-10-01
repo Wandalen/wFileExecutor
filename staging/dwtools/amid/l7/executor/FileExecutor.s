@@ -403,7 +403,7 @@ function _includeAct( o )
   logger.log( '_includeAct.begin',o.path );
 
   var maskTerminal = new _.RegexpObject( [],_.RegexpObject.Names.includeAny );
-  var maskTerminal2 = _.regexpMakeObject
+  var maskTerminal2 = _.RegexpObject
   ({
     excludeAny :
     [
@@ -413,24 +413,24 @@ function _includeAct( o )
     ],
   });
 
-  maskTerminal = _.RegexpObject.shrink( maskTerminal,maskTerminal2 );
+  maskTerminal = _.RegexpObject.And( maskTerminal,maskTerminal2 );
 
   if( o.translator.virtualFor( o.path || '.' ) === '/index/**' )
   debugger;
 
   if( !o.withManual && _.path.isGlob( o.path ) )
   {
-    _.RegexpObject.shrink( maskTerminal, wRegexpObject({ excludeAny : /\.(manual)($|\.|\/)/ }) );
+    _.RegexpObject.And( maskTerminal, wRegexpObject({ excludeAny : /\.(manual)($|\.|\/)/ }) );
   }
 
   // if( options.forTheDocument )
   // {
   //   var maskNotManual = _.regexpMakeObject( self.env.valueGet( '{{mask.manual}}' ) || /\.manual($|\.|\/)/,_.RegexpObject.Names.excludeAny );
-  //   _.RegexpObject.shrink( maskTerminal,maskNotManual );
+  //   _.RegexpObject.And( maskTerminal,maskNotManual );
   // }
   //
   // if( options.maskTerminal )
-  // _.RegexpObject.shrink( maskTerminal,_.regexpMakeObject( options.maskTerminal,_.RegexpObject.Names.includeAny ) );
+  // _.RegexpObject.And( maskTerminal,_.regexpMakeObject( options.maskTerminal,_.RegexpObject.Names.includeAny ) );
 
   var userIncludeFrame = self.includeFrames[ 0 ];
   var includeFrame = self.includeFrameBegin({ userIncludeFrame : userIncludeFrame });
