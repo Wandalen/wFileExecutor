@@ -30,7 +30,7 @@ if( typeof module !== 'undefined' )
     require( toolsPath );
   }
 
-  var _ = _global_.wTools;
+  let _ = _global_.wTools;
 
   _.include( 'wFiles' );
   _.include( 'wFilesArchive' );
@@ -38,11 +38,11 @@ if( typeof module !== 'undefined' )
   _.include( 'wConsequence' );
   _.include( 'wPathTranslator' );
 
-  var VirtualMachine = require( 'vm' );
+  let VirtualMachine = require( 'vm' );
 
   try
   {
-    var Coffee = require( 'coffee-script' );
+    let Coffee = require( 'coffee-script' );
   }
   catch( err )
   {
@@ -52,9 +52,9 @@ if( typeof module !== 'undefined' )
 
 //
 
-var _ = _global_.wTools;
-var Parent = null;
-var Self = function wFileExecutor( o )
+let _ = _global_.wTools;
+let Parent = null;
+let Self = function wFileExecutor( o )
 {
   return _.instanceConstructor( Self, this, arguments );
 }
@@ -65,7 +65,7 @@ Self.shortName = 'FileExecutor';
 
 function init( o )
 {
-  var self = this;
+  let self = this;
 
   _.assert( arguments.length === 0 || arguments.length === 1 );
   _.instanceInit( self );
@@ -143,13 +143,13 @@ scriptExecute.defaults =
 
 function ecmaExecute( o )
 {
-  var result;
+  let result;
 
   _.routineOptions( ecmaExecute,o );
   _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( _.strIs( o.code ) );
 
-  var execOptions =
+  let execOptions =
   {
     code : o.code,
     context : o.context,
@@ -218,8 +218,8 @@ ecmaExecute.defaults.__proto__ = scriptExecute.defaults;
 
 function coffeeCompile( o )
 {
-  var self = this;
-  var result = '';
+  let self = this;
+  let result = '';
 
   _.assert( arguments.length === 1, 'expects single argument' );
   _.routineOptions( coffeeCompile,o );
@@ -233,7 +233,7 @@ function coffeeCompile( o )
   //   o.code = [ self.prefix, o.code, self.postfix ].join( '\n' );
   // }
 
-  var compileOptions =
+  let compileOptions =
   {
     filename : o.filePath,
     bare : !!o.baring,
@@ -255,7 +255,7 @@ coffeeCompile.defaults =
 
 function coffeeExecute( o )
 {
-  var self = this;
+  let self = this;
 
   if( _.strIs( o ) )
   o = { code : code };
@@ -266,17 +266,17 @@ function coffeeExecute( o )
   if( !o.name )
   o.name = o.filePath ? _.path.name( o.filePath ) : 'unknown';
 
-  var optionsForCompile = _.mapExtend( null,o );
+  // let optionsForCompile = _.mapExtend( null,o );
   o.filePath = self.fileProvider.path.nativize( o.filePath );
 
   logger.log( 'coffeeExecute',o.filePath );
 
-  var optionsForCompile = _.mapOnly( o, this.coffeeCompile.defaults );
+  let optionsForCompile = _.mapOnly( o, this.coffeeCompile.defaults );
   optionsForCompile.baring = o.isConfig;
   o.code = this.coffeeCompile( optionsForCompile );
   o.prependingReturn = 1;
 
-  var result = this.ecmaExecute( o );
+  let result = this.ecmaExecute( o );
 
   return result;
 }
@@ -297,12 +297,12 @@ coffeeExecute.defaults.__proto__ = scriptExecute.defaults;
 
 function sessionMake( o )
 {
-  var self = this;
+  let self = this;
 
   _.routineOptions( sessionMake,o );
   _.assert( arguments.length === 1, 'expects single argument' );
 
-  var session = Object.create( null );
+  let session = Object.create( null );
   session.rootIncludeFrame = null;
   session.fileFrames = [];
   session.onFileExec = null;
@@ -333,12 +333,12 @@ sessionMake.defaults =
 
 function includeFrameBegin( o )
 {
-  var self = this;
+  let self = this;
 
   _.routineOptions( includeFrameBegin,o );
   _.assert( arguments.length === 1, 'expects single argument' );
 
-  var includeFrame = IncludeFrame.constructor();
+  let includeFrame = IncludeFrame.constructor();
 
   includeFrame.userIncludeFrame = o.userIncludeFrame;
   includeFrame.fileFrames = [];
@@ -367,7 +367,7 @@ includeFrameBegin.defaults =
 
 function includeFrameEnd( includeFrame )
 {
-  var self = this;
+  let self = this;
 
   if( self.verbosity > 1 )
   logger.log( 'includeFrameEnd',includeFrame.includeOptions.path );
@@ -391,8 +391,8 @@ function includeFrameEnd( includeFrame )
 
 function _includeAct( o )
 {
-  var self = this;
-  var session = o.session;
+  let self = this;
+  let session = o.session;
 
   _.routineOptions( _includeAct,o );
   _.assert( arguments.length === 1, 'expects single argument' );
@@ -402,8 +402,8 @@ function _includeAct( o )
   if( self.verbosity > 2 )
   logger.log( '_includeAct.begin',o.path );
 
-  var maskTerminal = new _.RegexpObject( [],_.RegexpObject.Names.includeAny );
-  var maskTerminal2 = _.RegexpObject
+  // let maskTerminal = new _.RegexpObject( [],_.RegexpObject.Names.includeAny );
+  let maskTerminal = _.RegexpObject
   ({
     excludeAny :
     [
@@ -413,27 +413,26 @@ function _includeAct( o )
     ],
   });
 
-  maskTerminal = _.RegexpObject.And( maskTerminal,maskTerminal2 );
-
-  if( o.translator.virtualFor( o.path || '.' ) === '/index/**' )
-  debugger;
+  // let maskTerminal = _.RegexpObject.And( maskTerminal,maskTerminal2 );
+  // if( o.translator.virtualFor( o.path || '.' ) === '/index/**' )
+  // debugger;
 
   if( !o.withManual && _.path.isGlob( o.path ) )
   {
-    maskTerminal = _.RegexpObject.And( maskTerminal, wRegexpObject({ excludeAny : /\.(manual)($|\.|\/)/ }) );
+    maskTerminal = _.RegexpObject.And( maskTerminal, _.RegexpObject({ excludeAny : /\.(manual)($|\.|\/)/ }) );
   }
 
   // if( options.forTheDocument )
   // {
-  //   var maskNotManual = _.regexpMakeObject( self.env.valueGet( '{{mask.manual}}' ) || /\.manual($|\.|\/)/,_.RegexpObject.Names.excludeAny );
+  //   let maskNotManual = _.regexpMakeObject( self.env.valueGet( '{{mask.manual}}' ) || /\.manual($|\.|\/)/,_.RegexpObject.Names.excludeAny );
   //   _.RegexpObject.And( maskTerminal,maskNotManual );
   // }
   //
   // if( options.maskTerminal )
   // _.RegexpObject.And( maskTerminal,_.regexpMakeObject( options.maskTerminal,_.RegexpObject.Names.includeAny ) );
 
-  var userIncludeFrame = self.includeFrames[ 0 ];
-  var includeFrame = self.includeFrameBegin({ userIncludeFrame : userIncludeFrame });
+  let userIncludeFrame = self.includeFrames[ 0 ];
+  let includeFrame = self.includeFrameBegin({ userIncludeFrame : userIncludeFrame });
 
   _.assert( _.construction.isLike( includeFrame,IncludeFrame ) );
 
@@ -446,7 +445,7 @@ function _includeAct( o )
 
   /* resolve */
 
-  var resolveOptions =
+  let resolveOptions =
   {
     globPath : includeFrame.translator.virtualFor( o.path || '.' ),
     ends : o.ends,
@@ -542,10 +541,10 @@ _includeAct.defaults =
 
 function _includeFromChunk( bound,o,o2 )
 {
-  var self = this;
-  var chunkFrame = bound.chunkFrame;
-  var includeFile = bound.includeFile;
-  var session = chunkFrame.fileFrame.includeFrame.session;
+  let self = this;
+  let chunkFrame = bound.chunkFrame;
+  let includeFile = bound.includeFile;
+  let session = chunkFrame.fileFrame.includeFrame.session;
 
   if( _.strIs( o ) )
   o = { path : o };
@@ -559,7 +558,7 @@ function _includeFromChunk( bound,o,o2 )
   }
 
   _.assertMapHasOnly( includeFile, _includeFromChunk.parameters );
-  var o3 = _.mapOnly( includeFile, _includeFromChunk.defaults );
+  let o3 = _.mapOnly( includeFile, _includeFromChunk.defaults );
 
   _.mapSupplement( o,o3 );
 
@@ -568,7 +567,7 @@ function _includeFromChunk( bound,o,o2 )
   o.syncExternal = chunkFrame.syncExternal;
   o.userChunkFrame = chunkFrame;
 
-  var included = self._includeAct( o );
+  let included = self._includeAct( o );
 
   _.assert( _.consequenceIs( o.syncExternal ) );
   _.assert( o2 === undefined || _.objectIs( o2 ) );
@@ -608,7 +607,7 @@ _includeFromChunk.parameters.__proto__ = _includeAct.defaults;
 
 function include( o )
 {
-  var self = this;
+  let self = this;
 
   if( _.strIs( o ) )
   o = { path : o };
@@ -623,7 +622,7 @@ function include( o )
   if( !o.translator )
   {
     o.translator = self.translator.clone();
-    var realRootPath = _.strIs( o.path ) ? _.path.dir( o.path ) : _.path.common.apply( _.path, o.path );
+    let realRootPath = _.strIs( o.path ) ? _.path.dir( o.path ) : _.path.common.apply( _.path, o.path );
     o.translator.realRootPath = realRootPath;
   }
 
@@ -643,7 +642,7 @@ function include( o )
 
   /* */
 
-  var includeFrame = self._includeAct( _.mapOnly( o, self._includeAct.defaults ) );
+  let includeFrame = self._includeAct( _.mapOnly( o, self._includeAct.defaults ) );
 
   /* */
 
@@ -680,12 +679,12 @@ _.mapExtend( include.defaults , _includeAct.defaults );
 
 function filesExecute( o )
 {
-  var self = this;
+  let self = this;
   if( !o.consequence )
   o.consequence = new _.Consequence().give();
-  var con = o.consequence;
-  var session = o.includeFrame.session;
-  var files = o.includeFrame.files;
+  let con = o.consequence;
+  let session = o.includeFrame.session;
+  let files = o.includeFrame.files;
 
   _.routineOptions( filesExecute,o );
   _.assert( arguments.length === 1, 'expects single argument' );
@@ -696,9 +695,9 @@ function filesExecute( o )
 
   /* prepare */
 
-  for( var i = 0 ; i < files.length ; i += 1 )
+  for( let i = 0 ; i < files.length ; i += 1 )
   {
-    var file = files[ i ];
+    let file = files[ i ];
     self.fileFrameFor
     ({
       file : file,
@@ -717,9 +716,9 @@ function filesExecute( o )
 
   /* execute */
 
-  for( var i = 0 ; i < files.length ; i += 1 )
+  for( let i = 0 ; i < files.length ; i += 1 )
   {
-    var file = files[ i ];
+    let file = files[ i ];
     con.ifNoErrorThen( _.routineSeal( self,self.fileExecute,[{ file : file, includeFrame : o.includeFrame }] ) );
   }
 
@@ -736,12 +735,12 @@ filesExecute.defaults =
 
 function fileExecute( o )
 {
-  var self = this;
-  var file = o.file;
-  var includeFrame = o.includeFrame;
-  var session = includeFrame.session;
+  let self = this;
+  let file = o.file;
+  let includeFrame = o.includeFrame;
+  let session = includeFrame.session;
 
-  var fileFrame = self.fileFrameFor
+  let fileFrame = self.fileFrameFor
   ({
     file : file,
     includeFrame : includeFrame,
@@ -887,9 +886,9 @@ fileExecute.defaults =
 
 function _fileExecute( o )
 {
-  var self = this;
-  var session = o.session;
-  var includeFrame = o.includeFrame;
+  let self = this;
+  let session = o.session;
+  let includeFrame = o.includeFrame;
 
   if( _.strIs( o ) )
   o = { code : o }
@@ -905,9 +904,9 @@ function _fileExecute( o )
   if( !o.consequence )
   o.consequence = new _.Consequence().give();
 
-  /* var */
+  /* let */
 
-  var errorPrefix = '';
+  let errorPrefix = '';
   if( o.file )
   errorPrefix = _.str( o.file.absolute + ' :', '\n' );
 
@@ -928,20 +927,20 @@ function _fileExecute( o )
 
   /* chunks */
 
-  var chunks = self._chunksSplit( o.code,_.mapOnly( o, _chunksSplit.defaults ) );
+  let chunks = self._chunksSplit( o.code,_.mapOnly( o, _chunksSplit.defaults ) );
   if( chunks.error )
   o.error = _.err( errorPrefix,chunks.error,'\n' );
   o.chunks = chunks.chunks;
 
   if( !chunks.error )
-  for( var c = 0 ; c < o.chunks.length ; c++ ) (function _executeChunk()
+  for( let c = 0 ; c < o.chunks.length ; c++ ) (function _executeChunk()
   {
 
-    var chunk = o.chunks[ c ];
+    let chunk = o.chunks[ c ];
     _.assert( _.numberIs( chunk.index ) );
     Object.preventExtensions( chunk );
 
-    var optionsChunkExecute = Object.create( null );
+    let optionsChunkExecute = Object.create( null );
     optionsChunkExecute.fileFrame = o;
     optionsChunkExecute.chunk = chunk;
     o.consequence.ifNoErrorThen( _.routineSeal( self,self.chunkExecute,[ optionsChunkExecute ] ) );
@@ -963,8 +962,8 @@ function _fileExecute( o )
 
 function filesFilter( includeFrame )
 {
-  var self = this;
-  var io = includeFrame.includeOptions;
+  let self = this;
+  let io = includeFrame.includeOptions;
 
   _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( _.construction.isLike( includeFrame,IncludeFrame ) );
@@ -979,11 +978,11 @@ function filesFilter( includeFrame )
   if( _.strIs( io.ifNone ) )
   io.ifNone = [ io.ifNone ];
 
-  var fileFrames = includeFrame.fileFrames;
-  var files = includeFrame.files;
-  for( var f = fileFrames.length-1 ; f >= 0 ; f-- )
+  let fileFrames = includeFrame.fileFrames;
+  let files = includeFrame.files;
+  for( let f = fileFrames.length-1 ; f >= 0 ; f-- )
   {
-    var fileFrame = fileFrames[ f ];
+    let fileFrame = fileFrames[ f ];
 
     if( io.ifAny )
     if( !_.arrayHasAny( fileFrame.categories,io.ifAny ) )
@@ -1017,9 +1016,9 @@ function filesFilter( includeFrame )
 
 function fileFrameFor( fileFrame )
 {
-  var self = this;
-  var includeFrame = fileFrame.includeFrame;
-  var session = includeFrame.session;
+  let self = this;
+  let includeFrame = fileFrame.includeFrame;
+  let session = includeFrame.session;
 
   _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( _.objectIs( session ) );
@@ -1028,8 +1027,8 @@ function fileFrameFor( fileFrame )
   if( self.verbosity > 4 )
   logger.log( 'fileFrameFor',fileFrame.file.absolute );
 
-  var equ = ( e ) => e.file.absolute;
-  var fileFrameFound = _.arrayLeft( session.fileFrames , fileFrame , equ ).element;
+  let equ = ( e ) => e.file.absolute;
+  let fileFrameFound = _.arrayLeft( session.fileFrames , fileFrame , equ ).element;
   if( fileFrameFound )
   {
     _.arrayAppendOnce( fileFrameFound.includeFrames , includeFrame );
@@ -1078,8 +1077,8 @@ function chunkFrameFor( o )
 
 function chunkExecute( o )
 {
-  var self = this;
-  var includeFrame = o.fileFrame.includeFrame;
+  let self = this;
+  let includeFrame = o.fileFrame.includeFrame;
 
   // _.assert( arguments.length === 1, 'expects single argument' );
   o = chunkFrameFor( o );
@@ -1092,7 +1091,7 @@ function chunkExecute( o )
   o.syncInternal = new wConsequence({ limitNumberOfMessages : 1 });
   o.syncExternal = new wConsequence({ limitNumberOfMessages : 1 }).give();
 
-  var executed = self._chunkExecute( o );
+  let executed = self._chunkExecute( o );
   executed = wConsequence.from( executed );
 
   executed.got( function( err,arg )
@@ -1162,8 +1161,8 @@ function chunkExecute( o )
 
 function _chunkExecute( o )
 {
-  var self = this;
-  var session = o.fileFrame.includeFrame.session;
+  let self = this;
+  let session = o.fileFrame.includeFrame.session;
 
   _.assert( _.objectIs( session ) );
   _.assert( arguments.length === 1, 'expects single argument' );
@@ -1187,7 +1186,7 @@ function _chunkExecute( o )
 
     /* */
 
-    var execution = _.mapOnly( o, ecmaExecute.defaults );
+    let execution = _.mapOnly( o, ecmaExecute.defaults );
     execution.language = self.languageFromFilePath( o.fileFrame.file.absolute );
     execution.filePath = o.fileFrame.file.absolute + '{' + o.chunk.line + '-' + ( o.chunk.line + o.chunk.lines.length ) + '}';
 
@@ -1226,11 +1225,11 @@ function _chunkExecute( o )
 
 function _chunkExpose( chunkFrame )
 {
-  var self = this;
-  var externals = chunkFrame.externals;
-  var fileFrame = chunkFrame.fileFrame;
-  var file = fileFrame.file;
-  var session = fileFrame.includeFrame.session;
+  let self = this;
+  let externals = chunkFrame.externals;
+  let fileFrame = chunkFrame.fileFrame;
+  let file = fileFrame.file;
+  let session = fileFrame.includeFrame.session;
 
   _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( _.construction.isLike( chunkFrame,ChunkFrame ) );
@@ -1241,7 +1240,7 @@ function _chunkExpose( chunkFrame )
   {
 
     _.assert( externals.includeFile === undefined );
-    var bound = Object.create( null );
+    let bound = Object.create( null );
     externals.includeFile = _.routineJoin( self,self._includeFromChunk,[ bound ] );
     bound.chunkFrame = chunkFrame;
     bound.includeFile = externals.includeFile;
@@ -1283,15 +1282,15 @@ function _chunkExpose( chunkFrame )
 
 function _chunkTabulate( chunkFrame )
 {
-  var self = this;
+  let self = this;
 
   _.assert( arguments.length === 1, 'expects single argument' );
 
   if( chunkFrame.chunk.kind !== 'dynamic' )
   return;
 
-  var result = '';
-  var ret = '';
+  let result = '';
+  let ret = '';
 
   if( _.strIs( chunkFrame.result ) )
   ret = chunkFrame.result;
@@ -1303,10 +1302,10 @@ function _chunkTabulate( chunkFrame )
   if( ret[ ret.length-1 ].trim() === '' )
   ret.splice( ret.length-1,1 );
 
-  for( var r = 0, l = ret.length ; r < l ; r++ )
+  for( let r = 0, l = ret.length ; r < l ; r++ )
   {
-    var prefix = r > 0 ? chunkFrame.chunk.tab : '';
-    var postfix = r < l-1 ? '\n' : '';
+    let prefix = r > 0 ? chunkFrame.chunk.tab : '';
+    let postfix = r < l-1 ? '\n' : '';
     result += prefix + ret[ r ] + postfix;
   }
 
@@ -1328,11 +1327,11 @@ _chunksSplit.defaults = _.strSplitChunks.defaults;
 
 function _chunkConcat( chunkFrame )
 {
-  var self = this;
-  var result = [];
-  var err = null;
-  var con = new _.Consequence();
-  var chunkFormatterOptions = Object.create( null );
+  let self = this;
+  let result = [];
+  let err = null;
+  let con = new _.Consequence();
+  let chunkFormatterOptions = Object.create( null );
 
   _.assert( _.strIs( chunkFrame.result ) );
   _.assert( _.arrayIs( chunkFrame.usedIncludeFrames ) );
@@ -1341,29 +1340,29 @@ function _chunkConcat( chunkFrame )
 
   /* */
 
-  for( var i = 0 ; i < chunkFrame.usedIncludeFrames.length ; i += 1 )
+  for( let i = 0 ; i < chunkFrame.usedIncludeFrames.length ; i += 1 )
   {
-    var usedIncludeFrame = chunkFrame.usedIncludeFrames[ i ];
+    let usedIncludeFrame = chunkFrame.usedIncludeFrames[ i ];
     _.assert( usedIncludeFrame.fileFrames.length === usedIncludeFrame.files.length );
     _.arrayAppendArray( chunkFrame.usedFileFrames,usedIncludeFrame.fileFrames );
   }
 
   /* */
 
-  var _index = 0;
-  for( var i = 0 ; i < chunkFrame.usedIncludeFrames.length ; i += 1 )
+  let _index = 0;
+  for( let i = 0 ; i < chunkFrame.usedIncludeFrames.length ; i += 1 )
   {
-    var usedIncludeFrame = chunkFrame.usedIncludeFrames[ i ];
+    let usedIncludeFrame = chunkFrame.usedIncludeFrames[ i ];
 
     _.assert( usedIncludeFrame.fileFrames.length === usedIncludeFrame.files.length );
 
-    for( var f = 0 ; f < usedIncludeFrame.fileFrames.length ; f += 1 ) ( function()
+    for( let f = 0 ; f < usedIncludeFrame.fileFrames.length ; f += 1 ) ( function()
     {
-      var fileFrame = usedIncludeFrame.fileFrames[ f ];
+      let fileFrame = usedIncludeFrame.fileFrames[ f ];
 
       con.choke();
       _index += 1;
-      var index = _index;
+      let index = _index;
 
       if( err && !fileFrame.consequence )
       return;
@@ -1381,7 +1380,7 @@ function _chunkConcat( chunkFrame )
       else
       {
         _.assert( _.strIs( fileFrame.result ),'expects string, but got',_.strTypeOf( fileFrame.result ) );
-        var formatted = self.linkFormat
+        let formatted = self.linkFormat
         ({
           userChunkFrame : chunkFrame,
           usedFileFrame : fileFrame,
@@ -1436,7 +1435,7 @@ function _chunkConcat( chunkFrame )
 
 function _chunkFormat( chunkFrame,text )
 {
-  var self = this;
+  let self = this;
 
   _.assert( arguments.length === 2, 'expects exactly two arguments' );
 
@@ -1455,9 +1454,9 @@ function _chunkFormat( chunkFrame,text )
 
 function categoriesForFile( fileFrame )
 {
-  var self = this;
-  var result = [];
-  var file = fileFrame.file;
+  let self = this;
+  let result = [];
+  let file = fileFrame.file;
 
   _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( _.construction.isLike( fileFrame,FileFrame ) );
@@ -1465,17 +1464,18 @@ function categoriesForFile( fileFrame )
 
   /* arbitrary categories */
 
-  for( var c in self.arbitraryCategorizers )
+  for( let c in self.arbitraryCategorizers )
   {
-    var categorizer = self.arbitraryCategorizers[ c ];
+    let categorizer = self.arbitraryCategorizers[ c ];
+    let category;
     _.assert( _.routineIs( categorizer ) );
     try
     {
-      var category = categorizer.call( self,file );
+      category = categorizer.call( self,file );
     }
     catch( err )
     {
-      var msg = 'Categorizer ' + c + ' failed\n';
+      let msg = 'Categorizer ' + c + ' failed\n';
       throw _.err( msg,err )
     }
     if( category )
@@ -1489,11 +1489,11 @@ function categoriesForFile( fileFrame )
 
   /* file categories */
 
-  for( var c in self.fileCategorizers )
+  for( let c in self.fileCategorizers )
   {
-    var categorizer = self.fileCategorizers[ c ];
+    let categorizer = self.fileCategorizers[ c ];
     _.assert( _.routineIs( categorizer ) );
-    var category = categorizer.call( self,file );
+    let category = categorizer.call( self,file );
     if( category )
     {
       _.assert( _.primitiveIs( category ) );
@@ -1510,19 +1510,19 @@ function categoriesForFile( fileFrame )
 
 function _categoriesForLink( o )
 {
-  var self = this;
-  var result = [];
+  let self = this;
+  let result = [];
 
   _.assert( arguments.length === 1, 'expects single argument' );
 
   /* file categories */
 
-  for( var c = 0 ; c < o.user.fileFrame.categories.length ; c++ )
+  for( let c = 0 ; c < o.user.fileFrame.categories.length ; c++ )
   {
     _.arrayAppendOnce( result , 'in.' + o.user.fileFrame.categories[ c ] );
   }
 
-  for( var c = 0 ; c < o.used.fileFrame.categories.length ; c++ )
+  for( let c = 0 ; c < o.used.fileFrame.categories.length ; c++ )
   {
     _.arrayAppendOnce( result , o.used.fileFrame.categories[ c ] );
   }
@@ -1531,11 +1531,11 @@ function _categoriesForLink( o )
 
   if( _.mapKeys( self.linkCategorizers ).length )
   debugger;
-  for( var c in self.linkCategorizers )
+  for( let c in self.linkCategorizers )
   {
-    var categorizer = self.linkCategorizers[ c ];
+    let categorizer = self.linkCategorizers[ c ];
     _.assert( _.routineIs( categorizer ) );
-    var category = categorizer.call( self,o );
+    let category = categorizer.call( self,o );
     if( category )
     {
       _.assert( _.primitiveIs( category ) );
@@ -1556,7 +1556,7 @@ function _categoriesForLink( o )
 
 function _categoriesCheck( categories,filter )
 {
-  var self = this;
+  let self = this;
 
   _.assert( arguments.length === 2, 'expects exactly two arguments' );
 
@@ -1579,8 +1579,8 @@ function _categoriesCheck( categories,filter )
 
 function formattersApply( o )
 {
-  var self = this;
-  var con = new _.Consequence().give( o.frame.result );
+  let self = this;
+  let con = new _.Consequence().give( o.frame.result );
 
   _.assert( arguments.length === 1, 'expects single argument' );
 
@@ -1591,10 +1591,10 @@ function formattersApply( o )
 
   o.executor = self;
 
-  for( var f = 0 ; f < o.formatters.length ; f++ ) ( function()
+  for( let f = 0 ; f < o.formatters.length ; f++ ) ( function()
   {
 
-    var ff = f;
+    let ff = f;
     con.ifNoErrorThen( function( arg )
     {
       o.formatter = o.formatters[ ff ];
@@ -1615,7 +1615,7 @@ function formattersApply( o )
 
 function formatterTry( o )
 {
-  var self = this;
+  let self = this;
 
   _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( _.objectIs( o.formatter ) );
@@ -1630,7 +1630,7 @@ function formatterTry( o )
 
 function formatterApply( o )
 {
-  var self = this;
+  let self = this;
 
   _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( _.objectIs( o.formatter ) );
@@ -1638,14 +1638,14 @@ function formatterApply( o )
   if( !o.usedFileFrames )
   {
 
-    var usedFileFrames = o.frame.usedFileFrames;
+    let usedFileFrames = o.frame.usedFileFrames;
     if( o.formatter.onlyForUsedFiles )
     {
 
       usedFileFrames = [];
-      for( var u = 0 ; u < o.frame.usedFileFrames.length ; u++ )
+      for( let u = 0 ; u < o.frame.usedFileFrames.length ; u++ )
       {
-        var usedFileFrame = o.frame.usedFileFrames[ u ];
+        let usedFileFrame = o.frame.usedFileFrames[ u ];
         if( self._categoriesCheck( usedFileFrame.categories,o.formatter.onlyForUsedFiles ) )
         usedFileFrames.push( usedFileFrame );
       }
@@ -1659,7 +1659,7 @@ function formatterApply( o )
   }
 
   _.assert( _.routineIs( o.formatter.format ),'formatter should have routine (-format-)' );
-  var r = o.formatter.format.call( self,o );
+  let r = o.formatter.format.call( self,o );
 
   _.assert( r === undefined || _.consequenceIs( r ) );
 
@@ -1680,13 +1680,13 @@ function formatterApply( o )
 
 function linkFor( userChunkFrame,usedFileFrame )
 {
-  var self = this;
+  let self = this;
 
   _.assert( arguments.length === 2, 'expects exactly two arguments' );
   _.assert( _.construction.isLike( userChunkFrame,ChunkFrame ) );
   _.assert( _.construction.isLike( usedFileFrame,FileFrame ) || usedFileFrame instanceof _.FileRecord );
 
-  var usedFile;
+  let usedFile;
   if( usedFileFrame instanceof _.FileRecord )
   {
     usedFile = usedFileFrame;
@@ -1697,7 +1697,7 @@ function linkFor( userChunkFrame,usedFileFrame )
     usedFile = usedFileFrame.file;
   }
 
-  var link = Object.create( null );
+  let link = Object.create( null );
   link.result = usedFileFrame ? usedFileFrame.result : null;
 
   link.used = Object.create( null );
@@ -1724,7 +1724,7 @@ function linkFor( userChunkFrame,usedFileFrame )
 
 function linkFormat( o )
 {
-  var self = this;
+  let self = this;
 
   // debugger; // aaa
 
@@ -1749,14 +1749,14 @@ function linkFormat( o )
     o.link.used.file.relative
   );
 
-  var formatted = self.formattersApply
+  let formatted = self.formattersApply
   ({
     formatters : self.linkFormatters,
     frame : o.link,
     categories : o.link.categories
   });
 
-  var got = formatted;
+  let got = formatted;
 
   got.got( function( err,arg )
   {
@@ -1770,7 +1770,7 @@ function linkFormat( o )
     got.ifNoErrorThen( function( arg )
     {
       o.link.result = arg;
-      var r = o.usedIncludeFrame.includeOptions.onIncludeFromat.call( self,o.link );
+      let r = o.usedIncludeFrame.includeOptions.onIncludeFromat.call( self,o.link );
       if( _.strIs( r ) )
       o.link.result = r;
       _.assert( r === undefined || _.strIs( r ),'expects string or nothing from (-onIncludeFromat-)' );
@@ -1794,27 +1794,27 @@ linkFormat.defaults =
 
 function linkFormatExplicit( o )
 {
-  var self = this;
+  let self = this;
 
   debugger;
 
   if( !o.filePath )
   o.filePath = _.path.join( o.formatter.frame.fileFrame.file.dir, o.formatter.frame.fileFrame.file.name + '.manual.js' );
-  var joinedFile = o.formatter.frame.fileFrame.file.clone( o.filePath );
+  let joinedFile = o.formatter.frame.fileFrame.file.clone( o.filePath );
 
-  var fileFrame = self.fileFrameFor
+  let fileFrame = self.fileFrameFor
   ({
     file : joinedFile,
     includeFrame : o.formatter.frame.fileFrame.includeFrame,
   });
 
-  var link = self.linkFor( o.formatter.frame , fileFrame );
+  let link = self.linkFor( o.formatter.frame , fileFrame );
   if( o.removeCategories )
   _.arrayRemoveArrayOnce( link.categories,o.removeCategories );
   if( o.addCategories )
   _.arrayAppendArrayOnce( link.categories,o.addCategories );
 
-  var formatted = self.linkFormat
+  let formatted = self.linkFormat
   ({
     link : link,
   });
@@ -1841,7 +1841,7 @@ linkFormatExplicit.default =
 
 function _fileCategorizersSet( categorizers )
 {
-  var self = this;
+  let self = this;
 
   _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( _.objectIs( categorizers ),'expects object (-categorizers-)' );
@@ -1857,22 +1857,22 @@ function _fileCategorizersSet( categorizers )
 
 function _fileCategorizersChanged()
 {
-  var self = this;
-  var categorizers = self[ fileCategorizersSymbol ];
+  let self = this;
+  let categorizers = self[ fileCategorizersSymbol ];
 
   _.assert( arguments.length === 0 );
   _.assert( _.objectIs( categorizers ),'expects map {-categorizers-}' );
 
-  for( var c in categorizers )
+  for( let c in categorizers )
   {
-    var categorizer = categorizers[ c ];
+    let categorizer = categorizers[ c ];
 
     if( _.strIs( categorizer ) )
     categorizer = [ categorizer ];
 
     if( _.arrayIs( categorizer ) ) ( function()
     {
-      var exts = categorizer;
+      let exts = categorizer;
       categorizer = function categorizer( file )
       {
         return _.arrayHasAny( exts,file.exts );
@@ -1888,17 +1888,17 @@ function _fileCategorizersChanged()
 // used
 // --
 
-function filesUsedGet( includes,result )
+function filesUsedGet( includes, result )
 {
-  var self = this;
-  var result = result || [];
+  let self = this;
+  result = result || [];
 
   _.assert( _.arrayIs( includes ) );
   _.assert( arguments.length === 1 || arguments.length === 2 );
 
-  for( var i = 0 ; i < includes.length ; i++ )
+  for( let i = 0 ; i < includes.length ; i++ )
   {
-    var includeFrame = includes[ i ];
+    let includeFrame = includes[ i ];
     _.assert( _.construction.isLike( includeFrame,IncludeFrame ) );
     _.arrayAppendArray( result,includeFrame.files );
     self.filesUsedGet( includeFrame.usedIncludeFrames,result );
@@ -1911,7 +1911,7 @@ function filesUsedGet( includes,result )
 
 function includesUsedInherit( includeFrame,fileFrame )
 {
-  var self = this;
+  let self = this;
 
   _.assert( arguments.length === 2, 'expects exactly two arguments' );
 
@@ -1923,7 +1923,7 @@ function includesUsedInherit( includeFrame,fileFrame )
 // construction
 // --
 
-var IncludeFrame = _.like()
+let IncludeFrame = _.like()
 .also
 ({
 
@@ -1951,7 +1951,7 @@ includeFrameEnd.defaults = IncludeFrame;
 
 //
 
-var FileFrame = _.like()
+let FileFrame = _.like()
 .also
 ({
   includeFrame : null,
@@ -1986,7 +1986,7 @@ fileFrameFor.defaults = FileFrame;
 
 //
 
-var ChunkFrame = _.like()
+let ChunkFrame = _.like()
 .also
 ({
   chunk : null,
@@ -2011,9 +2011,9 @@ chunkExecute.defaults = ChunkFrame;
 
 _.assert( !!_.PathTranslator );
 
-var fileCategorizersSymbol = Symbol.for( 'fileCategorizers' );
+let fileCategorizersSymbol = Symbol.for( 'fileCategorizers' );
 
-var Composes =
+let Composes =
 {
 
   translator : _.define.own( new _.PathTranslator({ realCurrentDirPath : _.path.refine( __dirname ) }) ),
@@ -2026,7 +2026,7 @@ var Composes =
 
 }
 
-var Aggregates =
+let Aggregates =
 {
 
   arbitraryCategorizers : _.define.own( {} ),
@@ -2038,24 +2038,24 @@ var Aggregates =
 
 }
 
-var Associates =
+let Associates =
 {
   fileProvider : null,
   archive : null,
   context : _.define.own( {} ),
 }
 
-var Restricts =
+let Restricts =
 {
   session : null,
   includeFrames : _.define.own( [] ),
 }
 
-var Statics =
+let Statics =
 {
 }
 
-var Forbids =
+let Forbids =
 {
   conChunkBegin : 'conChunkBegin',
   conChunkEnd : 'conChunkEnd',
@@ -2067,7 +2067,7 @@ var Forbids =
   realRelativePath : 'realRelativePath',
 }
 
-var Accessors =
+let Accessors =
 {
   fileCategorizers : 'fileCategorizers',
 }
@@ -2076,7 +2076,7 @@ var Accessors =
 // declare
 // --
 
-var Proto =
+let Proto =
 {
 
   init : init,
