@@ -44,7 +44,7 @@ function onSuiteBegin()
 {
   var self = this;
 
-  self.templateTreePath = _.path.join( __dirname, './TemplateTree.debug.s' );
+  self.templateTreePath = _.path.join( __dirname, './TemplateTree.debug.jslike' );
   self.templateTree = _.fileProvider.fileReadJs( self.templateTreePath );
   self.templateTreeProvider = _.FileProvider.Extract({ filesTree : self.templateTree, protocols : [ 'extract' ] });
 
