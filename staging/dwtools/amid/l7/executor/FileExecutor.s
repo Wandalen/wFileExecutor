@@ -852,7 +852,7 @@ function fileExecute( o )
           purging : 1,
         });
 
-        // file.restat();
+        // file.reval();
         // self.archive.statUpdate( file,file.stat );
 
         if( self.verbosity )
