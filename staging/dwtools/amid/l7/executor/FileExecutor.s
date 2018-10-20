@@ -1241,7 +1241,9 @@ function _chunkExpose( chunkFrame )
 
     _.assert( externals.includeFile === undefined );
     let bound = Object.create( null );
-    externals.includeFile = _.routineJoin( self,self._includeFromChunk,[ bound ] );
+    externals.includeFile = _.routineJoin( self, self._includeFromChunk, [ bound ] );
+    delete externals.includeFile.defaults;
+    delete externals.includeFile.parameters;
     bound.chunkFrame = chunkFrame;
     bound.includeFile = externals.includeFile;
 
