@@ -1088,8 +1088,8 @@ function chunkExecute( o )
 
   /* */
 
-  o.syncInternal = new wConsequence({ limitNumberOfMessages : 1 });
-  o.syncExternal = new wConsequence({ limitNumberOfMessages : 1 }).give();
+  o.syncInternal = new _.Consequence({ limitNumberOfMessages : 1 });
+  o.syncExternal = new _.Consequence({ limitNumberOfMessages : 1 }).give();
 
   let executed = self._chunkExecute( o );
   executed = wConsequence.from( executed );

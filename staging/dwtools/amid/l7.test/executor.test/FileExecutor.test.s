@@ -851,7 +851,7 @@ function chunksSplit( test )
 function samplesTest( test )
 {
   var context = this;
-  var con = new wConsequence().give();
+  var con = new _.Consequence().give();
   var executed, expected
 
   function sampleTest( sample )
