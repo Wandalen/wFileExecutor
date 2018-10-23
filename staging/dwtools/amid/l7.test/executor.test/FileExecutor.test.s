@@ -915,9 +915,6 @@ function samplesTest( test )
 
       let filesTreeReadOptions = { srcProvider : context.fileProvider }
 
-      if( _.path.isGlob( checkPath ) )
-      filesTreeReadOptions.glob = checkPath;
-      else
       filesTreeReadOptions.srcPath = checkPath;
 
       var got = _.FileProvider.Extract.filesTreeRead( filesTreeReadOptions );
