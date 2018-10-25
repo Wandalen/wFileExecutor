@@ -1092,7 +1092,7 @@ function chunkExecute( o )
   o.syncExternal = new _.Consequence({ limitNumberOfMessages : 1 }).give();
 
   let executed = self._chunkExecute( o );
-  executed = wConsequence.from( executed );
+  executed = _.Consequence.From( executed );
 
   executed.got( function( err,arg )
   {
@@ -1389,7 +1389,7 @@ function _chunkConcat( chunkFrame )
           usedIncludeFrame : usedIncludeFrame,
         });
 
-        formatted = wConsequence.from( formatted );
+        formatted = _.Consequence.From( formatted );
         formatted.ifNoErrorThen( function( formatted )
         {
           _.assert( _.strIs( formatted ) );
