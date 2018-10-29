@@ -1439,7 +1439,7 @@ function _chunkFormat( chunkFrame,text )
 {
   let self = this;
 
-  _.assert( arguments.length === 2, 'expects exactly two arguments' );
+  _.assert( arguments.length === 2, 'Expects exactly two arguments' );
 
   return self.formattersApply
   ({
@@ -1560,7 +1560,7 @@ function _categoriesCheck( categories,filter )
 {
   let self = this;
 
-  _.assert( arguments.length === 2, 'expects exactly two arguments' );
+  _.assert( arguments.length === 2, 'Expects exactly two arguments' );
 
   if( filter.ifAny )
   if( !_.arrayHasAny( categories,filter.ifAny ) )
@@ -1684,7 +1684,7 @@ function linkFor( userChunkFrame,usedFileFrame )
 {
   let self = this;
 
-  _.assert( arguments.length === 2, 'expects exactly two arguments' );
+  _.assert( arguments.length === 2, 'Expects exactly two arguments' );
   _.assert( _.construction.isLike( userChunkFrame,ChunkFrame ) );
   _.assert( _.construction.isLike( usedFileFrame,FileFrame ) || usedFileFrame instanceof _.FileRecord );
 
@@ -1915,7 +1915,7 @@ function includesUsedInherit( includeFrame,fileFrame )
 {
   let self = this;
 
-  _.assert( arguments.length === 2, 'expects exactly two arguments' );
+  _.assert( arguments.length === 2, 'Expects exactly two arguments' );
 
   _.arrayAppendArray( includeFrame.usedIncludeFrames , fileFrame.usedIncludeFrames );
 
