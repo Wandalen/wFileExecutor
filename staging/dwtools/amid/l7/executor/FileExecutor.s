@@ -376,7 +376,7 @@ function includeFrameEnd( includeFrame )
   _.assert( includeFrame.session === self.session );
   _.assert( _.construction.isLike( includeFrame,IncludeFrame ) );
 
-  _.arrayRemoveOnceStrictly( self.includeFrames,includeFrame );
+  _.arrayRemoveElementOnceStrictly( self.includeFrames,includeFrame );
 
   if( !includeFrame.userIncludeFrame )
   {
