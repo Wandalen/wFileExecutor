@@ -4,14 +4,14 @@
   "description": "Experimental. Class to execute a collection of templates with inlined JavaScript code to instantiate it. A collection of templates could be co-dependent in which case FileExecutor deduce dependencies and correct order of templates executions.",
   "author": "Kostiantyn Wandalen <wanalen@willbe.so>",
   "license": "MIT",
-  "main": "staging/dwtools/amid/l7/executor/FileExecutor.s",
+  "main": "proto/dwtools/amid/l7/executor/FileExecutor.s",
   "files": [
-    "staging/dwtools/amid/amid/l7/executor",
+    "proto/dwtools/amid/amid/l7/executor",
     "production"
   ],
   "scripts": {
     "test": "wtest staging",
-    "make_doc": "./doc.sh"
+    "docgen": "wdocgen proto"
   },
   "repository": {
     "type": "git",
