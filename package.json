@@ -7,7 +7,7 @@
   "main": "proto/dwtools/amid/l7/executor/FileExecutor.s",
   "files": [
     "proto/dwtools/amid/amid/l7/executor",
-    "production"
+    "proto/dwtools/Tools.s", "production"
   ],
   "scripts": {
     "test": "wtest staging",
