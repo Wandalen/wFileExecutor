@@ -424,7 +424,7 @@ function _includeAct( o )
 
   // if( options.forTheDocument )
   // {
-  //   let maskNotManual = _.regexpMakeObject( self.env.valueGet( '{{mask.manual}}' ) || /\.manual($|\.|\/)/,_.RegexpObject.Names.excludeAny );
+  //   let maskNotManual = _.regexpMakeObject( self.env.valueGet( '{{mask/manual}}' ) || /\.manual($|\.|\/)/,_.RegexpObject.Names.excludeAny );
   //   _.RegexpObject.And( maskTerminal,maskNotManual );
   // }
   //
