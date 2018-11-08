@@ -509,7 +509,7 @@ function _includeAct( o )
       throw _.err( err );
     }
 
-    // logger.log( 'includeFrameEnd\n',_.entitySelect( self.includeFrames,'*.includeOptions.globPath' ) );
+    // logger.log( 'includeFrameEnd\n',_.select( self.includeFrames,'*.includeOptions.globPath' ) );
 
     self.includeFrameEnd( includeFrame );
 

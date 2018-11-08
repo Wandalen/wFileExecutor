@@ -625,7 +625,7 @@ function executorMakeFor( path )
         var joinedFilePath = _.path.join( o.frame.fileFrame.file.dir,o.frame.fileFrame.file.name + '.manual.js' );
         // var joinedFile = o.frame.fileFrame.file.clone( joinedFilePath );
 
-        var paths = _.entitySelect( o.usedFileFrames,'*/file/absolute' );
+        var paths = _.select( o.usedFileFrames,'*/file/absolute' );
         var read = wTools.fileProvider.filesRead({ paths : paths, throwing : 1, sync : 1 });
         o.frame.result += '\n/*' + '\nstyle\n' + paths.join( '\n' ) + '\n*/\n';
         // o.frame.result += joinedFile.relative + '\n';
@@ -899,8 +899,8 @@ function samplesTest( test )
       debugger;
       if( sample.usedFiles )
       {
-        var used1 = _.entitySelect( executed.fileFrames,'*/file/relative' );
-        var used2 = _.entitySelect( executed.fileFrames,'*/usedFiles/*/relative' );
+        var used1 = _.select( executed.fileFrames,'*/file/relative' );
+        var used2 = _.select( executed.fileFrames,'*/usedFiles/*/relative' );
         var usedFiles = {};
         for( var u = 0 ; u < used1.length ; u++ )
         {
