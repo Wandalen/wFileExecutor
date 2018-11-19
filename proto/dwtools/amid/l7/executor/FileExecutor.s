@@ -478,7 +478,7 @@ function _includeAct( o )
   /* */
 
   if( !o.syncExternal )
-  o.syncExternal = new _.Consequence().give();
+  o.syncExternal = new _.Consequence().give( null );
   includeFrame.consequence = new _.Consequence();
 
   o.syncExternal.got( function( err,arg )
@@ -513,7 +513,7 @@ function _includeAct( o )
 
     self.includeFrameEnd( includeFrame );
 
-    o.syncExternal.give();
+    o.syncExternal.give( null );
     return arg;
   });
 
@@ -681,7 +681,7 @@ function filesExecute( o )
 {
   let self = this;
   if( !o.consequence )
-  o.consequence = new _.Consequence().give();
+  o.consequence = new _.Consequence().give( null );
   let con = o.consequence;
   let session = o.includeFrame.session;
   let files = o.includeFrame.files;
@@ -902,7 +902,7 @@ function _fileExecute( o )
 
   o.result = '';
   if( !o.consequence )
-  o.consequence = new _.Consequence().give();
+  o.consequence = new _.Consequence().give( null );
 
   /* let */
 
@@ -1088,8 +1088,8 @@ function chunkExecute( o )
 
   /* */
 
-  o.syncInternal = new _.Consequence({ limitNumberOfMessages : 1 });
-  o.syncExternal = new _.Consequence({ limitNumberOfMessages : 1 }).give();
+  o.syncInternal = new _.Consequence({ resourceLimit : 1 });
+  o.syncExternal = new _.Consequence({ resourceLimit : 1 }).give( null );
 
   let executed = self._chunkExecute( o );
   executed = _.Consequence.From( executed );
@@ -1408,8 +1408,8 @@ function _chunkConcat( chunkFrame )
   /* */
 
   con
-  .give()
-  .ifNoErrorThen( function()
+  .give( null )
+  .ifNoErrorThen( function( arg/*aaa*/ )
   {
     if( result.length )
     chunkFrame.result = result.join( '' ) + chunkFrame.result;

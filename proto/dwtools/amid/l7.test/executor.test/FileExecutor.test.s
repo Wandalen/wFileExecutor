@@ -851,7 +851,7 @@ function chunksSplit( test )
 function samplesTest( test )
 {
   var context = this;
-  var con = new _.Consequence().give();
+  var con = new _.Consequence().give( null );
   var executed, expected
 
   function sampleTest( sample )
@@ -938,7 +938,7 @@ function samplesTest( test )
   for( var s in context.samples ) (function()
   {
     var sample = context.samples[ s ];
-    con.ifNoErrorThen( () => sampleTest( sample ) );
+    con.ifNoErrorThen( ( arg/*aaa*/ ) => sampleTest( sample ) );
   })();
 
   return con;
