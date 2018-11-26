@@ -1109,7 +1109,7 @@ function chunkExecute( o )
     if( !_.strIs( arg ) )
     return this.error( _.err
     (
-      'chunk should return string, but returned',_.strTypeOf( arg ),
+      'chunk should return string, but returned',_.strType( arg ),
       '\ncode :\n',_.strLinesNumber( o.chunk.text || o.chunk.code )
     ));
 
@@ -1381,7 +1381,7 @@ function _chunkConcat( chunkFrame )
       }
       else
       {
-        _.assert( _.strIs( fileFrame.result ),'Expects string, but got',_.strTypeOf( fileFrame.result ) );
+        _.assert( _.strIs( fileFrame.result ),'Expects string, but got',_.strType( fileFrame.result ) );
         let formatted = self.linkFormat
         ({
           userChunkFrame : chunkFrame,

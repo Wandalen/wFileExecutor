@@ -170,7 +170,7 @@ reflector:
       ./dwtools/amid/l7.test/executor.test/TemplateTree.debug.jslike: true
     srcFilter:
       basePath: ./proto
-      prefixPath: proto
+      prefixPath: .
     dstFilter:
       basePath: .
       prefixPath: .
