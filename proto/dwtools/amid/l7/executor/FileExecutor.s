@@ -1394,6 +1394,7 @@ function _chunkConcat( chunkFrame )
         {
           _.assert( _.strIs( formatted ) );
           result[ index ] = formatted;
+          return formatted;
         });
         formatted.doThen( con );
       }
@@ -1623,7 +1624,7 @@ function formatterTry( o )
   _.assert( _.objectIs( o.formatter ) );
 
   if( !self._categoriesCheck( o.categories,o.formatter ) )
-  return;
+  return false;
 
   return self.formatterApply( o );
 }
@@ -1653,7 +1654,7 @@ function formatterApply( o )
       }
 
       if( !usedFileFrames.length )
-      return;
+      return false;
 
     }
     o.usedFileFrames = usedFileFrames;
@@ -1675,7 +1676,7 @@ function formatterApply( o )
     o.usedFileFrames = null;
   }
 
-  return r;
+  return r || null;
 }
 
 //
