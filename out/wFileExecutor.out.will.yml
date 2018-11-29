@@ -6,7 +6,7 @@ about:
     JavaScript code to instantiate it. A collection of templates could be
     co-dependent in which case FileExecutor deduce dependencies and correct
     order of templates executions.
-  version: 0.3.94
+  version: 0.3.98
   enabled: 1
   interpreters:
     - nodejs >= 6.0.0
@@ -46,6 +46,7 @@ path:
       proto: 1
       export: 1
       tar: 1
+      public: 1
   baseDir:
     path: ..
   exportedFiles.0:
@@ -70,6 +71,7 @@ path:
       proto: 1
       export: 1
       tar: 1
+      public: 1
   exportedTerminals.0:
     path:
       - ./dwtools/Tools.s
@@ -83,6 +85,7 @@ path:
       proto: 1
       export: 1
       tar: 1
+      public: 1
 submodule: {}
 reflector:
   reflect.proto.0:
@@ -263,12 +266,13 @@ build:
       proto: 1
       export: 1
       tar: 1
+      public: 1
     steps:
       - 'build::debug.raw'
       - 'step::export.proto'
 exported:
   proto.export:
-    version: 0.3.94
+    version: 0.3.98
     criterion:
       default: 1
       debug: 1
@@ -276,6 +280,7 @@ exported:
       proto: 1
       export: 1
       tar: 1
+      public: 1
     exportedReflector: 'reflector::exported.0'
     exportedFilesReflector: 'reflector::exportedFiles.0'
     exportedDirPath: 'path::exportedDir.0'
@@ -293,3 +298,4 @@ exported:
         proto: 1
         export: 1
         tar: 1
+        public: 1
