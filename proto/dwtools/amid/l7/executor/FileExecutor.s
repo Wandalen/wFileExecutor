@@ -481,12 +481,12 @@ function _includeAct( o )
   /* */
 
   if( !o.syncExternal )
-  o.syncExternal = new _.Consequence().give( null );
+  o.syncExternal = new _.Consequence().take( null );
   includeFrame.consequence = new _.Consequence();
 
   o.syncExternal.got( function( err,arg )
   {
-    includeFrame.consequence.give( err,arg );
+    includeFrame.consequence.take( err,arg );
   });
 
   self.filesExecute
@@ -503,12 +503,12 @@ function _includeAct( o )
     return arg;
   });
 
-  includeFrame.consequence.doThen( function _includeSecondAfter( err,arg )
+  includeFrame.consequence.finally( function _includeSecondAfter( err,arg )
   {
     // debugger;
     if( err )
     {
-      o.syncExternal.give( err,arg );
+      o.syncExternal.take( err,arg );
       throw _.err( err );
     }
 
@@ -516,7 +516,7 @@ function _includeAct( o )
 
     self.includeFrameEnd( includeFrame );
 
-    o.syncExternal.give( null );
+    o.syncExternal.take( null );
     return arg;
   });
 
@@ -649,7 +649,7 @@ function include( o )
 
   /* */
 
-  includeFrame.consequence.doThen( function _includeAfter( err,arg )
+  includeFrame.consequence.finally( function _includeAfter( err,arg )
   {
     if( err )
     {
@@ -684,7 +684,7 @@ function filesExecute( o )
 {
   let self = this;
   if( !o.consequence )
-  o.consequence = new _.Consequence().give( null );
+  o.consequence = new _.Consequence().take( null );
   let con = o.consequence;
   let session = o.includeFrame.session;
   let files = o.includeFrame.files;
@@ -822,7 +822,7 @@ function fileExecute( o )
 
   /* */
 
-  fileFrame.consequence.doThen( function _fileExecuteAfter( err,arg )
+  fileFrame.consequence.finally( function _fileExecuteAfter( err,arg )
   {
 
     if( err )
@@ -905,7 +905,7 @@ function _fileExecute( o )
 
   o.result = '';
   if( !o.consequence )
-  o.consequence = new _.Consequence().give( null );
+  o.consequence = new _.Consequence().take( null );
 
   /* let */
 
@@ -1092,7 +1092,7 @@ function chunkExecute( o )
   /* */
 
   o.syncInternal = new _.Consequence({ resourceLimit : 1 });
-  o.syncExternal = new _.Consequence({ resourceLimit : 1 }).give( null );
+  o.syncExternal = new _.Consequence({ resourceLimit : 1 }).take( null );
 
   let executed = self._chunkExecute( o );
   executed = _.Consequence.From( executed );
@@ -1104,7 +1104,7 @@ function chunkExecute( o )
     logger.log( 'chunkExecute.end1',o.fileFrame.file.relative,o.chunk.index );
 
     if( err )
-    return this.give( err,arg );
+    return this.take( err,arg );
 
     if( _.numberIs( arg ) )
     arg = _.toStr( arg );
@@ -1116,11 +1116,11 @@ function chunkExecute( o )
       '\ncode :\n',_.strLinesNumber( o.chunk.text || o.chunk.code )
     ));
 
-    this.give( err,arg );
+    this.take( err,arg );
   });
 
-  executed.andThen( o.syncExternal );
-  executed.doThen( o.syncInternal );
+  executed.andKeep( o.syncExternal );
+  executed.finally( o.syncInternal );
 
   /* */
 
@@ -1365,7 +1365,7 @@ function _chunkConcat( chunkFrame )
     {
       let fileFrame = usedIncludeFrame.fileFrames[ f ];
 
-      con.choke();
+      con.done( 1 );
       _index += 1;
       let index = _index;
 
@@ -1399,7 +1399,7 @@ function _chunkConcat( chunkFrame )
           result[ index ] = formatted;
           return formatted;
         });
-        formatted.doThen( con );
+        formatted.finally( con );
       }
 
     })();
@@ -1412,7 +1412,7 @@ function _chunkConcat( chunkFrame )
   /* */
 
   con
-  .give( null )
+  .take( null )
   .ifNoErrorThen( function( arg/*aaa*/ )
   {
     if( result.length )
@@ -1586,7 +1586,7 @@ function _categoriesCheck( categories,filter )
 function formattersApply( o )
 {
   let self = this;
-  let con = new _.Consequence().give( o.frame.result );
+  let con = new _.Consequence().take( o.frame.result );
 
   _.assert( arguments.length === 1, 'Expects single argument' );
 
@@ -1768,7 +1768,7 @@ function linkFormat( o )
   {
     _.assert( _.strIs( arg ),'Expects string' );
     o.link.result = arg;
-    this.give( err,arg );
+    this.take( err,arg );
   });
 
   if( o.usedIncludeFrame.includeOptions.onIncludeFromat )

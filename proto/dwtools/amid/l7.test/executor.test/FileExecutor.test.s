@@ -831,7 +831,7 @@ function chunksSplit( test )
 function samplesTest( test )
 {
   var context = this;
-  var con = new _.Consequence().give( null );
+  var con = new _.Consequence().take( null );
   var executed, expected
 
   function sampleTest( sample )
@@ -858,7 +858,8 @@ function samplesTest( test )
         allowIncludingChildren : sample.allowIncludingChildren,
       });
       return executed.consequence;
-    }).chokeThen();
+    // }).chokeThen(); // xxx
+    })
     else
     {
       var translator;
