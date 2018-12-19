@@ -465,8 +465,8 @@ function _includeAct( o )
 
   includeFrame.resolveOptions = _.mapOnly( includeFrame.resolveOptions, self.fileProvider.filesResolve.defaults );
 
-  if( includeFrame.resolveOptions.allowingMissing === undefined || includeFrame.resolveOptions.allowingMissing === null )
-  includeFrame.resolveOptions.allowingMissing = 1;
+  if( includeFrame.resolveOptions.allowingMissed === undefined || includeFrame.resolveOptions.allowingMissed === null )
+  includeFrame.resolveOptions.allowingMissed = 1;
 
   // debugger; // aaa
   includeFrame.files = self.fileProvider.filesResolve( includeFrame.resolveOptions );
