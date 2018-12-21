@@ -5,7 +5,7 @@
 if( typeof module !== 'undefined' )
 {
 
-  let _ = require( '../../Tools.s' );
+  let _ = require( '../../../Tools.s' );
 
   _.include( 'wTesting' );
   _.include( 'wExternalFundamentals' );
@@ -909,6 +909,7 @@ function samplesTest( test )
       logger.log( 'filesTreeRead',checkPath );
       logger.log( _.toJson( got ) );
 
+      return null;
     });
 
     return executed.consequence;
