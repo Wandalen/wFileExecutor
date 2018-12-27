@@ -29,8 +29,7 @@
     "wfilesarchive": ""
   },
   "devDependencies": {
-    "wTesting": "",
-    "wfileexecutor": "."
+    "wTesting": ""
   },
   "keywords": [
     "wTools",
