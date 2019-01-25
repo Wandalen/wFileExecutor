@@ -3,7 +3,8 @@
 'use strict';
 
 /**
-  @module Tools/amid/Executor - Experimental. Class to execute a collection of templates with inlined JavaScript code to instantiate it. A collection of templates could be co-dependent in which case FileExecutor deduce dependencies and correct order of templates executions.
+ * Experimental. Class to execute a collection of templates with inlined JavaScript code to instantiate it. A collection of templates could be co-dependent in which case FileExecutor deduce dependencies and correct order of templates executions.
+  @module Tools/amid/Executor
 */
 
 /**
