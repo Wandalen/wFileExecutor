@@ -6,7 +6,7 @@ about:
     JavaScript code to instantiate it. A collection of templates could be
     co-dependent in which case FileExecutor deduce dependencies and correct
     order of templates executions.
-  version: 0.3.98
+  version: 0.3.109
   enabled: 1
   interpreters:
     - nodejs >= 6.0.0
@@ -240,7 +240,7 @@ step:
       export: 'path::proto'
       tar: 0
     inherit:
-      - export
+      - predefined.export
 build:
   debug.raw:
     criterion:
@@ -289,7 +289,7 @@ build:
       - 'step::export.proto'
 exported:
   proto.export:
-    version: 0.3.98
+    version: 0.3.109
     criterion:
       default: 1
       debug: 1
