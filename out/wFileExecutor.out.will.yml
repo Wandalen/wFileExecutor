@@ -6,7 +6,7 @@ about:
     JavaScript code to instantiate it. A collection of templates could be
     co-dependent in which case FileExecutor deduce dependencies and correct
     order of templates executions.
-  version: 0.3.112
+  version: 0.3.113
   enabled: 1
   interpreters:
     - nodejs >= 6.0.0
@@ -26,11 +26,11 @@ path:
   out:
     path: out
   out.debug:
-    path: ./out.debug
+    path: ./out/debug
     criterion:
       debug: 1
   out.release:
-    path: ./out.release
+    path: ./out/release
     criterion:
       debug: 0
   repository:
@@ -49,19 +49,19 @@ path:
       public: 1
   exportedFiles.proto.export:
     path:
-      - .
-      - ./dwtools
-      - ./dwtools/Tools.s
-      - ./dwtools/abase
-      - ./dwtools/amid
-      - ./dwtools/amid/l7
-      - ./dwtools/amid/l7/executor
-      - ./dwtools/amid/l7/executor/FileExecutor.s
-      - ./dwtools/amid/l7.test
-      - ./dwtools/amid/l7.test/executor.test
-      - ./dwtools/amid/l7.test/executor.test/FileExecutor.test.s
-      - ./dwtools/amid/l7.test/executor.test/TemplateTree.debug.jslike
-      - ./dwtools/atop
+      - proto
+      - proto/dwtools
+      - proto/dwtools/Tools.s
+      - proto/dwtools/abase
+      - proto/dwtools/amid
+      - proto/dwtools/amid/l7
+      - proto/dwtools/amid/l7/executor
+      - proto/dwtools/amid/l7/executor/FileExecutor.s
+      - proto/dwtools/amid/l7.test
+      - proto/dwtools/amid/l7.test/executor.test
+      - proto/dwtools/amid/l7.test/executor.test/FileExecutor.test.s
+      - proto/dwtools/amid/l7.test/executor.test/TemplateTree.debug.jslike
+      - proto/dwtools/atop
     criterion:
       default: 1
       debug: 1
@@ -75,7 +75,7 @@ reflector:
   reflect.proto.:
     srcFilter:
       filePath:
-        ./proto: ./out.release
+        ./proto: ./out/release
       maskAll:
         excludeAny:
           - !<tag:yaml.org,2002:js/regexp> /(\W|^)node_modules(\W|$)/
@@ -96,7 +96,7 @@ reflector:
   reflect.proto.debug:
     srcFilter:
       filePath:
-        ./proto: ./out.debug
+        ./proto: ./out/debug
       maskAll:
         excludeAny:
           - !<tag:yaml.org,2002:js/regexp> /(\W|^)node_modules(\W|$)/
@@ -131,27 +131,44 @@ reflector:
       - predefined.*
   exported.proto.export:
     srcFilter:
-      filePath: ./proto
+      filePath:
+        ./proto: true
       prefixPath: .
+    criterion:
+      default: 1
+      debug: 1
+      raw: 1
+      proto: 1
+      export: 1
+      tar: 1
+      public: 1
   exportedFiles.proto.export:
     recursive: 0
     srcFilter:
       filePath:
         .: true
-        ./dwtools: true
-        ./dwtools/Tools.s: true
-        ./dwtools/abase: true
-        ./dwtools/amid: true
-        ./dwtools/amid/l7: true
-        ./dwtools/amid/l7/executor: true
-        ./dwtools/amid/l7/executor/FileExecutor.s: true
-        ./dwtools/amid/l7.test: true
-        ./dwtools/amid/l7.test/executor.test: true
-        ./dwtools/amid/l7.test/executor.test/FileExecutor.test.s: true
-        ./dwtools/amid/l7.test/executor.test/TemplateTree.debug.jslike: true
-        ./dwtools/atop: true
+        dwtools: true
+        dwtools/Tools.s: true
+        dwtools/abase: true
+        dwtools/amid: true
+        dwtools/amid/l7: true
+        dwtools/amid/l7/executor: true
+        dwtools/amid/l7/executor/FileExecutor.s: true
+        dwtools/amid/l7.test: true
+        dwtools/amid/l7.test/executor.test: true
+        dwtools/amid/l7.test/executor.test/FileExecutor.test.s: true
+        dwtools/amid/l7.test/executor.test/TemplateTree.debug.jslike: true
+        dwtools/atop: true
       basePath: .
       prefixPath: proto
+    criterion:
+      default: 1
+      debug: 1
+      raw: 1
+      proto: 1
+      export: 1
+      tar: 1
+      public: 1
 step:
   clean.out.:
     criterion:
@@ -272,7 +289,7 @@ build:
       - 'step::export.proto'
 exported:
   proto.export:
-    version: 0.3.112
+    version: 0.3.113
     criterion:
       default: 1
       debug: 1
