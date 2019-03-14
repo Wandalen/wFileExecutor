@@ -78,6 +78,7 @@ reflector:
     src:
       filePath:
         .: .
+      prefixPath: proto
       maskAll:
         excludeAny:
           - !<tag:yaml.org,2002:js/regexp> /(\W|^)node_modules(\W|$)/
@@ -90,7 +91,6 @@ reflector:
           - !<tag:yaml.org,2002:js/regexp> /\.debug($|\.|\/)/i
           - !<tag:yaml.org,2002:js/regexp> /\.test($|\.|\/)/i
           - !<tag:yaml.org,2002:js/regexp> /\.experiment($|\.|\/)/i
-      prefixPath: proto
     dst:
       prefixPath: out/release
     criterion:
@@ -101,6 +101,7 @@ reflector:
     src:
       filePath:
         .: .
+      prefixPath: proto
       maskAll:
         excludeAny:
           - !<tag:yaml.org,2002:js/regexp> /(\W|^)node_modules(\W|$)/
@@ -111,7 +112,6 @@ reflector:
           - !<tag:yaml.org,2002:js/regexp> /\.DS_Store$/
           - !<tag:yaml.org,2002:js/regexp> /(^|\/)-/
           - !<tag:yaml.org,2002:js/regexp> /\.release($|\.|\/)/i
-      prefixPath: proto
     dst:
       prefixPath: out/debug
     criterion:
@@ -137,7 +137,7 @@ reflector:
   exported.proto.export:
     src:
       filePath:
-        .: true
+        .: null
       prefixPath: proto
     criterion:
       default: 1
@@ -151,19 +151,19 @@ reflector:
     recursive: 0
     src:
       filePath:
-        .: true
-        dwtools: true
-        dwtools/Tools.s: true
-        dwtools/abase: true
-        dwtools/amid: true
-        dwtools/amid/l7: true
-        dwtools/amid/l7/executor: true
-        dwtools/amid/l7/executor/FileExecutor.s: true
-        dwtools/amid/l7.test: true
-        dwtools/amid/l7.test/executor.test: true
-        dwtools/amid/l7.test/executor.test/FileExecutor.test.s: true
-        dwtools/amid/l7.test/executor.test/TemplateTree.debug.jslike: true
-        dwtools/atop: true
+        .: null
+        dwtools: null
+        dwtools/Tools.s: null
+        dwtools/abase: null
+        dwtools/amid: null
+        dwtools/amid/l7: null
+        dwtools/amid/l7/executor: null
+        dwtools/amid/l7/executor/FileExecutor.s: null
+        dwtools/amid/l7.test: null
+        dwtools/amid/l7.test/executor.test: null
+        dwtools/amid/l7.test/executor.test/FileExecutor.test.s: null
+        dwtools/amid/l7.test/executor.test/TemplateTree.debug.jslike: null
+        dwtools/atop: null
       basePath: .
       prefixPath: proto
     criterion:
