@@ -3,13 +3,16 @@
 'use strict';
 
 /**
- * Experimental. Class to execute a collection of templates with inlined JavaScript code to instantiate it. A collection of templates could be co-dependent in which case FileExecutor deduce dependencies and correct order of templates executions.
-  @module Tools/amid/Executor
+  @module Tools/amid/Executor - Experimental. Class to execute a collection of templates with inlined JavaScript code to instantiate it. A collection of templates could be co-dependent in which case FileExecutor deduce dependencies and correct order of templates executions.
 */
 
 /**
  * @file FileExecutor.s.
  */
+
+/*
+qqq : repair, please
+*/
 
 if( typeof module !== 'undefined' )
 {
@@ -321,13 +324,12 @@ function includeFrameBegin( o )
   
   _.routineOptions( includeFrameBegin,o );
   _.assert( arguments.length === 1, 'Expects single argument' );
-  
+
   if( o.fileFrames === null )
   o.fileFrames = [];
-  
   if( o.usedIncludeFrames === null )
   o.usedIncludeFrames = [];
- 
+
   let includeFrame = IncludeFrame.constructor();
 
   includeFrame.userIncludeFrame = o.userIncludeFrame;
@@ -371,7 +373,6 @@ function includeFrameEnd( includeFrame )
 
   if( !includeFrame.userIncludeFrame )
   {
-    // debugger;
     self.session = null;
     _.assert( self.includeFrames.length === 0 );
   }
@@ -846,7 +847,7 @@ function fileExecute( o )
           purging : 1,
         });
 
-        // file.reval();
+        // file.reset();
         // self.archive.statUpdate( file,file.stat );
 
         if( self.verbosity )
@@ -1404,7 +1405,7 @@ function _chunkConcat( chunkFrame )
 
   con
   .take( null )
-  .ifNoErrorThen( function( arg/*aaa*/ )
+  .ifNoErrorThen( function( arg )
   {
     if( result.length )
     chunkFrame.result = result.join( '' ) + chunkFrame.result;
@@ -1936,6 +1937,9 @@ let IncludeFrame = _.like()
   userIncludeFrame : null,
   fileFrames : null,
   usedIncludeFrames : null,
+
+  // fileFrames : [],
+  // usedIncludeFrames : [],
 
   externals : null,
   context : null,

@@ -1,13 +1,12 @@
-
 {
   "name": "wfileexecutor",
-  "version": "0.3.0",
-  "description": "___",
+  "version": "0.3.130",
+  "description": "Experimental. Class to execute a collection of templates with inlined JavaScript code to instantiate it. A collection of templates could be co-dependent in which case FileExecutor deduce dependencies and correct order of templates executions.",
   "author": "Kostiantyn Wandalen <wanalen@willbe.so>",
   "license": "MIT",
-  "main": "proto/dwtools/amid/___",
+  "main": "proto/dwtools/amid/l7/executor/FileExecutor.s",
   "files": [
-    "proto/dwtools/amid",
+    "proto/dwtools/amid/amid/l7/executor",
     "proto/dwtools/Tools.s",
     "production"
   ],
@@ -23,12 +22,17 @@
     "url": "https://github.com/Wandalen/wFileExecutor/issues"
   },
   "dependencies": {
-    "wTools": ""
+    "wTools": "",
+    "wFiles": "",
+    "wexternalfundamentals": "",
+    "wpathtranslator": "",
+    "wfilesarchive": ""
   },
   "devDependencies": {
     "wTesting": ""
   },
   "keywords": [
-    "wTools"
+    "wTools",
+    "File executor"
   ]
 }

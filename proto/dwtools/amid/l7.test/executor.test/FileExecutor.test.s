@@ -935,7 +935,7 @@ function samplesTest( test )
   for( var s in context.samples ) (function()
   {
     var sample = context.samples[ s ];
-    con.ifNoErrorThen( ( arg/*aaa*/ ) => sampleTest( sample ) );
+    con.ifNoErrorThen( ( arg ) => sampleTest( sample ) );
   })();
 
   return con;

@@ -453,13 +453,20 @@ function executorMakeFor( path )
   var dstPath = _.path.s.join( context.dstPath, _.path.split( path )[ 0 ] );
   var srcPath = _.path.s.join( context.srcPath, _.path.split( path )[ 0 ] );
 
-  context.templateTreeProvider.readToProvider
+  // context.templateTreeProvider.readToProvider
+  // ({
+  //   dstProvider : context.fileProvider,
+  //   dstPath : context.dstPath,
+  //   allowWrite : 1,
+  //   allowDelete : 1,
+  //   sameTime : 1,
+  // });
+
+  context.templateTreeProvider.filesReflectTo
   ({
     dstProvider : context.fileProvider,
     dstPath : context.dstPath,
-    allowWrite : 1,
-    allowDelete : 1,
-    sameTime : 1,
+    preservingTime : 1,
   });
 
   context.executor = new wFileExecutor();
@@ -588,7 +595,7 @@ function executorMakeFor( path )
           return _.arrayHas( e.categories,'script' ) ? e.file.absolute : undefined;
         });
 
-        var read = wTools.fileProvider.filesRead({ paths : paths, throwing : 1, sync : 1 });
+        var read = wTools.fileProvider.filesReadOld({ paths : paths, throwing : 1, sync : 1 });
 
         o.frame.result += '\n/*' + '\nscript\n' + paths.join( '\n' ) + '\n*/\n';
 
@@ -606,7 +613,7 @@ function executorMakeFor( path )
         // var joinedFile = o.frame.fileFrame.file.clone( joinedFilePath );
 
         var paths = _.select( o.usedFileFrames,'*/file/absolute' );
-        var read = wTools.fileProvider.filesRead({ paths : paths, throwing : 1, sync : 1 });
+        var read = wTools.fileProvider.filesReadOld({ paths : paths, throwing : 1, sync : 1 });
         o.frame.result += '\n/*' + '\nstyle\n' + paths.join( '\n' ) + '\n*/\n';
         // o.frame.result += joinedFile.relative + '\n';
 
@@ -920,7 +927,7 @@ function samplesTest( test )
   for( var s in context.samples ) (function()
   {
     var sample = context.samples[ s ];
-    con.ifNoErrorThen( ( arg/*aaa*/ ) => sampleTest( sample ) );
+    con.ifNoErrorThen( ( arg ) => sampleTest( sample ) );
   })();
 
   return con;
