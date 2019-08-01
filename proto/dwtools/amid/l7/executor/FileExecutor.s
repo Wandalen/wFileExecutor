@@ -321,7 +321,7 @@ sessionMake.defaults =
 function includeFrameBegin( o )
 {
   let self = this;
-
+  
   _.routineOptions( includeFrameBegin,o );
   _.assert( arguments.length === 1, 'Expects single argument' );
 
@@ -333,6 +333,7 @@ function includeFrameBegin( o )
   let includeFrame = IncludeFrame.constructor();
 
   includeFrame.userIncludeFrame = o.userIncludeFrame;
+  includeFrame.usedIncludeFrames = o.usedIncludeFrames
   includeFrame.fileFrames = [];
 
   includeFrame.session = includeFrame.userIncludeFrame ? includeFrame.userIncludeFrame.session : self.session;
