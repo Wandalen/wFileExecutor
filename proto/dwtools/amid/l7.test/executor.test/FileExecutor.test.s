@@ -26,11 +26,11 @@ function onSuiteBegin()
 
   self.templateTreePath = _.path.join( __dirname, './TemplateTree.debug.jslike' );
   self.templateTree = _.fileProvider.fileReadJs( self.templateTreePath );
-  
-  
+
+
   self.templateTreeProvider = _.FileProvider.Extract({ filesTree : self.templateTree, protocols : [ 'extract' ] });
   self.fileProvider = _.FileProvider.HardDrive();
-  
+
   self.hub = _.FileProvider.Hub({ providers : [ self.templateTreeProvider, self.fileProvider ] });
 
 }
@@ -456,14 +456,14 @@ function executorMakeFor( path )
 
   var dstPath = _.path.s.join( context.dstPath, _.path.split( path )[ 0 ] );
   var srcPath = _.path.s.join( context.srcPath, _.path.split( path )[ 0 ] );
-  
+
   let srcPathGlobal = context.templateTreeProvider.path.globalFromLocal( '/' );
   let dstPathGlobal = context.fileProvider.path.globalFromLocal( context.dstPath );
-  
+
   context.fileProvider.filesDelete( context.dstPath  );
 
   context.hub.filesReflect({ reflectMap : { [ srcPathGlobal ] : dstPathGlobal } });
-  
+
   context.executor = new wFileExecutor();
 
   context.executor.linkAttributeDefault = 'js';
@@ -895,15 +895,15 @@ function samplesTest( test )
 
       if( sample.asyncFormatterCallCounter !== undefined )
       test.identical( _global_.asyncFormatterCallCounter , sample.asyncFormatterCallCounter );
-      
+
       let extract = _.FileProvider.Extract({ protocols : [ 'extract2' ] });
       extract.providerRegisterTo( context.hub );
 
       let checkPathGlobal = context.fileProvider.path.globalFromLocal( checkPath );
       let dstPathGlobal = extract.path.globalFromLocal( '/got' );
-      
+
       context.hub.filesReflect({ reflectMap : { [  checkPathGlobal] : dstPathGlobal }, onWriteDstDown : onWriteDstDown })
-      
+
       if( _.strIs( extract.filesTree.got ) )
       {
         expected = expected[ '.' ];
@@ -911,15 +911,15 @@ function samplesTest( test )
       test.identical( extract.filesTree.got,expected );
       logger.log( 'filesTreeRead',checkPath );
       logger.log( _.toJson( extract.filesTree.got ) );
-      
+
       extract.finit();
 
       return null;
-      
+
       /*  */
-      
+
       function onWriteDstDown( record, o )
-      { 
+      {
         if( record.src.isDir )
         return;
         let read = extract.fileRead({ filePath : record.dst.absolute });
@@ -941,7 +941,7 @@ function samplesTest( test )
   return con;
 }
 
-samplesTest.timeOut = 60000;
+samplesTest.timeOut = 500000;
 
 // --
 // declare
