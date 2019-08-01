@@ -40,7 +40,7 @@ let _ = _global_.wTools;
 let Parent = null;
 let Self = function wFileExecutor( o )
 {
-  return _.instanceConstructor( Self, this, arguments );
+  return _.workpiece.construct( Self, this, arguments );
 }
 
 Self.shortName = 'FileExecutor';
@@ -52,7 +52,7 @@ function init( o )
   let self = this;
 
   _.assert( arguments.length === 0 || arguments.length === 1 );
-  _.instanceInit( self );
+  _.workpiece.initFields( self );
 
   Object.preventExtensions( self );
 
@@ -318,13 +318,20 @@ sessionMake.defaults =
 function includeFrameBegin( o )
 {
   let self = this;
-
+  
   _.routineOptions( includeFrameBegin,o );
   _.assert( arguments.length === 1, 'Expects single argument' );
-
+  
+  if( o.fileFrames === null )
+  o.fileFrames = [];
+  
+  if( o.usedIncludeFrames === null )
+  o.usedIncludeFrames = [];
+ 
   let includeFrame = IncludeFrame.constructor();
 
   includeFrame.userIncludeFrame = o.userIncludeFrame;
+  includeFrame.usedIncludeFrames = o.usedIncludeFrames
   includeFrame.fileFrames = [];
 
   includeFrame.session = includeFrame.userIncludeFrame ? includeFrame.userIncludeFrame.session : self.session;
@@ -444,7 +451,7 @@ function _includeAct( o )
   =
   self.fileProvider._filesFilterMasksSupplement( includeFrame.resolveOptions, resolveOptions );
 
-  let filter = _.FileRecordFilter.TollerantMake( includeFrame.resolveOptions,{ fileProvider : self.fileProvider } );
+  let filter = _.FileRecordFilter.TollerantFrom( includeFrame.resolveOptions,{ defaultFileProvider : self.fileProvider } );
   includeFrame.resolveOptions.filter = filter;
 
   includeFrame.resolveOptions = _.mapOnly( includeFrame.resolveOptions, self.fileProvider.filesResolve.defaults );
@@ -468,7 +475,7 @@ function _includeAct( o )
   o.syncExternal = new _.Consequence().take( null );
   includeFrame.consequence = new _.Consequence();
 
-  o.syncExternal.got( function( err,arg )
+  o.syncExternal.give( function( err,arg )
   {
     includeFrame.consequence.take( err,arg );
   });
@@ -1081,7 +1088,7 @@ function chunkExecute( o )
   let executed = self._chunkExecute( o );
   executed = _.Consequence.From( executed );
 
-  executed.got( function( err,arg )
+  executed.give( function( err,arg )
   {
 
     if( self.verbosity > 2 )
@@ -1349,7 +1356,7 @@ function _chunkConcat( chunkFrame )
     {
       let fileFrame = usedIncludeFrame.fileFrames[ f ];
 
-      con.done( 1 );
+      con.give( 1 );
       _index += 1;
       let index = _index;
 
@@ -1749,7 +1756,7 @@ function linkFormat( o )
 
   let got = formatted;
 
-  got.got( function( err,arg )
+  got.give( function( err,arg )
   {
     _.assert( _.strIs( arg ),'Expects string' );
     o.link.result = arg;
@@ -1927,8 +1934,8 @@ let IncludeFrame = _.like()
 
   userChunkFrame : null,
   userIncludeFrame : null,
-  fileFrames : [],
-  usedIncludeFrames : [],
+  fileFrames : null,
+  usedIncludeFrames : null,
 
   externals : null,
   context : null,
