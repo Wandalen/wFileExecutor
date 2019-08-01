@@ -26,8 +26,12 @@ function onSuiteBegin()
 
   self.templateTreePath = _.path.join( __dirname, './TemplateTree.debug.jslike' );
   self.templateTree = _.fileProvider.fileReadJs( self.templateTreePath );
+  
+  
   self.templateTreeProvider = _.FileProvider.Extract({ filesTree : self.templateTree, protocols : [ 'extract' ] });
-
+  self.fileProvider = _.FileProvider.HardDrive();
+  
+  self.hub = _.FileProvider.Hub({ providers : [ self.templateTreeProvider, self.fileProvider ] });
 
 }
 
@@ -452,23 +456,14 @@ function executorMakeFor( path )
 
   var dstPath = _.path.s.join( context.dstPath, _.path.split( path )[ 0 ] );
   var srcPath = _.path.s.join( context.srcPath, _.path.split( path )[ 0 ] );
+  
+  let srcPathGlobal = context.templateTreeProvider.path.globalFromLocal( '/' );
+  let dstPathGlobal = context.fileProvider.path.globalFromLocal( context.dstPath );
+  
+  context.fileProvider.filesDelete( context.dstPath  );
 
-  // context.templateTreeProvider.readToProvider
-  // ({
-  //   dstProvider : context.fileProvider,
-  //   dstPath : context.dstPath,
-  //   allowWrite : 1,
-  //   allowDelete : 1,
-  //   sameTime : 1,
-  // });
-
-  context.templateTreeProvider.filesReflectTo
-  ({
-    dstProvider : context.fileProvider,
-    dstPath : context.dstPath,
-    preservingTime : 1,
-  });
-
+  context.hub.filesReflect({ reflectMap : { [ srcPathGlobal ] : dstPathGlobal } });
+  
   context.executor = new wFileExecutor();
 
   context.executor.linkAttributeDefault = 'js';
@@ -595,7 +590,7 @@ function executorMakeFor( path )
           return _.arrayHas( e.categories,'script' ) ? e.file.absolute : undefined;
         });
 
-        var read = wTools.fileProvider.filesReadOld({ paths : paths, throwing : 1, sync : 1 });
+        var read = wTools.fileProvider.filesRead({ src : paths, throwing : 1, sync : 1 });
 
         o.frame.result += '\n/*' + '\nscript\n' + paths.join( '\n' ) + '\n*/\n';
 
@@ -613,7 +608,7 @@ function executorMakeFor( path )
         // var joinedFile = o.frame.fileFrame.file.clone( joinedFilePath );
 
         var paths = _.select( o.usedFileFrames,'*/file/absolute' );
-        var read = wTools.fileProvider.filesReadOld({ paths : paths, throwing : 1, sync : 1 });
+        var read = wTools.fileProvider.filesRead({ src : paths, throwing : 1, sync : 1 });
         o.frame.result += '\n/*' + '\nstyle\n' + paths.join( '\n' ) + '\n*/\n';
         // o.frame.result += joinedFile.relative + '\n';
 
@@ -900,23 +895,36 @@ function samplesTest( test )
 
       if( sample.asyncFormatterCallCounter !== undefined )
       test.identical( _global_.asyncFormatterCallCounter , sample.asyncFormatterCallCounter );
+      
+      let extract = _.FileProvider.Extract({ protocols : [ 'extract2' ] });
+      extract.providerRegisterTo( context.hub );
 
-      let filesTreeReadOptions = { srcProvider : context.fileProvider }
-
-      filesTreeReadOptions.srcPath = checkPath;
-
-      var got = _.FileProvider.Extract.filesTreeRead( filesTreeReadOptions );
-
-      if( _.strIs( got ) )
+      let checkPathGlobal = context.fileProvider.path.globalFromLocal( checkPath );
+      let dstPathGlobal = extract.path.globalFromLocal( '/got' );
+      
+      context.hub.filesReflect({ reflectMap : { [  checkPathGlobal] : dstPathGlobal }, onWriteDstDown : onWriteDstDown })
+      
+      if( _.strIs( extract.filesTree.got ) )
       {
-        expected = expected[ '.' ]
+        expected = expected[ '.' ];
       }
-
-      test.identical( got,expected );
+      test.identical( extract.filesTree.got,expected );
       logger.log( 'filesTreeRead',checkPath );
-      logger.log( _.toJson( got ) );
+      logger.log( _.toJson( extract.filesTree.got ) );
+      
+      extract.finit();
 
       return null;
+      
+      /*  */
+      
+      function onWriteDstDown( record, o )
+      { 
+        if( record.src.isDir )
+        return;
+        let read = extract.fileRead({ filePath : record.dst.absolute });
+        extract.fileWrite({ filePath : record.dst.absolute, data : read, encoding : 'utf8' });
+      }
     });
 
     return executed.consequence;
@@ -958,6 +966,7 @@ var Self =
     srcPath : null,
     templateTreePath : null,
     templateTreeProvider : null,
+    hub : null,
     samples : samples,
   },
 
