@@ -8,7 +8,7 @@ if( typeof module !== 'undefined' )
   let _ = require( '../../../Tools.s' );
 
   _.include( 'wTesting' );
-  _.include( 'wExternalFundamentals' );
+  _.include( 'wAppBasic' );
   _.include( 'wFiles' );
 
   require( '../../l7/executor/FileExecutor.s' );
