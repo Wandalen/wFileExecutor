@@ -457,8 +457,8 @@ function executorMakeFor( path )
   var dstPath = _.path.s.join( context.dstPath, _.path.split( path )[ 0 ] );
   var srcPath = _.path.s.join( context.srcPath, _.path.split( path )[ 0 ] );
 
-  let srcPathGlobal = context.templateTreeProvider.path.globalFromLocal( '/' );
-  let dstPathGlobal = context.fileProvider.path.globalFromLocal( context.dstPath );
+  let srcPathGlobal = context.templateTreeProvider.path.globalFromPreferred( '/' );
+  let dstPathGlobal = context.fileProvider.path.globalFromPreferred( context.dstPath );
 
   context.fileProvider.filesDelete( context.dstPath  );
 
@@ -899,8 +899,8 @@ function samplesTest( test )
       let extract = _.FileProvider.Extract({ protocols : [ 'extract2' ] });
       extract.providerRegisterTo( context.hub );
 
-      let checkPathGlobal = context.fileProvider.path.globalFromLocal( checkPath );
-      let dstPathGlobal = extract.path.globalFromLocal( '/got' );
+      let checkPathGlobal = context.fileProvider.path.globalFromPreferred( checkPath );
+      let dstPathGlobal = extract.path.globalFromPreferred( '/got' );
 
       context.hub.filesReflect({ reflectMap : { [  checkPathGlobal] : dstPathGlobal }, onWriteDstDown : onWriteDstDown })
 
