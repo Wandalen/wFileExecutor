@@ -321,7 +321,7 @@ sessionMake.defaults =
 function includeFrameBegin( o )
 {
   let self = this;
-  
+
   _.routineOptions( includeFrameBegin,o );
   _.assert( arguments.length === 1, 'Expects single argument' );
 
@@ -450,7 +450,8 @@ function _includeAct( o )
 
   includeFrame.resolveOptions
   =
-  self.fileProvider._filesFilterMasksSupplement( includeFrame.resolveOptions, resolveOptions );
+  _filesFilterMasksSupplement( includeFrame.resolveOptions, resolveOptions );
+  // self.fileProvider._filesFilterMasksSupplement( includeFrame.resolveOptions, resolveOptions );
 
   let filter = _.FileRecordFilter.TollerantFrom( includeFrame.resolveOptions,{ defaultFileProvider : self.fileProvider } );
   includeFrame.resolveOptions.filter = filter;
@@ -513,6 +514,20 @@ function _includeAct( o )
   });
 
   return includeFrame;
+
+  function _filesFilterMasksSupplement( dst, src )
+  {
+    _.assert( arguments.length === 2, 'Expects exactly two arguments' );
+
+    _.mapSupplement( dst, src );
+
+    dst.maskDirectory = _.RegexpObject.And( null, dst.maskDirectory || Object.create( null ), src.maskDirectory || Object.create( null ) );
+    dst.maskTerminal = _.RegexpObject.And( null, dst.maskTerminal || Object.create( null ), src.maskTerminal || Object.create( null ) );
+    dst.maskAll = _.RegexpObject.And( null, dst.maskAll || Object.create( null ), src.maskAll || Object.create( null ) );
+
+    return dst;
+  }
+
 }
 
 _includeAct.defaults =
