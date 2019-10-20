@@ -29,7 +29,7 @@ if( typeof module !== 'undefined' )
 
   try
   {
-    let Coffee = require( 'coffee-script' );
+    let Coffee = require( 'coffeescript' );
   }
   catch( err )
   {
@@ -445,7 +445,7 @@ function _includeAct( o )
     maskTerminal : maskTerminal,
     outputFormat : 'record',
     orderingExclusion : [ [ '.external','' ], [ '.pre', '', '.post' ] ],
-    includingDirs : 0,
+    withDirs : 0,
   }
 
   includeFrame.resolveOptions
@@ -453,7 +453,7 @@ function _includeAct( o )
   _filesFilterMasksSupplement( includeFrame.resolveOptions, resolveOptions );
   // self.fileProvider._filesFilterMasksSupplement( includeFrame.resolveOptions, resolveOptions );
 
-  let filter = _.FileRecordFilter.TollerantFrom( includeFrame.resolveOptions,{ defaultFileProvider : self.fileProvider } );
+  let filter = _.FileRecordFilter.TolerantFrom( includeFrame.resolveOptions,{ defaultProvider : self.fileProvider } );
   includeFrame.resolveOptions.filter = filter;
 
   includeFrame.resolveOptions = _.mapOnly( includeFrame.resolveOptions, self.fileProvider.filesResolve.defaults );
@@ -1098,8 +1098,8 @@ function chunkExecute( o )
 
   /* */
 
-  o.syncInternal = new _.Consequence({ resourceLimit : 1 });
-  o.syncExternal = new _.Consequence({ resourceLimit : 1 }).take( null );
+  o.syncInternal = new _.Consequence({ capacity : 1 });
+  o.syncExternal = new _.Consequence({ capacity : 1 }).take( null );
 
   let executed = self._chunkExecute( o );
   executed = _.Consequence.From( executed );

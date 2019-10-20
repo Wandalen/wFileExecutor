@@ -31,7 +31,7 @@ function onSuiteBegin()
   self.templateTreeProvider = _.FileProvider.Extract({ filesTree : self.templateTree, protocols : [ 'extract' ] });
   self.fileProvider = _.FileProvider.HardDrive();
 
-  self.hub = _.FileProvider.Hub({ providers : [ self.templateTreeProvider, self.fileProvider ] });
+  self.hub = _.FileProvider.System({ providers : [ self.templateTreeProvider, self.fileProvider ] });
 
 }
 
@@ -950,7 +950,7 @@ samplesTest.timeOut = 500000;
 var Self =
 {
 
-  name : 'Tools/mid/FileExecutor',
+  name : 'Tools.mid.FileExecutor',
   silencing : 1,
   // verbosity : 7,
 
