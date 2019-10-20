@@ -22,13 +22,16 @@ about :
 path :
 
   repository : git+https:///github.com/Wandalen/wFileExecutor.git
+  remotes :
+   - git+https:///github.com/Wandalen/wFileExecutor.git
+   - npm:///wfileexecutor
   bugs : https:///github.com/Wandalen/wFileExecutor/issues
 
 step :
 
   export.proto :
     inherit : module.export
-    export : path::proto
+    export : path::export
     tar : 0
     criterion :
       debug : 1
