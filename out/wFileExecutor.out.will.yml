@@ -3,8 +3,8 @@ root:
   - wFileExecutor.out
 consistency:
   wFileExecutor.out.will.yml: &ref_0
-    hash: d10b6da72f658ba242315fc703b4ec81
-    size: 13750
+    hash: 4be664add2fed89664cde13c6327bfb2
+    size: 13584
   ../.ex.will.yml: &ref_1
     hash: 4f804abd8e095426cb3332b8d3ba1a15
     size: 1113
@@ -15,6 +15,7 @@ module:
   wFileExecutor.out:
     about:
       name: wFileExecutor
+      org: noorg
       description: >-
         Experimental. Class to execute a collection of templates with inlined
         JavaScript code to instantiate it. A collection of templates could be
@@ -56,9 +57,6 @@ module:
       download:
         criterion:
           predefined: 1
-      remote:
-        criterion:
-          predefined: 1
       repository:
         path: 'git+https:///github.com/Wandalen/wFileExecutor.git'
       origins:
@@ -68,14 +66,10 @@ module:
       bugs:
         path: 'https:///github.com/Wandalen/wFileExecutor/issues'
       in:
-        criterion:
-          predefined: 0
         path: .
       temp:
         path: .
       out:
-        criterion:
-          predefined: 0
         path: .
       out.debug:
         criterion:
@@ -91,6 +85,7 @@ module:
         path: '{path::proto}/**'
       exported.dir.proto.export:
         criterion:
+          generated: 1
           default: 1
           debug: 1
           raw: 1
@@ -101,6 +96,7 @@ module:
         path: ../proto
       exported.files.proto.export:
         criterion:
+          generated: 1
           default: 1
           debug: 1
           raw: 1
@@ -165,6 +161,7 @@ module:
           prefixPath: ../proto
         mandatory: 1
         criterion:
+          generated: 1
           default: 1
           debug: 1
           raw: 1
@@ -182,6 +179,7 @@ module:
         recursive: 0
         mandatory: 1
         criterion:
+          generated: 1
           default: 1
           debug: 1
           raw: 1
@@ -273,6 +271,7 @@ module:
         opts:
           reflector: 'reflector::exported.proto.export*'
         criterion:
+          generated: 1
           default: 1
           debug: 1
           raw: 1
@@ -286,6 +285,7 @@ module:
         opts:
           reflector: 'reflector::exported.files.proto.export*'
         criterion:
+          generated: 1
           default: 1
           debug: 1
           raw: 1
@@ -366,6 +366,7 @@ module:
   ../:
     about:
       name: wFileExecutor
+      org: noorg
       description: >-
         Experimental. Class to execute a collection of templates with inlined
         JavaScript code to instantiate it. A collection of templates could be
@@ -407,9 +408,6 @@ module:
       download:
         criterion:
           predefined: 1
-      remote:
-        criterion:
-          predefined: 1
       repository:
         path: 'git+https:///github.com/Wandalen/wFileExecutor.git'
       origins:
@@ -419,25 +417,21 @@ module:
       bugs:
         path: 'https:///github.com/Wandalen/wFileExecutor/issues'
       in:
-        criterion:
-          predefined: 0
         path: .
       temp:
         path: out
       out:
-        criterion:
-          predefined: 0
         path: out
       out.debug:
         criterion:
           debug: 1
-        path: ./out/debug
+        path: out/debug
       out.release:
         criterion:
           debug: 0
-        path: ./out/release
+        path: out/release
       proto:
-        path: ./proto
+        path: proto
       export:
         path: '{path::proto}/**'
     submodule: {}
