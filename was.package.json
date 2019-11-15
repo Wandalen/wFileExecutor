@@ -18,12 +18,12 @@
   }, 
   "dependencies" : 
   {
-    "wTools" : "beta", 
-    "wFiles" : "beta", 
-    "wappbasic" : "beta", 
-    "wpathtranslator" : "beta", 
-    "wfilesarchive" : "beta"
+    "wTools" : "", 
+    "wFiles" : "", 
+    "wappbasic" : "", 
+    "wpathtranslator" : "", 
+    "wfilesarchive" : ""
   }, 
-  "devDependencies" : { "wTesting" : "beta" }, 
+  "devDependencies" : { "wTesting" : "" }, 
   "keywords" : [ "wTools", "File executor" ]
 }

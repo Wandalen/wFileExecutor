@@ -15,7 +15,7 @@ if( typeof module !== 'undefined' )
 
 }
 
-var _ = wTools;
+var _ = _global_.wTools;
 
 if( typeof __dirname === 'undefined' )
 return;
@@ -31,7 +31,7 @@ function onSuiteBegin()
   self.templateTreeProvider = _.FileProvider.Extract({ filesTree : self.templateTree, protocols : [ 'extract' ] });
   self.fileProvider = _.FileProvider.HardDrive();
 
-  self.hub = _.FileProvider.Hub({ providers : [ self.templateTreeProvider, self.fileProvider ] });
+  self.hub = _.FileProvider.System({ providers : [ self.templateTreeProvider, self.fileProvider ] });
 
 }
 
@@ -474,20 +474,20 @@ function executorMakeFor( path )
   {
     'html' : function( file )
     {
-      return _.arrayHas( [ 'html','htm' ],file.ext );
+      return _.longHas( [ 'html','htm' ],file.ext );
     },
     'html.withChunkFormat' : [ 'html2' ],
     'script' : function( file )
     {
-      return _.arrayHas( [ 'ss','js','s' ],file.ext );
+      return _.longHas( [ 'ss','js','s' ],file.ext );
     },
     'script.server' : function( file )
     {
-      return _.arrayHas( [ 'ss','s' ],file.ext );
+      return _.longHas( [ 'ss','s' ],file.ext );
     },
     'script.client' : function( file )
     {
-      return _.arrayHas( [ 'js','s' ],file.ext );
+      return _.longHas( [ 'js','s' ],file.ext );
     },
     'script.withAsyncFormatter' : [ 'js2' ],
     'style' : [ 'css','less' ],
@@ -587,7 +587,7 @@ function executorMakeFor( path )
 
         var paths = _.entityFilter( o.frame.usedFileFrames,function( e )
         {
-          return _.arrayHas( e.categories,'script' ) ? e.file.absolute : undefined;
+          return _.longHas( e.categories,'script' ) ? e.file.absolute : undefined;
         });
 
         var read = wTools.fileProvider.filesRead({ src : paths, throwing : 1, sync : 1 });
@@ -950,7 +950,7 @@ samplesTest.timeOut = 500000;
 var Self =
 {
 
-  name : 'Tools/mid/FileExecutor',
+  name : 'Tools.mid.FileExecutor',
   silencing : 1,
   // verbosity : 7,
 

@@ -29,7 +29,7 @@ if( typeof module !== 'undefined' )
 
   try
   {
-    let Coffee = require( 'coffee-script' );
+    let Coffee = require( 'coffeescript' );
   }
   catch( err )
   {
@@ -445,7 +445,7 @@ function _includeAct( o )
     maskTerminal : maskTerminal,
     outputFormat : 'record',
     orderingExclusion : [ [ '.external','' ], [ '.pre', '', '.post' ] ],
-    includingDirs : 0,
+    withDirs : 0,
   }
 
   includeFrame.resolveOptions
@@ -453,7 +453,7 @@ function _includeAct( o )
   _filesFilterMasksSupplement( includeFrame.resolveOptions, resolveOptions );
   // self.fileProvider._filesFilterMasksSupplement( includeFrame.resolveOptions, resolveOptions );
 
-  let filter = _.FileRecordFilter.TollerantFrom( includeFrame.resolveOptions,{ defaultFileProvider : self.fileProvider } );
+  let filter = _.FileRecordFilter.TolerantFrom( includeFrame.resolveOptions,{ defaultProvider : self.fileProvider } );
   includeFrame.resolveOptions.filter = filter;
 
   includeFrame.resolveOptions = _.mapOnly( includeFrame.resolveOptions, self.fileProvider.filesResolve.defaults );
@@ -995,7 +995,7 @@ function filesFilter( includeFrame )
     let fileFrame = fileFrames[ f ];
 
     if( io.ifAny )
-    if( !_.arrayHasAny( fileFrame.categories,io.ifAny ) )
+    if( !_.longHasAny( fileFrame.categories,io.ifAny ) )
     {
       fileFrames.splice( f,1 );
       files.splice( f,1 );
@@ -1003,7 +1003,7 @@ function filesFilter( includeFrame )
     }
 
     if( io.ifAll )
-    if( !_.arrayHasAll( fileFrame.categories,io.ifAll ) )
+    if( !_.longHasAll( fileFrame.categories,io.ifAll ) )
     {
       fileFrames.splice( f,1 );
       files.splice( f,1 );
@@ -1011,7 +1011,7 @@ function filesFilter( includeFrame )
     }
 
     if( io.ifNone )
-    if( !_.arrayHasNone( fileFrame.categories,io.ifNone ) )
+    if( !_.longHasNone( fileFrame.categories,io.ifNone ) )
     {
       fileFrames.splice( f,1 );
       files.splice( f,1 );
@@ -1038,7 +1038,7 @@ function fileFrameFor( fileFrame )
   logger.log( 'fileFrameFor',fileFrame.file.absolute );
 
   let equ = ( e ) => e.file.absolute;
-  let fileFrameFound = _.arrayLeft( session.fileFrames , fileFrame , equ ).element;
+  let fileFrameFound = _.longLeft( session.fileFrames , fileFrame , equ ).element;
   if( fileFrameFound )
   {
     _.arrayAppendOnce( fileFrameFound.includeFrames , includeFrame );
@@ -1098,8 +1098,8 @@ function chunkExecute( o )
 
   /* */
 
-  o.syncInternal = new _.Consequence({ resourceLimit : 1 });
-  o.syncExternal = new _.Consequence({ resourceLimit : 1 }).take( null );
+  o.syncInternal = new _.Consequence({ capacity : 1 });
+  o.syncExternal = new _.Consequence({ capacity : 1 }).take( null );
 
   let executed = self._chunkExecute( o );
   executed = _.Consequence.From( executed );
@@ -1574,15 +1574,15 @@ function _categoriesCheck( categories,filter )
   _.assert( arguments.length === 2, 'Expects exactly two arguments' );
 
   if( filter.ifAny )
-  if( !_.arrayHasAny( categories,filter.ifAny ) )
+  if( !_.longHasAny( categories,filter.ifAny ) )
   return false;
 
   if( filter.ifAll )
-  if( !_.arrayHasAll( categories,filter.ifAll ) )
+  if( !_.longHasAll( categories,filter.ifAll ) )
   return false;
 
   if( filter.ifNone )
-  if( !_.arrayHasNone( categories,filter.ifNone ) )
+  if( !_.longHasNone( categories,filter.ifNone ) )
   return false;
 
   return true;
@@ -1889,7 +1889,7 @@ function _fileCategorizersChanged()
       let exts = categorizer;
       categorizer = function categorizer( file )
       {
-        return _.arrayHasAny( exts,file.exts );
+        return _.longHasAny( exts,file.exts );
       }
     })();
 
