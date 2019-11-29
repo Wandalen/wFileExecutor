@@ -68,14 +68,14 @@
     "a.js" : `(function() {\n\nconsole.log( 'a:before' );\n\n//\n//>-` + `->//\n\nincludeFile( 'b/b1.js' );\nincludeFile( 'b/b2.js' );\nincludeFile( 'b/b3.js' );\n\nreturn \`// a\`\n//<-` + `-<//\n//\n\nconsole.log( 'a:after' );\n\n});\n`,
     "b" :
     {
-      "b1.js" : `(function() {\n\nconsole.log( 'b1:before' );\n\n//\n//>-` + `->//\nreturn _.timeOut( 1000,() => \`// b1\` );\n//<-` + `-<//\n//\n\nconsole.log( 'b1:after' );\n\n});\n`,
+      "b1.js" : `(function() {\n\nconsole.log( 'b1:before' );\n\n//\n//>-` + `->//\nreturn _.time.out( 1000,() => \`// b1\` );\n//<-` + `-<//\n//\n\nconsole.log( 'b1:after' );\n\n});\n`,
       "b2.js" : `(function() {\n\nconsole.log( 'b2:before' );\n\n//\n//>-` + `->//\n\nincludeFile( '../c/c1.js2' );\nincludeFile( '../c/c2.js2' );\nincludeFile( '../c/c3.js2' );\n\nreturn \`// b2\`\n//<-` + `-<//\n//\n\nconsole.log( 'b2:after' );\n\n});\n`,
-      "b3.js" : `(function() {\n\nconsole.log( 'b3:before' );\n\n//\n//>-` + `->//\nreturn _.timeOut( 1000,() => \`// b3\` );\n//<-` + `-<//\n//\n\nconsole.log( 'b3:after' );\n\n});\n`
+      "b3.js" : `(function() {\n\nconsole.log( 'b3:before' );\n\n//\n//>-` + `->//\nreturn _.time.out( 1000,() => \`// b3\` );\n//<-` + `-<//\n//\n\nconsole.log( 'b3:after' );\n\n});\n`
     },
     "c" :
     {
       "c1.js2" : `(function() {\n\nconsole.log( 'c1:before' );\n\n//\n//>-` + `->//\nreturn \`// c1\`\n//<-` + `-<//\n//\n\nconsole.log( 'c1:after' );\n\n});\n`,
-      "c2.js2" : `(function() {\n\nconsole.log( 'c2:before' );\n\n//\n//>-` + `->//\nreturn _.timeOut( 1000,() => \`// c2\` );\n//<-` + `-<//\n//\n\nconsole.log( 'c2:after' );\n\n});\n`,
+      "c2.js2" : `(function() {\n\nconsole.log( 'c2:before' );\n\n//\n//>-` + `->//\nreturn _.time.out( 1000,() => \`// c2\` );\n//<-` + `-<//\n//\n\nconsole.log( 'c2:after' );\n\n});\n`,
       "c3.js2" : `(function() {\n\nconsole.log( 'c3:before' );\n\n//\n//>-` + `->//\nreturn \`// c3\`\n//<-` + `-<//\n//\n\nconsole.log( 'c3:after' );\n\n});\n`
     }
   },

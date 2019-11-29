@@ -562,7 +562,7 @@ function executorMakeFor( path )
       {
         _global_.asyncFormatterCallCounter += 1;
         var result = o.frame.result;
-        o.frame.result = _.timeOut( 1000,function()
+        o.frame.result = _.time.out( 1000,function()
         {
           debugger;
           return result;
