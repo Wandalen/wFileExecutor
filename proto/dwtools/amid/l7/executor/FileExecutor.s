@@ -918,7 +918,7 @@ function _fileExecute( o )
 
   let errorPrefix = '';
   if( o.file )
-  errorPrefix = _.str( o.file.absolute + ' :', '\n' );
+  errorPrefix = _.toStrSimple( o.file.absolute + ' :', '\n' );
 
   /* read file */
 
