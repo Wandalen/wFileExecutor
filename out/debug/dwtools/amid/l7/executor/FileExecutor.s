@@ -216,7 +216,7 @@ function coffeeCompile( o )
 
   // if( o.fix )
   // {
-  //   o.code = _.strIndentation( o.code,'  ' );
+  //   o.code = _.strLinesIndentation( o.code,'  ' );
   //   o.code = [ self.prefix, o.code, self.postfix ].join( '\n' );
   // }
 
@@ -1874,7 +1874,7 @@ function _fileCategorizersChanged()
   let self = this;
   let categorizers = self[ fileCategorizersSymbol ];
 
-  _.assert( arguments.length === 0 );
+  _.assert( arguments.length === 0, 'Expects no arguments' );
   _.assert( _.objectIs( categorizers ),'Expects map {-categorizers-}' );
 
   for( let c in categorizers )
