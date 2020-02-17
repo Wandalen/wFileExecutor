@@ -1937,8 +1937,8 @@ function includesUsedInherit( includeFrame,fileFrame )
 // construction
 // --
 
-let IncludeFrame = _.like()
-.also
+let IncludeFrame = _.blueprint
+.construct
 ({
 
   resolveOptions : null,
@@ -1961,15 +1961,14 @@ let IncludeFrame = _.like()
   session : null,
 
 })
-.end
 
 includeFrameBegin.defaults = IncludeFrame;
 includeFrameEnd.defaults = IncludeFrame;
 
 //
 
-let FileFrame = _.like()
-.also
+let FileFrame = _.blueprint
+.construct
 ({
   includeFrame : null,
   includeFrames : [],
@@ -1997,14 +1996,13 @@ let FileFrame = _.like()
   categories : [],
 
 })
-.end
 
 fileFrameFor.defaults = FileFrame;
 
 //
 
-let ChunkFrame = _.like()
-.also
+let ChunkFrame = _.blueprint
+.construct
 ({
   chunk : null,
   fileFrame : null,
@@ -2017,7 +2015,6 @@ let ChunkFrame = _.like()
   result : null,
   resultRaw : null,
 })
-.end
 
 chunkFrameFor.defaults = ChunkFrame;
 chunkExecute.defaults = ChunkFrame;
