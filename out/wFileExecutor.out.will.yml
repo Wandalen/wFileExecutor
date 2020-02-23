@@ -2,10 +2,13 @@ format: outwillfile-2.0
 root:
   - wFileExecutor.out
 consistency:
-  ../.ex.will.yml: &ref_0
+  wFileExecutor.out.will.yml: &ref_0
+    hash: bcc751e2e11bac016a16cd7f114fe488
+    size: 39364
+  ../.ex.will.yml: &ref_1
     hash: 7fee901c84806250334b992d092e3772
     size: 1948
-  ../.im.will.yml: &ref_1
+  ../.im.will.yml: &ref_2
     hash: 3c0ab92f26bf2ff5dfe488ec9a582585
     size: 5186
 module:
@@ -20,20 +23,20 @@ module:
         order of templates executions.
       enabled: 1
       version: 0.4.0
-      interpreters: &ref_2
+      interpreters:
         - njs >= 8.0.0
         - chrome >= 60.0.0
         - firefox >= 60.0.0
-      keywords: &ref_3
+      keywords:
         - wTools
         - File executor
         - template
       license: MIT
       author: Kostiantyn Wandalen <wanalen@willbe.so>
-      contributors: &ref_4
+      contributors:
         - Kostiantyn Wandalen <wanalen@willbe.so>
       npm.name: wfileexecutor
-      npm.scripts: &ref_5
+      npm.scripts:
         test: wtest .run proto/**
         docgen: wdocgen .build proto
     path:
@@ -714,6 +717,24 @@ module:
           content: prime
         inherit:
           - files.transpile
+      exported.proto.export:
+        opts:
+          reflector: 'reflector::exported.proto.export*'
+        criterion:
+          generated: 1
+          content: proto
+          export: 1
+        inherit:
+          - files.reflect
+      exported.files.proto.export:
+        opts:
+          reflector: 'reflector::exported.files.proto.export*'
+        criterion:
+          generated: 1
+          content: proto
+          export: 1
+        inherit:
+          - files.reflect
     build:
       proto.export:
         steps:
@@ -802,8 +823,9 @@ module:
           content: proto
           export: 1
     consistency:
-      ../.ex.will.yml: *ref_0
-      ../.im.will.yml: *ref_1
+      wFileExecutor.out.will.yml: *ref_0
+      ../.ex.will.yml: *ref_1
+      ../.im.will.yml: *ref_2
   ../:
     about:
       name: wFileExecutor
@@ -815,13 +837,22 @@ module:
         order of templates executions.
       enabled: 1
       version: 0.4.0
-      interpreters: *ref_2
-      keywords: *ref_3
+      interpreters:
+        - njs >= 8.0.0
+        - chrome >= 60.0.0
+        - firefox >= 60.0.0
+      keywords:
+        - wTools
+        - File executor
+        - template
       license: MIT
       author: Kostiantyn Wandalen <wanalen@willbe.so>
-      contributors: *ref_4
+      contributors:
+        - Kostiantyn Wandalen <wanalen@willbe.so>
       npm.name: wfileexecutor
-      npm.scripts: *ref_5
+      npm.scripts:
+        test: wtest .run proto/**
+        docgen: wdocgen .build proto
     path:
       module.willfiles:
         criterion:
@@ -1505,3 +1536,6 @@ module:
       ../.im.will.yml:
         hash: 3c0ab92f26bf2ff5dfe488ec9a582585
         size: 5186
+      wFileExecutor.out.will.yml:
+        hash: bcc751e2e11bac016a16cd7f114fe488
+        size: 39364
