@@ -1536,6 +1536,4 @@ module:
       ../.im.will.yml:
         hash: 3c0ab92f26bf2ff5dfe488ec9a582585
         size: 5186
-      wFileExecutor.out.will.yml:
-        hash: bcc751e2e11bac016a16cd7f114fe488
-        size: 39364
+      wFileExecutor.out.will.yml: *ref_0
