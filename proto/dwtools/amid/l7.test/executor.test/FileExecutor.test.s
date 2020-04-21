@@ -633,7 +633,9 @@ function executorMakeFor( path )
 function chunksSplit( test )
 {
 
-  test.case = 'empty chunk'; /* */
+  /* */
+
+  test.case = 'empty chunk';
 
   var executor = new wFileExecutor();
   debugger;
@@ -651,7 +653,9 @@ function chunksSplit( test )
 
   test.identical( chunks,expected );
 
-  test.case = 'single text chunk'; /* */
+  /* */
+
+  test.case = 'single text chunk';
 
   var executor = new wFileExecutor();
   var chunks = executor._chunksSplit( 'abc' );
@@ -668,7 +672,9 @@ function chunksSplit( test )
 
   test.identical( chunks,expected );
 
-  test.case = 'single code chunk'; /* */
+  /* */
+
+  test.case = 'single code chunk';
 
   var executor = new wFileExecutor();
   var chunks = executor._chunksSplit( '//>-'+'->//abc//<-'+'-<//' );
@@ -694,7 +700,9 @@ function chunksSplit( test )
   /*logger.log( _.toJs( chunks ) );*/
   test.identical( chunks,expected );
 
-  test.case = 'single code chunk with text chunk before'; /* */
+  /* */
+
+  test.case = 'single code chunk with text chunk before';
 
   var executor = new wFileExecutor();
   var chunks = executor._chunksSplit( 'a //>-'+'->//abc//<-'+'-<//' );
@@ -721,7 +729,9 @@ function chunksSplit( test )
   /*logger.log( _.toJs( chunks ) );*/
   test.identical( chunks,expected );
 
-  test.case = 'single code chunk with text chunk after'; /* */
+  /* */
+
+  test.case = 'single code chunk with text chunk after';
 
   var executor = new wFileExecutor();
   var chunks = executor._chunksSplit( '//>-'+'->//abc//<-'+'-<// b' );
@@ -748,7 +758,9 @@ function chunksSplit( test )
   /*logger.log( _.toJs( chunks ) );*/
   test.identical( chunks,expected );
 
-  test.case = 'two code chunks'; /* */
+  /* */
+
+  test.case = 'two code chunks';
 
   var executor = new wFileExecutor();
   var chunks = executor._chunksSplit( '//>-'+'->//abc//<-'+'-<//' + '//>-'+'->//def//<-'+'-<//' );
@@ -785,7 +797,9 @@ function chunksSplit( test )
   /*logger.log( _.toJs( chunks ) );*/
   test.identical( chunks,expected );
 
-  test.case = 'two code chunks with text chunks'; /* */
+  /* */
+
+  test.case = 'two code chunks with text chunks';
 
   var executor = new wFileExecutor();
   var chunks = executor._chunksSplit( 'a//>-'+'->//abc//<-'+'-<//b' + 'c//>-'+'->//def//<-'+'-<//d' );
