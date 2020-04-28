@@ -978,6 +978,7 @@ var Self =
     executor : null,
     dstPath : null,
     srcPath : null,
+    templateTree : null,
     templateTreePath : null,
     templateTreeProvider : null,
     hub : null,
