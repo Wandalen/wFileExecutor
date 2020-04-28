@@ -329,8 +329,8 @@ function includeFrameBegin( o )
   o.fileFrames = [];
   if( o.usedIncludeFrames === null )
   o.usedIncludeFrames = [];
-
-  let includeFrame = IncludeFrame.constructor();
+  
+  let includeFrame = new IncludeFrameBlueprint.construct();
 
   includeFrame.userIncludeFrame = o.userIncludeFrame;
   includeFrame.usedIncludeFrames = o.usedIncludeFrames
@@ -367,7 +367,7 @@ function includeFrameEnd( includeFrame )
 
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( includeFrame.session === self.session );
-  _.assert( _.construction.isLike( includeFrame,IncludeFrame ) );
+  _.assert( _.construction.isInstanceOf( includeFrame,IncludeFrameBlueprint ) );
 
   _.arrayRemoveElementOnceStrictly( self.includeFrames,includeFrame );
 
@@ -426,8 +426,8 @@ function _includeAct( o )
   let userIncludeFrame = self.includeFrames[ 0 ];
   let includeFrame = self.includeFrameBegin({ userIncludeFrame : userIncludeFrame });
 
-  _.assert( _.construction.isLike( includeFrame,IncludeFrame ) );
-
+  _.assert( _.construction.isInstanceOf( includeFrame,IncludeFrameBlueprint ) );
+  
   includeFrame.userChunkFrame = o.userChunkFrame;
   includeFrame.translator = o.translator.clone();
   includeFrame.includeOptions = o;
@@ -584,7 +584,7 @@ function _includeFromChunk( bound,o,o2 )
   _.assert( arguments.length === 2 || arguments.length === 3, 'Expects two or three arguments' );
   _.assert( _.objectIs( o.translator ) );
   _.assert( _.objectIs( session ) );
-  _.assert( _.construction.isLike( included,IncludeFrame ) );
+  _.assert( _.construction.isInstanceOf( included,IncludeFrameBlueprint ) );
 
   _.assert( included.files.length === included.fileFrames.length );
 
@@ -698,7 +698,7 @@ function filesExecute( o )
 
   _.routineOptions( filesExecute,o );
   _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.construction.isLike( o.includeFrame,IncludeFrame ) );
+  _.assert( _.construction.isInstanceOf( o.includeFrame,IncludeFrameBlueprint ) );
   _.assert( _.objectIs( o.includeFrame ) );
   _.assert( _.arrayIs( o.includeFrame.files ) );
   _.assert( _.objectIs( session ) );
@@ -760,7 +760,7 @@ function fileExecute( o )
   _.routineOptions( fileExecute,o );
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.objectIs( session ) );
-  _.assert( _.construction.isLike( fileFrame,FileFrame ) );
+  _.assert( _.construction.isInstanceOf( fileFrame,FileFrameBlueprint ) );
 
   if( !file.stat )
   debugger;
@@ -905,7 +905,7 @@ function _fileExecute( o )
 
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( o.file instanceof _.FileRecord );
-  _.assert( _.construction.isLike( o,FileFrame ) );
+  _.assert( _.construction.isInstanceOf( o,FileFrameBlueprint ) );
   _.assert( !o.consequence );
 
   /* result */
@@ -976,7 +976,7 @@ function filesFilter( includeFrame )
   let io = includeFrame.includeOptions;
 
   _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.construction.isLike( includeFrame,IncludeFrame ) );
+  _.assert( _.construction.isInstanceOf( includeFrame,IncludeFrameBlueprint ) );
 
   if( !io.ifAny && !io.ifAll && !io.ifNone )
   return;
@@ -1048,7 +1048,7 @@ function fileFrameFor( fileFrame )
 
   /* */
 
-  fileFrame = FileFrame.constructor( fileFrame );
+  fileFrame = new FileFrameBlueprint.construct( fileFrame );
 
   if( !session.allowIncluding )
   throw _.err( 'can only reuse included files, but was attempt to include a new one',fileFrame.file.absolute );
@@ -1079,7 +1079,7 @@ function chunkFrameFor( o )
 {
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.mapIs( o ) );
-  o = ChunkFrame.constructor( o );
+  o = ChunkFrameBlueprint.construct( o );
   return o;
 }
 
@@ -1177,7 +1177,7 @@ function _chunkExecute( o )
   _.assert( _.objectIs( session ) );
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( o.chunk.text ) || _.strIs( o.chunk.code ) );
-  _.assert( _.construction.isLike( o,ChunkFrame ) );
+  _.assert( _.construction.isInstanceOf( o,ChunkFrameBlueprint ) );
 
   /* */
 
@@ -1242,7 +1242,7 @@ function _chunkExpose( chunkFrame )
   let session = fileFrame.includeFrame.session;
 
   _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.construction.isLike( chunkFrame,ChunkFrame ) );
+  _.assert( _.construction.isInstanceOf( chunkFrame,ChunkFrameBlueprint ) );
 
   /* exposing */
 
@@ -1472,7 +1472,7 @@ function categoriesForFile( fileFrame )
   let file = fileFrame.file;
 
   _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.construction.isLike( fileFrame,FileFrame ) );
+  _.assert( _.construction.isInstanceOf( fileFrame,FileFrameBlueprint ) );
   _.assert( file instanceof _.FileRecord );
 
   /* arbitrary categories */
@@ -1697,8 +1697,8 @@ function linkFor( userChunkFrame,usedFileFrame )
   let self = this;
 
   _.assert( arguments.length === 2, 'Expects exactly two arguments' );
-  _.assert( _.construction.isLike( userChunkFrame,ChunkFrame ) );
-  _.assert( _.construction.isLike( usedFileFrame,FileFrame ) || usedFileFrame instanceof _.FileRecord );
+  _.assert( _.construction.isInstanceOf( userChunkFrame,ChunkFrameBlueprint ) );
+  _.assert( _.construction.isInstanceOf( usedFileFrame,FileFrameBlueprint ) || usedFileFrame instanceof _.FileRecord );
 
   let usedFile;
   if( usedFileFrame instanceof _.FileRecord )
@@ -1750,7 +1750,7 @@ function linkFormat( o )
 
   _.assert( _.objectIs( o.usedIncludeFrame ) );
   _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.construction.isLike( o.usedIncludeFrame,IncludeFrame ) );
+  _.assert( _.construction.isInstanceOf( o.usedIncludeFrame,IncludeFrameBlueprint ) );
 
   if( self.verbosity > 2 )
   logger.log
@@ -1913,7 +1913,7 @@ function filesUsedGet( includes, result )
   for( let i = 0 ; i < includes.length ; i++ )
   {
     let includeFrame = includes[ i ];
-    _.assert( _.construction.isLike( includeFrame,IncludeFrame ) );
+    _.assert( _.construction.isInstanceOf( includeFrame,IncludeFrameBlueprint ) );
     _.arrayAppendArray( result,includeFrame.files );
     self.filesUsedGet( includeFrame.usedIncludeFrames,result );
   }
@@ -1937,8 +1937,7 @@ function includesUsedInherit( includeFrame,fileFrame )
 // construction
 // --
 
-let IncludeFrame = _.blueprint
-.construct
+let IncludeFrameBlueprint = _.blueprint
 ({
 
   resolveOptions : null,
@@ -1959,24 +1958,26 @@ let IncludeFrame = _.blueprint
   externals : null,
   context : null,
   session : null,
-
+  
+  typed : _.trait.typed( true )
 })
+
+let IncludeFrame = IncludeFrameBlueprint.construct();
 
 includeFrameBegin.defaults = IncludeFrame;
 includeFrameEnd.defaults = IncludeFrame;
 
 //
 
-let FileFrame = _.blueprint
-.construct
+let FileFrameBlueprint = _.blueprint
 ({
   includeFrame : null,
-  includeFrames : [],
+  includeFrames : _.define.shallow([]),
 
   file : null,
   translator : null,
 
-  usedIncludeFrames : [],
+  usedIncludeFrames : _.define.shallow([]),
   usedFiles : null,
 
   chunks : null,
@@ -1993,28 +1994,35 @@ let FileFrame = _.blueprint
   consequence : null,
 
   code : null,
-  categories : [],
+  categories : _.define.shallow([]),
+  
+  typed : _.trait.typed( true )
 
 })
+
+let FileFrame = FileFrameBlueprint.construct();
 
 fileFrameFor.defaults = FileFrame;
 
 //
 
-let ChunkFrame = _.blueprint
-.construct
+let ChunkFrameBlueprint = _.blueprint
 ({
   chunk : null,
   fileFrame : null,
   externals : null,
-  usedIncludeFrames : [],
-  usedFileFrames : [],
+  usedIncludeFrames : _.define.shallow([]),
+  usedFileFrames : _.define.shallow([]),
   syncExternal : null,
   syncInternal : null,
   execution : null,
   result : null,
   resultRaw : null,
+  
+  typed : _.trait.typed( true )
 })
+
+let ChunkFrame = ChunkFrameBlueprint.construct();
 
 chunkFrameFor.defaults = ChunkFrame;
 chunkExecute.defaults = ChunkFrame;
