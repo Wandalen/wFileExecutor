@@ -41,7 +41,8 @@ if( typeof module !== 'undefined' )
 
 let _ = _global_.wTools;
 let Parent = null;
-let Self = function wFileExecutor( o )
+let Self = wFileExecutor;
+function wFileExecutor( o )
 {
   return _.workpiece.construct( Self, this, arguments );
 }

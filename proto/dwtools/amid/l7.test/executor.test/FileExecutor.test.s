@@ -8,7 +8,7 @@ if( typeof module !== 'undefined' )
   let _ = require( '../../../../dwtools/Tools.s' );
 
   _.include( 'wTesting' );
-  _.include( 'wAppBasic' );
+  _.include( 'wProcess' );
   _.include( 'wFiles' );
 
   require( '../../l7/executor/FileExecutor.s' );
