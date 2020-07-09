@@ -114,7 +114,7 @@ module:
       entry.proto.no.tests:
         criterion:
           tests: no.tests
-        path: ../proto/dwtools/amid/l7/executor/FileExecutor.s
+        path: ../proto/wtools/amid/l7/executor/FileExecutor.s
       entry.proto.only.tests:
         criterion:
           tests: only.tests
@@ -124,13 +124,13 @@ module:
           debug: debug
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/amid/l7/executor/FileExecutor.s'
+        path: '{path::out.*=1}/source/wtools/amid/l7/executor/FileExecutor.s'
       entry.out.raw.debug.release:
         criterion:
           debug: release
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/amid/l7/executor/FileExecutor.s'
+        path: '{path::out.*=1}/source/wtools/amid/l7/executor/FileExecutor.s'
       entry.out.compiled.debug.debug:
         criterion:
           debug: debug
@@ -157,19 +157,19 @@ module:
         path:
           - ../proto
           - ../proto/Integration.test.s
-          - ../proto/dwtools
-          - ../proto/dwtools/Tools.s
-          - ../proto/dwtools/abase
-          - ../proto/dwtools/amid
-          - ../proto/dwtools/amid/l7
-          - ../proto/dwtools/amid/l7/executor
-          - ../proto/dwtools/amid/l7/executor/FileExecutor.s
-          - ../proto/dwtools/amid/l7.test
-          - ../proto/dwtools/amid/l7.test/executor.test
-          - ../proto/dwtools/amid/l7.test/executor.test/FileExecutor.test.s
+          - ../proto/wtools
+          - ../proto/wtools/Tools.s
+          - ../proto/wtools/abase
+          - ../proto/wtools/amid
+          - ../proto/wtools/amid/l7
+          - ../proto/wtools/amid/l7/executor
+          - ../proto/wtools/amid/l7/executor/FileExecutor.s
+          - ../proto/wtools/amid/l7.test
+          - ../proto/wtools/amid/l7.test/executor.test
+          - ../proto/wtools/amid/l7.test/executor.test/FileExecutor.test.s
           - >-
-            ../proto/dwtools/amid/l7.test/executor.test/TemplateTree.debug.jslike
-          - ../proto/dwtools/atop
+            ../proto/wtools/amid/l7.test/executor.test/TemplateTree.debug.jslike
+          - ../proto/wtools/atop
     submodule:
       wTools:
         path: 'npm:///wTools'
@@ -921,7 +921,7 @@ module:
       entry.proto.no.tests:
         criterion:
           tests: no.tests
-        path: proto/dwtools/amid/l7/executor/FileExecutor.s
+        path: proto/wtools/amid/l7/executor/FileExecutor.s
       entry.proto.only.tests:
         criterion:
           tests: only.tests
@@ -931,13 +931,13 @@ module:
           debug: debug
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/amid/l7/executor/FileExecutor.s'
+        path: '{path::out.*=1}/source/wtools/amid/l7/executor/FileExecutor.s'
       entry.out.raw.debug.release:
         criterion:
           debug: release
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/amid/l7/executor/FileExecutor.s'
+        path: '{path::out.*=1}/source/wtools/amid/l7/executor/FileExecutor.s'
       entry.out.compiled.debug.debug:
         criterion:
           debug: debug
