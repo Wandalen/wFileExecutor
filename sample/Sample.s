@@ -4,6 +4,6 @@ if( typeof module !== 'undefined' )
   require( 'wfileexecutor' );
 }
 
-var _ = wTools;
+let _ = wTools;
 
 var executor = new _.FileExecutor();

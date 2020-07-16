@@ -15,7 +15,7 @@ if( typeof module !== 'undefined' )
 
 }
 
-var _ = _global_.wTools;
+let _ = _global_.wTools;
 
 if( typeof __dirname === 'undefined' )
 return;
@@ -961,7 +961,7 @@ samplesTest.timeOut = 500000;
 // declare
 // --
 
-var Self =
+let Self =
 {
 
   name : 'Tools.mid.FileExecutor',
