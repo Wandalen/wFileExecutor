@@ -444,7 +444,7 @@ function _includeAct( o )
     translator : includeFrame.translator,
     maskTerminal : maskTerminal,
     outputFormat : 'record',
-    orderingExclusion : [ [ '.external','' ], [ '.pre', '', '.post' ] ],
+    orderingExclusion : [ [ '.external','' ], [ '.head', '', '.post' ] ],
     withDirs : 0,
   }
 
