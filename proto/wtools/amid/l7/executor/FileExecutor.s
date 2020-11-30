@@ -329,7 +329,7 @@ function includeFrameBegin( o )
   o.fileFrames = [];
   if( o.usedIncludeFrames === null )
   o.usedIncludeFrames = [];
-  
+
   let includeFrame = new IncludeFrameBlueprint.construct();
 
   includeFrame.userIncludeFrame = o.userIncludeFrame;
@@ -427,7 +427,7 @@ function _includeAct( o )
   let includeFrame = self.includeFrameBegin({ userIncludeFrame : userIncludeFrame });
 
   _.assert( _.construction.isInstanceOf( includeFrame,IncludeFrameBlueprint ) );
-  
+
   includeFrame.userChunkFrame = o.userChunkFrame;
   includeFrame.translator = o.translator.clone();
   includeFrame.includeOptions = o;
@@ -1937,7 +1937,7 @@ function includesUsedInherit( includeFrame,fileFrame )
 // construction
 // --
 
-let IncludeFrameBlueprint = _.blueprint
+let IncludeFrameBlueprint = _.Blueprint
 ({
 
   resolveOptions : null,
@@ -1958,7 +1958,7 @@ let IncludeFrameBlueprint = _.blueprint
   externals : null,
   context : null,
   session : null,
-  
+
   typed : _.trait.typed( true )
 })
 
@@ -1969,7 +1969,7 @@ includeFrameEnd.defaults = IncludeFrame;
 
 //
 
-let FileFrameBlueprint = _.blueprint
+let FileFrameBlueprint = _.Blueprint
 ({
   includeFrame : null,
   includeFrames : _.define.shallow([]),
@@ -1995,7 +1995,7 @@ let FileFrameBlueprint = _.blueprint
 
   code : null,
   categories : _.define.shallow([]),
-  
+
   typed : _.trait.typed( true )
 
 })
@@ -2006,7 +2006,7 @@ fileFrameFor.defaults = FileFrame;
 
 //
 
-let ChunkFrameBlueprint = _.blueprint
+let ChunkFrameBlueprint = _.Blueprint
 ({
   chunk : null,
   fileFrame : null,
@@ -2018,7 +2018,7 @@ let ChunkFrameBlueprint = _.blueprint
   execution : null,
   result : null,
   resultRaw : null,
-  
+
   typed : _.trait.typed( true )
 })
 
