@@ -585,7 +585,7 @@ function executorMakeFor( path )
         if( !o.frame.usedIncludeFrames.length )
         return;
 
-        var paths = _.entityFilter( o.frame.usedFileFrames,function( e )
+        var paths = _.filter_( null, o.frame.usedFileFrames,function( e )
         {
           return _.longHas( e.categories,'script' ) ? e.file.absolute : undefined;
         });
