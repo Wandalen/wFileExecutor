@@ -24,6 +24,6 @@
     "wpathtranslator" : "",
     "wfilesarchive" : ""
   },
-  "devDependencies" : { "wTesting" : "" },
+  "devDependencies" : { "wTesting" : "", "wfileexecutor" : "file:.", "eslint" : "7.1.0" },
   "keywords" : [ "wTools", "File executor" ]
 }
