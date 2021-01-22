@@ -7,3 +7,5 @@ if( typeof module !== 'undefined' )
 let _ = wTools;
 
 var executor = new _.FileExecutor();
+
+console.log( executor );
