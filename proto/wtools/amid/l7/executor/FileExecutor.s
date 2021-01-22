@@ -1,4 +1,5 @@
-( function _FileExecutor_s_() {
+( function _FileExecutor_s_()
+{
 
 'use strict';
 
@@ -79,9 +80,9 @@ function init( o )
 function languageFromFilePath( filePath )
 {
 
-  if( _.strEnds( filePath,'.coffee' ) )
+  if( _.strEnds( filePath, '.coffee' ) )
   return 'coffee'
-  else if( _.strEnds( filePath,'.js' ) || _.strEnds( filePath,'.s' ) || _.strEnds( filePath,'.ss' ) )
+  else if( _.strEnds( filePath, '.js' ) || _.strEnds( filePath, '.s' ) || _.strEnds( filePath, '.ss' ) )
   return 'ecma';
 
 }
@@ -92,7 +93,7 @@ function scriptExecute( o )
 {
 
   _.assert( arguments.length === 1, 'Expects single argument' );
-  _.routineOptions( scriptExecute,o );
+  _.routineOptions( scriptExecute, o );
 
   if( !o.language )
   o.language = languageFromFilePath( o.filePath );
@@ -107,7 +108,7 @@ function scriptExecute( o )
   else if( o.language === 'coffee' )
   return this.coffeeExecute( o );
 
-  _.assert( 0,'unknown language',o.language );
+  _.assert( 0, 'unknown language', o.language );
 }
 
 scriptExecute.defaults =
@@ -132,7 +133,7 @@ function ecmaExecute( o )
 {
   let result;
 
-  _.routineOptions( ecmaExecute,o );
+  _.routineOptions( ecmaExecute, o );
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( o.code ) );
 
@@ -147,7 +148,7 @@ function ecmaExecute( o )
   }
 
   _.routineExec( execOptions );
-  _.mapExtend( o,execOptions );
+  _.mapExtend( o, execOptions );
 
   return o;
 }
@@ -199,7 +200,8 @@ ecmaExecute.defaults =
 
 }
 
-ecmaExecute.defaults.__proto__ = scriptExecute.defaults;
+// ecmaExecute.defaults.__proto__ = scriptExecute.defaults;
+Object.setPrototypeOf( ecmaExecute.defaults, scriptExecute.defaults )
 
 //
 
@@ -209,14 +211,14 @@ function coffeeCompile( o )
   let result = '';
 
   _.assert( arguments.length === 1, 'Expects single argument' );
-  _.routineOptions( coffeeCompile,o );
+  _.routineOptions( coffeeCompile, o );
 
   if( !_.strIs( o.code ) )
-  throw _.err( 'coffeCompile','Expects (-o.code-)' );
+  throw _.err( 'coffeCompile', 'Expects (-o.code-)' );
 
   // if( o.fix )
   // {
-  //   o.code = _.strLinesIndentation( o.code,'  ' );
+  //   o.code = _.strLinesIndentation( o.code, '  ' );
   //   o.code = [ self.prefix, o.code, self.postfix ].join( '\n' );
   // }
 
@@ -226,7 +228,7 @@ function coffeeCompile( o )
     bare : !!o.baring,
   }
 
-  result += Coffee.compile( o.code,compileOptions );
+  result += Coffee.compile( o.code, compileOptions );
 
   return result;
 }
@@ -245,18 +247,18 @@ function coffeeExecute( o )
   let self = this;
 
   if( _.strIs( o ) )
-  o = { code : code };
+  o = { code };
 
-  _.routineOptions( coffeeExecute,o );
+  _.routineOptions( coffeeExecute, o );
   _.assert( arguments.length === 1, 'Expects single argument' );
 
   if( !o.name )
   o.name = o.filePath ? _.path.name( o.filePath ) : 'unknown';
 
-  // let optionsForCompile = _.mapExtend( null,o );
+  // let optionsForCompile = _.mapExtend( null, o );
   o.filePath = self.fileProvider.path.nativize( o.filePath );
 
-  logger.log( 'coffeeExecute',o.filePath );
+  logger.log( 'coffeeExecute', o.filePath );
 
   let optionsForCompile = _.mapOnly( o, this.coffeeCompile.defaults );
   optionsForCompile.baring = o.isConfig;
@@ -273,10 +275,10 @@ coffeeExecute.defaults =
   language : 'coffee',
 }
 
-// _.mapSupplement( coffeeExecute.defaults,coffeeCompile.defaults );
+// _.mapSupplement( coffeeExecute.defaults, coffeeCompile.defaults );
 
-coffeeExecute.defaults.__proto__ = scriptExecute.defaults;
-
+// coffeeExecute.defaults.__proto__ = scriptExecute.defaults;
+Object.setPrototypeOf( coffeeExecute.defaults, scriptExecute.defaults )
 // --
 // include
 // --
@@ -286,7 +288,7 @@ function sessionMake( o )
 {
   let self = this;
 
-  _.routineOptions( sessionMake,o );
+  _.routineOptions( sessionMake, o );
   _.assert( arguments.length === 1, 'Expects single argument' );
 
   let session = Object.create( null );
@@ -294,7 +296,7 @@ function sessionMake( o )
   session.fileFrames = [];
   session.onFileExec = null;
 
-  _.mapExtend( session,o );
+  _.mapExtend( session, o );
 
   if( session.exposingInclude || session.exposingEnvironment || session.exposingTools )
   {
@@ -322,7 +324,7 @@ function includeFrameBegin( o )
 {
   let self = this;
 
-  _.routineOptions( includeFrameBegin,o );
+  _.routineOptions( includeFrameBegin, o );
   _.assert( arguments.length === 1, 'Expects single argument' );
 
   if( o.fileFrames === null )
@@ -330,7 +332,7 @@ function includeFrameBegin( o )
   if( o.usedIncludeFrames === null )
   o.usedIncludeFrames = [];
 
-  let includeFrame = new IncludeFrameBlueprint.construct();
+  let includeFrame = new IncludeFrameBlueprint.Make();
 
   includeFrame.userIncludeFrame = o.userIncludeFrame;
   includeFrame.usedIncludeFrames = o.usedIncludeFrames
@@ -363,13 +365,13 @@ function includeFrameEnd( includeFrame )
   let self = this;
 
   if( self.verbosity > 1 )
-  logger.log( 'includeFrameEnd',includeFrame.includeOptions.path );
+  logger.log( 'includeFrameEnd', includeFrame.includeOptions.path );
 
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( includeFrame.session === self.session );
-  _.assert( _.construction.isInstanceOf( includeFrame,IncludeFrameBlueprint ) );
+  _.assert( _.construction.isInstanceOf( includeFrame, IncludeFrameBlueprint ) );
 
-  _.arrayRemoveElementOnceStrictly( self.includeFrames,includeFrame );
+  _.arrayRemoveElementOnceStrictly( self.includeFrames, includeFrame );
 
   if( !includeFrame.userIncludeFrame )
   {
@@ -386,15 +388,15 @@ function _includeAct( o )
   let self = this;
   let session = o.session;
 
-  _.routineOptions( _includeAct,o );
+  _.routineOptions( _includeAct, o );
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.objectIs( session ) );
   _.assert( _.objectIs( o.translator ) );
 
   if( self.verbosity > 2 )
-  logger.log( '_includeAct.begin',o.path );
+  logger.log( '_includeAct.begin', o.path );
 
-  // let maskTerminal = new _.RegexpObject( [],_.RegexpObject.Names.includeAny );
+  // let maskTerminal = new _.RegexpObject( [], _.RegexpObject.Names.includeAny );
   let maskTerminal = _.RegexpObject
   ({
     excludeAny :
@@ -416,24 +418,24 @@ function _includeAct( o )
 
   // if( options.forTheDocument )
   // {
-  //   let maskNotManual = _.regexpMakeObject( self.env.valueGet( '{{mask/manual}}' ) || /\.manual($|\.|\/)/,_.RegexpObject.Names.excludeAny );
+  //   let maskNotManual = _.regexpMakeObject( self.env.valueGet( '{{mask/manual}}' ) || /\.manual($|\.|\/)/, _.RegexpObject.Names.excludeAny );
   //   _.RegexpObject.And( maskTerminal,maskNotManual );
   // }
   //
   // if( options.maskTerminal )
-  // _.RegexpObject.And( maskTerminal,_.regexpMakeObject( options.maskTerminal,_.RegexpObject.Names.includeAny ) );
+  // _.RegexpObject.And( maskTerminal, _.regexpMakeObject( options.maskTerminal, _.RegexpObject.Names.includeAny ) );
 
   let userIncludeFrame = self.includeFrames[ 0 ];
-  let includeFrame = self.includeFrameBegin({ userIncludeFrame : userIncludeFrame });
+  let includeFrame = self.includeFrameBegin({ userIncludeFrame });
 
-  _.assert( _.construction.isInstanceOf( includeFrame,IncludeFrameBlueprint ) );
+  _.assert( _.construction.isInstanceOf( includeFrame, IncludeFrameBlueprint ) );
 
   includeFrame.userChunkFrame = o.userChunkFrame;
   includeFrame.translator = o.translator.clone();
   includeFrame.includeOptions = o;
   includeFrame.resolveOptions = o.resolveOptions || Object.create( null );
 
-  // logger.log( 'maskTerminal',_.toStr( maskTerminal,{ levels : 3 } ) );
+  // logger.log( 'maskTerminal', _.toStr( maskTerminal,{ levels : 3 } ) );
 
   /* resolve */
 
@@ -442,18 +444,16 @@ function _includeAct( o )
     globPath : includeFrame.translator.virtualFor( o.path || '.' ),
     ends : o.ends,
     translator : includeFrame.translator,
-    maskTerminal : maskTerminal,
+    maskTerminal,
     outputFormat : 'record',
-    orderingExclusion : [ [ '.external','' ], [ '.head', '', '.post' ] ],
+    orderingExclusion : [ [ '.external', '' ], [ '.head', '', '.post' ] ],
     withDirs : 0,
   }
 
-  includeFrame.resolveOptions
-  =
-  _filesFilterMasksSupplement( includeFrame.resolveOptions, resolveOptions );
+  includeFrame.resolveOptions = _filesFilterMasksSupplement( includeFrame.resolveOptions, resolveOptions );
   // self.fileProvider._filesFilterMasksSupplement( includeFrame.resolveOptions, resolveOptions );
 
-  let filter = _.FileRecordFilter.TolerantFrom( includeFrame.resolveOptions,{ defaultProvider : self.fileProvider } );
+  let filter = _.FileRecordFilter.TolerantFrom( includeFrame.resolveOptions, { defaultProvider : self.fileProvider } );
   includeFrame.resolveOptions.filter = filter;
 
   includeFrame.resolveOptions = _.mapOnly( includeFrame.resolveOptions, self.fileProvider.filesResolve.defaults );
@@ -468,7 +468,7 @@ function _includeAct( o )
   if( !includeFrame.files.length && !o.optional )
   {
     debugger;
-    throw _.err( '\nnone file found for',includeFrame.resolveOptions.globPath,'\n' );
+    throw _.err( '\nnone file found for', includeFrame.resolveOptions.globPath, '\n' );
   }
 
   /* */
@@ -477,35 +477,35 @@ function _includeAct( o )
   o.syncExternal = new _.Consequence().take( null );
   includeFrame.consequence = new _.Consequence();
 
-  o.syncExternal.give( function( err,arg )
+  o.syncExternal.give( function( err, arg )
   {
-    includeFrame.consequence.take( err,arg );
+    includeFrame.consequence.take( err, arg );
   });
 
   self.filesExecute
   ({
-    includeFrame : includeFrame,
+    includeFrame,
     consequence : includeFrame.consequence,
   })
 
   includeFrame.consequence.ifNoErrorThen( function _includeSecondAfter( arg )
   {
     if( self.verbosity > 2 )
-    logger.log( '_includeAct.end',o.path );
+    logger.log( '_includeAct.end', o.path );
     _.assert( session === self.session );
     return arg;
   });
 
-  includeFrame.consequence.finally( function _includeSecondAfter( err,arg )
+  includeFrame.consequence.finally( function _includeSecondAfter( err, arg )
   {
     // debugger;
     if( err )
     {
-      o.syncExternal.take( err,arg );
+      o.syncExternal.take( err, arg );
       throw _.err( err );
     }
 
-    // logger.log( 'includeFrameEnd\n',_.select( self.includeFrames,'*.includeOptions.globPath' ) );
+    // logger.log( 'includeFrameEnd\n', _.select( self.includeFrames, '*.includeOptions.globPath' ) );
 
     self.includeFrameEnd( includeFrame );
 
@@ -521,9 +521,18 @@ function _includeAct( o )
 
     _.mapSupplement( dst, src );
 
-    dst.maskDirectory = _.RegexpObject.And( null, dst.maskDirectory || Object.create( null ), src.maskDirectory || Object.create( null ) );
-    dst.maskTerminal = _.RegexpObject.And( null, dst.maskTerminal || Object.create( null ), src.maskTerminal || Object.create( null ) );
-    dst.maskAll = _.RegexpObject.And( null, dst.maskAll || Object.create( null ), src.maskAll || Object.create( null ) );
+    dst.maskDirectory = _.RegexpObject.And
+    (
+      null, dst.maskDirectory || Object.create( null ), src.maskDirectory || Object.create( null )
+    );
+    dst.maskTerminal = _.RegexpObject.And
+    (
+      null, dst.maskTerminal || Object.create( null ), src.maskTerminal || Object.create( null )
+    );
+    dst.maskAll = _.RegexpObject.And
+    (
+      null, dst.maskAll || Object.create( null ), src.maskAll || Object.create( null )
+    );
 
     return dst;
   }
@@ -549,7 +558,7 @@ _includeAct.defaults =
 
 //
 
-function _includeFromChunk( bound,o,o2 )
+function _includeFromChunk( bound, o, o2 )
 {
   let self = this;
   let chunkFrame = bound.chunkFrame;
@@ -564,13 +573,13 @@ function _includeFromChunk( bound,o,o2 )
 
   if( o2 )
   {
-    _.mapExtend( o,o2 );
+    _.mapExtend( o, o2 );
   }
 
   _.assertMapHasOnly( includeFile, _includeFromChunk.parameters );
   let o3 = _.mapOnly( includeFile, _includeFromChunk.defaults );
 
-  _.mapSupplement( o,o3 );
+  _.mapSupplement( o, o3 );
 
   o.session = session;
   o.translator = chunkFrame.fileFrame.translator;
@@ -584,14 +593,14 @@ function _includeFromChunk( bound,o,o2 )
   _.assert( arguments.length === 2 || arguments.length === 3, 'Expects two or three arguments' );
   _.assert( _.objectIs( o.translator ) );
   _.assert( _.objectIs( session ) );
-  _.assert( _.construction.isInstanceOf( included,IncludeFrameBlueprint ) );
+  _.assert( _.construction.isInstanceOf( included, IncludeFrameBlueprint ) );
 
   _.assert( included.files.length === included.fileFrames.length );
 
   if( self.verbosity > 4 )
   {
-    logger.log( 'includeFromChunk.includeFrame :',chunkFrame.fileFrame.includeFrame.includeOptions.path );
-    logger.log( 'includeFromChunk.fileFrame :',chunkFrame.fileFrame.file.relative );
+    logger.log( 'includeFromChunk.includeFrame :', chunkFrame.fileFrame.includeFrame.includeOptions.path );
+    logger.log( 'includeFromChunk.fileFrame :', chunkFrame.fileFrame.file.relative );
   }
 
   chunkFrame.usedIncludeFrames.push( included );
@@ -605,13 +614,15 @@ _includeFromChunk.defaults =
 {
 }
 
-_includeFromChunk.defaults.__proto__ = _includeAct.defaults;
+// _includeFromChunk.defaults.__proto__ = _includeAct.defaults;
+Object.setPrototypeOf( _includeFromChunk.defaults, _includeAct.defaults );
 
 _includeFromChunk.parameters =
 {
 }
 
-_includeFromChunk.parameters.__proto__ = _includeAct.defaults;
+// _includeFromChunk.parameters.__proto__ = _includeAct.defaults;
+Object.setPrototypeOf( _includeFromChunk.parameters, _includeAct.defaults );
 
 //
 
@@ -623,11 +634,11 @@ function include( o )
   o = { path : o };
 
   if( self.verbosity > 1 )
-  logger.log( 'include',o.path );
+  logger.log( 'include', o.path );
 
-  _.routineOptions( include,o );
+  _.routineOptions( include, o );
   _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( self.session === null,'attempt to relaunch executor during execution' );
+  _.assert( self.session === null, 'attempt to relaunch executor during execution' );
 
   if( !o.translator )
   {
@@ -656,12 +667,12 @@ function include( o )
 
   /* */
 
-  includeFrame.consequence.finally( function _includeAfter( err,arg )
+  includeFrame.consequence.finally( function _includeAfter( err, arg )
   {
     if( err )
     {
       debugger;
-      err = _.err( 'Error including',o.path,'\n',err );
+      err = _.err( 'Error including', o.path, '\n', err );
       throw _.errLogOnce( err );
     }
 
@@ -680,8 +691,8 @@ include.defaults =
   virtualCurrentDirPath : null,
 }
 
-_.mapExtend( include.defaults , sessionMake.defaults );
-_.mapExtend( include.defaults , _includeAct.defaults );
+_.mapExtend( include.defaults, sessionMake.defaults );
+_.mapExtend( include.defaults, _includeAct.defaults );
 
 // --
 // file
@@ -696,9 +707,9 @@ function filesExecute( o )
   let session = o.includeFrame.session;
   let files = o.includeFrame.files;
 
-  _.routineOptions( filesExecute,o );
+  _.routineOptions( filesExecute, o );
   _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.construction.isInstanceOf( o.includeFrame,IncludeFrameBlueprint ) );
+  _.assert( _.construction.isInstanceOf( o.includeFrame, IncludeFrameBlueprint ) );
   _.assert( _.objectIs( o.includeFrame ) );
   _.assert( _.arrayIs( o.includeFrame.files ) );
   _.assert( _.objectIs( session ) );
@@ -710,7 +721,7 @@ function filesExecute( o )
     let file = files[ i ];
     self.fileFrameFor
     ({
-      file : file,
+      file,
       includeFrame : o.includeFrame,
     });
   }
@@ -729,7 +740,7 @@ function filesExecute( o )
   for( let i = 0 ; i < files.length ; i += 1 )
   {
     let file = files[ i ];
-    con.ifNoErrorThen( _.routineSeal( self,self.fileExecute,[{ file : file, includeFrame : o.includeFrame }] ) );
+    con.ifNoErrorThen( _.routineSeal( self, self.fileExecute, [ { file, includeFrame : o.includeFrame } ] ) );
   }
 
   return con;
@@ -752,35 +763,35 @@ function fileExecute( o )
 
   let fileFrame = self.fileFrameFor
   ({
-    file : file,
-    includeFrame : includeFrame,
+    file,
+    includeFrame,
   });
 
-  _.assert( fileFrame.includeFrames.indexOf( includeFrame ) !== -1,'Expects same includeFrame' );
-  _.routineOptions( fileExecute,o );
+  _.assert( fileFrame.includeFrames.indexOf( includeFrame ) !== -1, 'Expects same includeFrame' );
+  _.routineOptions( fileExecute, o );
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.objectIs( session ) );
-  _.assert( _.construction.isInstanceOf( fileFrame,FileFrameBlueprint ) );
+  _.assert( _.construction.isInstanceOf( fileFrame, FileFrameBlueprint ) );
 
   if( !file.stat )
   debugger;
 
   if( file.stat.size > o.maxSize )
   {
-    logger.warn( 'WARNING :','execution of file ( ',file.stat.size,'>',o.maxSize,' ) canceled because it is too big :',file.absolute );
+    logger.warn( 'WARNING :', 'execution of file ( ', file.stat.size, '>', o.maxSize, ' ) canceled because it is too big :', file.absolute );
     return;
   }
 
   if( fileFrame.executing )
   {
-    throw _.err( 'File',fileFrame.file.absolute,'already executing, recursion dependence!' );
+    throw _.err( 'File', fileFrame.file.absolute, 'already executing, recursion dependence!' );
   }
 
   if( fileFrame.executed )
   {
     if( self.verbosity > 1 )
-    logger.log( 'already executed :',fileFrame.file.relative );
-    self.includesUsedInherit( includeFrame,fileFrame );
+    logger.log( 'already executed :', fileFrame.file.relative );
+    self.includesUsedInherit( includeFrame, fileFrame );
     return fileFrame.consequence;
   }
 
@@ -796,11 +807,11 @@ function fileExecute( o )
   /* verbosity */
 
   if( self.verbosity )
-  logger.log( 'fileExecute',o.file.absolute );
+  logger.log( 'fileExecute', o.file.absolute );
 
   if( self.warnBigFiles )
   if( file.stat.size > self.warnBigFiles )
-  logger.warn( 'WARNING :','execution of big (',file.stat.size,'>',self.warnBigFiles,') files is slow :',file.absolute );
+  logger.warn( 'WARNING :', 'execution of big (', file.stat.size, '>', self.warnBigFiles, ') files is slow :', file.absolute );
 
   /* */
 
@@ -817,10 +828,10 @@ function fileExecute( o )
   {
 
     if( self.verbosity > 1 )
-    logger.log( 'fileExecute.end1',file.absolute );
+    logger.log( 'fileExecute.end1', file.absolute );
 
-    _.assert( _.strIs( arg ) || fileFrame.error,'problem executing file',fileFrame.file.absolute );
-    _.assert( _.strIs( fileFrame.result ),'problem executing file',fileFrame.file.absolute );
+    _.assert( _.strIs( arg ) || fileFrame.error, 'problem executing file', fileFrame.file.absolute );
+    _.assert( _.strIs( fileFrame.result ), 'problem executing file', fileFrame.file.absolute );
 
     fileFrame.usedFiles = self.filesUsedGet( fileFrame.usedIncludeFrames );
 
@@ -829,7 +840,7 @@ function fileExecute( o )
 
   /* */
 
-  fileFrame.consequence.finally( function _fileExecuteAfter( err,arg )
+  fileFrame.consequence.finally( function _fileExecuteAfter( err, arg )
   {
 
     if( err )
@@ -849,9 +860,9 @@ function fileExecute( o )
       {
 
         // if( fileFrame.usedFiles.length )
-        // self.archive.dependencyAdd( file,fileFrame.usedFiles );
+        // self.archive.dependencyAdd( file, fileFrame.usedFiles );
         //
-        // self.archive.contentUpdate( file,fileFrame.result );
+        // self.archive.contentUpdate( file, fileFrame.result );
         // debugger;
 
         self.fileProvider.fileWrite
@@ -863,10 +874,10 @@ function fileExecute( o )
         });
 
         // file.reset();
-        // self.archive.statUpdate( file,file.stat );
+        // self.archive.statUpdate( file, file.stat );
 
         if( self.verbosity )
-        logger.log( '+ executed :',file.absolute );
+        logger.log( '+ executed :', file.absolute );
 
       }
 
@@ -876,7 +887,7 @@ function fileExecute( o )
     fileFrame.executing = 0;
 
     // if( self.verbosity > 1 )
-    // logger.log( 'fileExecute.end2',file.absolute );
+    // logger.log( 'fileExecute.end2', file.absolute );
 
     return fileFrame.result;
   });
@@ -905,7 +916,7 @@ function _fileExecute( o )
 
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( o.file instanceof _.FileRecord );
-  _.assert( _.construction.isInstanceOf( o,FileFrameBlueprint ) );
+  _.assert( _.construction.isInstanceOf( o, FileFrameBlueprint ) );
   _.assert( !o.consequence );
 
   /* result */
@@ -937,9 +948,9 @@ function _fileExecute( o )
 
   /* chunks */
 
-  let chunks = self._chunksSplit( o.code,_.mapOnly( o, _chunksSplit.defaults ) );
+  let chunks = self._chunksSplit( o.code, _.mapOnly( o, _chunksSplit.defaults ) );
   if( chunks.error )
-  o.error = _.err( errorPrefix,chunks.error,'\n' );
+  o.error = _.err( errorPrefix, chunks.error, '\n' );
   o.chunks = chunks.chunks;
 
   if( !chunks.error )
@@ -953,7 +964,7 @@ function _fileExecute( o )
     let optionsChunkExecute = Object.create( null );
     optionsChunkExecute.fileFrame = o;
     optionsChunkExecute.chunk = chunk;
-    o.consequence.ifNoErrorThen( _.routineSeal( self,self.chunkExecute,[ optionsChunkExecute ] ) );
+    o.consequence.ifNoErrorThen( _.routineSeal( self, self.chunkExecute, [ optionsChunkExecute ] ) );
     o.consequence.ifNoErrorThen( function( arg )
     {
       _.assert( _.strIs( arg ) );
@@ -976,7 +987,7 @@ function filesFilter( includeFrame )
   let io = includeFrame.includeOptions;
 
   _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.construction.isInstanceOf( includeFrame,IncludeFrameBlueprint ) );
+  _.assert( _.construction.isInstanceOf( includeFrame, IncludeFrameBlueprint ) );
 
   if( !io.ifAny && !io.ifAll && !io.ifNone )
   return;
@@ -995,26 +1006,26 @@ function filesFilter( includeFrame )
     let fileFrame = fileFrames[ f ];
 
     if( io.ifAny )
-    if( !_.longHasAny( fileFrame.categories,io.ifAny ) )
+    if( !_.longHasAny( fileFrame.categories, io.ifAny ) )
     {
-      fileFrames.splice( f,1 );
-      files.splice( f,1 );
+      fileFrames.splice( f, 1 );
+      files.splice( f, 1 );
       continue;
     }
 
     if( io.ifAll )
-    if( !_.longHasAll( fileFrame.categories,io.ifAll ) )
+    if( !_.longHasAll( fileFrame.categories, io.ifAll ) )
     {
-      fileFrames.splice( f,1 );
-      files.splice( f,1 );
+      fileFrames.splice( f, 1 );
+      files.splice( f, 1 );
       continue;
     }
 
     if( io.ifNone )
-    if( !_.longHasNone( fileFrame.categories,io.ifNone ) )
+    if( !_.longHasNone( fileFrame.categories, io.ifNone ) )
     {
-      fileFrames.splice( f,1 );
-      files.splice( f,1 );
+      fileFrames.splice( f, 1 );
+      files.splice( f, 1 );
       continue;
     }
 
@@ -1035,23 +1046,23 @@ function fileFrameFor( fileFrame )
   _.assert( _.objectIs( includeFrame ) );
 
   if( self.verbosity > 4 )
-  logger.log( 'fileFrameFor',fileFrame.file.absolute );
+  logger.log( 'fileFrameFor', fileFrame.file.absolute );
 
   let equ = ( e ) => e.file.absolute;
-  let fileFrameFound = _.longLeft( session.fileFrames , fileFrame , equ ).element;
+  let fileFrameFound = _.longLeft( session.fileFrames, fileFrame, equ ).element;
   if( fileFrameFound )
   {
-    _.arrayAppendOnce( fileFrameFound.includeFrames , includeFrame );
-    _.arrayAppendOnce( includeFrame.fileFrames , fileFrameFound );
+    _.arrayAppendOnce( fileFrameFound.includeFrames, includeFrame );
+    _.arrayAppendOnce( includeFrame.fileFrames, fileFrameFound );
     return fileFrameFound;
   }
 
   /* */
 
-  fileFrame = new FileFrameBlueprint.construct( fileFrame );
+  fileFrame = new FileFrameBlueprint.Make( fileFrame );
 
   if( !session.allowIncluding )
-  throw _.err( 'can only reuse included files, but was attempt to include a new one',fileFrame.file.absolute );
+  throw _.err( 'can only reuse included files, but was attempt to include a new one', fileFrame.file.absolute );
 
   includeFrame.fileFrames.push( fileFrame );
   session.fileFrames.push( fileFrame );
@@ -1064,7 +1075,7 @@ function fileFrameFor( fileFrame )
   fileFrame.context = includeFrame.context;
 
   if( fileFrame.externals === null )
-  fileFrame.externals = _.mapExtend( null,includeFrame.externals );
+  fileFrame.externals = _.mapExtend( null, includeFrame.externals );
 
   fileFrame.categories = self.categoriesForFile( fileFrame );
 
@@ -1079,7 +1090,7 @@ function chunkFrameFor( o )
 {
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.mapIs( o ) );
-  o = ChunkFrameBlueprint.construct( o );
+  o = ChunkFrameBlueprint.Make( o );
   return o;
 }
 
@@ -1094,7 +1105,7 @@ function chunkExecute( o )
   o = chunkFrameFor( o );
 
   if( self.verbosity > 2 )
-  logger.log( 'chunkExecute',o.fileFrame.file.relative,o.chunk.index );
+  logger.log( 'chunkExecute', o.fileFrame.file.relative, o.chunk.index );
 
   /* */
 
@@ -1104,14 +1115,14 @@ function chunkExecute( o )
   let executed = self._chunkExecute( o );
   executed = _.Consequence.From( executed );
 
-  executed.give( function( err,arg )
+  executed.give( function( err, arg )
   {
 
     if( self.verbosity > 2 )
-    logger.log( 'chunkExecute.end1',o.fileFrame.file.relative,o.chunk.index );
+    logger.log( 'chunkExecute.end1', o.fileFrame.file.relative, o.chunk.index );
 
     if( err )
-    return this.take( err,arg );
+    return this.take( err, arg );
 
     if( _.numberIs( arg ) )
     arg = _.toStr( arg );
@@ -1119,11 +1130,11 @@ function chunkExecute( o )
     if( !_.strIs( arg ) )
     return this.error( _.err
     (
-      'chunk should return string, but returned',_.strType( arg ),
-      '\ncode :\n',_.strLinesNumber( o.chunk.text || o.chunk.code )
+      'chunk should return string, but returned', _.strType( arg ),
+      '\ncode :\n', _.strLinesNumber( o.chunk.text || o.chunk.code )
     ));
 
-    this.take( err,arg );
+    this.take( err, arg );
   });
 
   executed.andKeep( o.syncExternal );
@@ -1138,9 +1149,9 @@ function chunkExecute( o )
     result = result[ 1 ];
 
     if( self.verbosity > 2 )
-    logger.log( 'chunkExecute.end2',o.fileFrame.file.relative,o.chunk.index );
+    logger.log( 'chunkExecute.end2', o.fileFrame.file.relative, o.chunk.index );
 
-    _.assert( _.strIs( result ),'Expects string result from chunk' );
+    _.assert( _.strIs( result ), 'Expects string result from chunk' );
     _.assert( _.arrayIs( o.usedIncludeFrames ) );
 
     o.resultRaw = result;
@@ -1155,7 +1166,7 @@ function chunkExecute( o )
   {
 
     if( self.verbosity > 2 )
-    logger.log( 'chunkExecute.end3',o.fileFrame.file.relative,o.chunk.index );
+    logger.log( 'chunkExecute.end3', o.fileFrame.file.relative, o.chunk.index );
 
     _.assert( _.strIs( arg ) );
     _.assert( _.strIs( o.result ) );
@@ -1177,7 +1188,7 @@ function _chunkExecute( o )
   _.assert( _.objectIs( session ) );
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( o.chunk.text ) || _.strIs( o.chunk.code ) );
-  _.assert( _.construction.isInstanceOf( o,ChunkFrameBlueprint ) );
+  _.assert( _.construction.isInstanceOf( o, ChunkFrameBlueprint ) );
 
   /* */
 
@@ -1185,46 +1196,50 @@ function _chunkExecute( o )
   {
     return o.chunk.text;
   }
-  else if( _.strIs( o.chunk.code ) ) try
+  else if( _.strIs( o.chunk.code ) )
   {
 
-    /* exposing */
+    try
+    {
 
-    if( !o.externals && o.fileFrame.externals )
-    o.externals = _.mapExtend( null,o.fileFrame.externals );
-    self._chunkExpose( o );
+      /* exposing */
 
-    /* */
+      if( !o.externals && o.fileFrame.externals )
+      o.externals = _.mapExtend( null, o.fileFrame.externals );
+      self._chunkExpose( o );
 
-    let execution = _.mapOnly( o, ecmaExecute.defaults );
-    execution.language = self.languageFromFilePath( o.fileFrame.file.absolute );
-    execution.filePath = o.fileFrame.file.absolute + '{' + o.chunk.line + '-' + ( o.chunk.line + o.chunk.lines.length ) + '}';
+      /* */
 
-    execution.verbosity = self.verbosity;
-    execution.debug = self.debug;
+      let execution = _.mapOnly( o, ecmaExecute.defaults );
+      execution.language = self.languageFromFilePath( o.fileFrame.file.absolute );
+      execution.filePath = o.fileFrame.file.absolute + '{' + o.chunk.line + '-' + ( o.chunk.line + o.chunk.lines.length ) + '}';
 
-    execution.context = o.fileFrame.context;
-    execution.externals = o.externals;
-    execution.defaultLanguage = 'ecma';
+      execution.verbosity = self.verbosity;
+      execution.debug = self.debug;
 
-    execution.code = o.chunk.code;
-    o.execution = execution;
+      execution.context = o.fileFrame.context;
+      execution.externals = o.externals;
+      execution.defaultLanguage = 'ecma';
 
-    self.scriptExecute( execution );
+      execution.code = o.chunk.code;
+      o.execution = execution;
 
-    return execution.result;
-  }
-  catch( err )
-  {
+      self.scriptExecute( execution );
 
-    debugger;
-    throw _.err
-    (
-      'Error executing chunk :\n',_.toStr( o.chunk ), '\n',
-      '\nat file',o.fileFrame.file.absolute,
-      '\n',err
-    );
+      return execution.result;
+    }
+    catch( err )
+    {
 
+      debugger;
+      throw _.err
+      (
+        'Error executing chunk :\n', _.toStr( o.chunk ), '\n',
+        '\nat file', o.fileFrame.file.absolute,
+        '\n', err
+      );
+
+    }
   }
 
 }
@@ -1242,7 +1257,7 @@ function _chunkExpose( chunkFrame )
   let session = fileFrame.includeFrame.session;
 
   _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.construction.isInstanceOf( chunkFrame,ChunkFrameBlueprint ) );
+  _.assert( _.construction.isInstanceOf( chunkFrame, ChunkFrameBlueprint ) );
 
   /* exposing */
 
@@ -1312,7 +1327,7 @@ function _chunkTabulate( chunkFrame )
   ret = ret.split( '\n' );
 
   if( ret[ ret.length-1 ].trim() === '' )
-  ret.splice( ret.length-1,1 );
+  ret.splice( ret.length-1, 1 );
 
   for( let r = 0, l = ret.length ; r < l ; r++ )
   {
@@ -1326,10 +1341,10 @@ function _chunkTabulate( chunkFrame )
 
 //
 
-function _chunksSplit( src,o )
+function _chunksSplit( src, o )
 {
 
-  return _.strSplitChunks( src,o );
+  return _.strSplitChunks( src, o );
 
 }
 
@@ -1356,7 +1371,7 @@ function _chunkConcat( chunkFrame )
   {
     let usedIncludeFrame = chunkFrame.usedIncludeFrames[ i ];
     _.assert( usedIncludeFrame.fileFrames.length === usedIncludeFrame.files.length );
-    _.arrayAppendArray( chunkFrame.usedFileFrames,usedIncludeFrame.fileFrames );
+    _.arrayAppendArray( chunkFrame.usedFileFrames, usedIncludeFrame.fileFrames );
   }
 
   /* */
@@ -1391,12 +1406,12 @@ function _chunkConcat( chunkFrame )
       }
       else
       {
-        _.assert( _.strIs( fileFrame.result ),'Expects string, but got',_.strType( fileFrame.result ) );
+        _.assert( _.strIs( fileFrame.result ), 'Expects string, but got', _.strType( fileFrame.result ) );
         let formatted = self.linkFormat
         ({
           userChunkFrame : chunkFrame,
           usedFileFrame : fileFrame,
-          usedIncludeFrame : usedIncludeFrame,
+          usedIncludeFrame,
         });
 
         formatted = _.Consequence.From( formatted );
@@ -1429,15 +1444,14 @@ function _chunkConcat( chunkFrame )
   .ifNoErrorThen( function( arg )
   {
     if( self.verbosity > 1 )
-    logger.log( '_chunkFormat',chunkFrame.fileFrame.file.absolute,chunkFrame.chunk.index );
-    return self._chunkFormat( chunkFrame,arg );
+    logger.log( '_chunkFormat', chunkFrame.fileFrame.file.absolute, chunkFrame.chunk.index );
+    return self._chunkFormat( chunkFrame, arg );
   })
   .ifNoErrorThen( function( arg )
   {
     _.assert( _.strIs( arg ) );
     return arg;
-  })
-  ;
+  });
 
   /* */
 
@@ -1446,7 +1460,7 @@ function _chunkConcat( chunkFrame )
 
 //
 
-function _chunkFormat( chunkFrame,text )
+function _chunkFormat( chunkFrame, text )
 {
   let self = this;
 
@@ -1472,7 +1486,7 @@ function categoriesForFile( fileFrame )
   let file = fileFrame.file;
 
   _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.construction.isInstanceOf( fileFrame,FileFrameBlueprint ) );
+  _.assert( _.construction.isInstanceOf( fileFrame, FileFrameBlueprint ) );
   _.assert( file instanceof _.FileRecord );
 
   /* arbitrary categories */
@@ -1484,12 +1498,12 @@ function categoriesForFile( fileFrame )
     _.assert( _.routineIs( categorizer ) );
     try
     {
-      category = categorizer.call( self,file );
+      category = categorizer.call( self, file );
     }
     catch( err )
     {
       let msg = 'Categorizer ' + c + ' failed\n';
-      throw _.err( msg,err )
+      throw _.err( msg, err )
     }
     if( category )
     {
@@ -1506,7 +1520,7 @@ function categoriesForFile( fileFrame )
   {
     let categorizer = self.fileCategorizers[ c ];
     _.assert( _.routineIs( categorizer ) );
-    let category = categorizer.call( self,file );
+    let category = categorizer.call( self, file );
     if( category )
     {
       _.assert( _.primitiveIs( category ) );
@@ -1532,12 +1546,12 @@ function _categoriesForLink( o )
 
   for( let c = 0 ; c < o.user.fileFrame.categories.length ; c++ )
   {
-    _.arrayAppendOnce( result , 'in.' + o.user.fileFrame.categories[ c ] );
+    _.arrayAppendOnce( result, 'in.' + o.user.fileFrame.categories[ c ] );
   }
 
   for( let c = 0 ; c < o.used.fileFrame.categories.length ; c++ )
   {
-    _.arrayAppendOnce( result , o.used.fileFrame.categories[ c ] );
+    _.arrayAppendOnce( result, o.used.fileFrame.categories[ c ] );
   }
 
   /* link categories */
@@ -1548,13 +1562,13 @@ function _categoriesForLink( o )
   {
     let categorizer = self.linkCategorizers[ c ];
     _.assert( _.routineIs( categorizer ) );
-    let category = categorizer.call( self,o );
+    let category = categorizer.call( self, o );
     if( category )
     {
       _.assert( _.primitiveIs( category ) );
       if( !_.strIs( category ) )
       category = c;
-      _.arrayAppendOnce( result,category );
+      _.arrayAppendOnce( result, category );
     }
   }
 
@@ -1567,22 +1581,22 @@ function _categoriesForLink( o )
 
 //
 
-function _categoriesCheck( categories,filter )
+function _categoriesCheck( categories, filter )
 {
   let self = this;
 
   _.assert( arguments.length === 2, 'Expects exactly two arguments' );
 
   if( filter.ifAny )
-  if( !_.longHasAny( categories,filter.ifAny ) )
+  if( !_.longHasAny( categories, filter.ifAny ) )
   return false;
 
   if( filter.ifAll )
-  if( !_.longHasAll( categories,filter.ifAll ) )
+  if( !_.longHasAll( categories, filter.ifAll ) )
   return false;
 
   if( filter.ifNone )
-  if( !_.longHasNone( categories,filter.ifNone ) )
+  if( !_.longHasNone( categories, filter.ifNone ) )
   return false;
 
   return true;
@@ -1633,7 +1647,7 @@ function formatterTry( o )
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.objectIs( o.formatter ) );
 
-  if( !self._categoriesCheck( o.categories,o.formatter ) )
+  if( !self._categoriesCheck( o.categories, o.formatter ) )
   return false;
 
   return self.formatterApply( o );
@@ -1659,7 +1673,7 @@ function formatterApply( o )
       for( let u = 0 ; u < o.frame.usedFileFrames.length ; u++ )
       {
         let usedFileFrame = o.frame.usedFileFrames[ u ];
-        if( self._categoriesCheck( usedFileFrame.categories,o.formatter.onlyForUsedFiles ) )
+        if( self._categoriesCheck( usedFileFrame.categories, o.formatter.onlyForUsedFiles ) )
         usedFileFrames.push( usedFileFrame );
       }
 
@@ -1671,8 +1685,8 @@ function formatterApply( o )
 
   }
 
-  _.assert( _.routineIs( o.formatter.format ),'formatter should have routine (-format-)' );
-  let r = o.formatter.format.call( self,o );
+  _.assert( _.routineIs( o.formatter.format ), 'formatter should have routine (-format-)' );
+  let r = o.formatter.format.call( self, o );
 
   _.assert( r === undefined || _.consequenceIs( r ) );
 
@@ -1692,13 +1706,13 @@ function formatterApply( o )
 
 //
 
-function linkFor( userChunkFrame,usedFileFrame )
+function linkFor( userChunkFrame, usedFileFrame )
 {
   let self = this;
 
   _.assert( arguments.length === 2, 'Expects exactly two arguments' );
-  _.assert( _.construction.isInstanceOf( userChunkFrame,ChunkFrameBlueprint ) );
-  _.assert( _.construction.isInstanceOf( usedFileFrame,FileFrameBlueprint ) || usedFileFrame instanceof _.FileRecord );
+  _.assert( _.construction.isInstanceOf( userChunkFrame, ChunkFrameBlueprint ) );
+  _.assert( _.construction.isInstanceOf( usedFileFrame, FileFrameBlueprint ) || usedFileFrame instanceof _.FileRecord );
 
   let usedFile;
   if( usedFileFrame instanceof _.FileRecord )
@@ -1743,14 +1757,14 @@ function linkFormat( o )
   // debugger; // aaa
 
   if( !o.link )
-  o.link = self.linkFor( o.userChunkFrame,o.usedFileFrame );
+  o.link = self.linkFor( o.userChunkFrame, o.usedFileFrame );
 
   if( !o.usedIncludeFrame )
   o.usedIncludeFrame = o.link.used.includeFrame;
 
   _.assert( _.objectIs( o.usedIncludeFrame ) );
   _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.construction.isInstanceOf( o.usedIncludeFrame,IncludeFrameBlueprint ) );
+  _.assert( _.construction.isInstanceOf( o.usedIncludeFrame, IncludeFrameBlueprint ) );
 
   if( self.verbosity > 2 )
   logger.log
@@ -1772,11 +1786,11 @@ function linkFormat( o )
 
   let got = formatted;
 
-  got.give( function( err,arg )
+  got.give( function( err, arg )
   {
-    _.assert( _.strIs( arg ),'Expects string' );
+    _.assert( _.strIs( arg ), 'Expects string' );
     o.link.result = arg;
-    this.take( err,arg );
+    this.take( err, arg );
   });
 
   if( o.usedIncludeFrame.includeOptions.onIncludeFromat )
@@ -1784,10 +1798,10 @@ function linkFormat( o )
     got.ifNoErrorThen( function( arg )
     {
       o.link.result = arg;
-      let r = o.usedIncludeFrame.includeOptions.onIncludeFromat.call( self,o.link );
+      let r = o.usedIncludeFrame.includeOptions.onIncludeFromat.call( self, o.link );
       if( _.strIs( r ) )
       o.link.result = r;
-      _.assert( r === undefined || _.strIs( r ),'Expects string or nothing from (-onIncludeFromat-)' );
+      _.assert( r === undefined || _.strIs( r ), 'Expects string or nothing from (-onIncludeFromat-)' );
       _.assert( _.strIs( o.link.result ) );
       return o.link.result;
     });
@@ -1822,15 +1836,15 @@ function linkFormatExplicit( o )
     includeFrame : o.formatter.frame.fileFrame.includeFrame,
   });
 
-  let link = self.linkFor( o.formatter.frame , fileFrame );
+  let link = self.linkFor( o.formatter.frame, fileFrame );
   if( o.removeCategories )
-  _.arrayRemoveArrayOnce( link.categories,o.removeCategories );
+  _.arrayRemoveArrayOnce( link.categories, o.removeCategories );
   if( o.addCategories )
-  _.arrayAppendArrayOnce( link.categories,o.addCategories );
+  _.arrayAppendArrayOnce( link.categories, o.addCategories );
 
   let formatted = self.linkFormat
   ({
-    link : link,
+    link,
   });
 
   formatted.ifNoErrorThen( function _formatReplaceByFileAfter( arg )
@@ -1858,7 +1872,7 @@ function _fileCategorizersSet( categorizers )
   let self = this;
 
   _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.objectIs( categorizers ),'Expects object (-categorizers-)' );
+  _.assert( _.objectIs( categorizers ), 'Expects object (-categorizers-)' );
 
   self[ fileCategorizersSymbol ] = categorizers;
 
@@ -1875,7 +1889,7 @@ function _fileCategorizersChanged()
   let categorizers = self[ fileCategorizersSymbol ];
 
   _.assert( arguments.length === 0, 'Expects no arguments' );
-  _.assert( _.objectIs( categorizers ),'Expects map {-categorizers-}' );
+  _.assert( _.objectIs( categorizers ), 'Expects map {-categorizers-}' );
 
   for( let c in categorizers )
   {
@@ -1889,7 +1903,7 @@ function _fileCategorizersChanged()
       let exts = categorizer;
       categorizer = function categorizer( file )
       {
-        return _.longHasAny( exts,file.exts );
+        return _.longHasAny( exts, file.exts );
       }
     })();
 
@@ -1913,9 +1927,9 @@ function filesUsedGet( includes, result )
   for( let i = 0 ; i < includes.length ; i++ )
   {
     let includeFrame = includes[ i ];
-    _.assert( _.construction.isInstanceOf( includeFrame,IncludeFrameBlueprint ) );
-    _.arrayAppendArray( result,includeFrame.files );
-    self.filesUsedGet( includeFrame.usedIncludeFrames,result );
+    _.assert( _.construction.isInstanceOf( includeFrame, IncludeFrameBlueprint ) );
+    _.arrayAppendArray( result, includeFrame.files );
+    self.filesUsedGet( includeFrame.usedIncludeFrames, result );
   }
 
   return result;
@@ -1923,13 +1937,13 @@ function filesUsedGet( includes, result )
 
 //
 
-function includesUsedInherit( includeFrame,fileFrame )
+function includesUsedInherit( includeFrame, fileFrame )
 {
   let self = this;
 
   _.assert( arguments.length === 2, 'Expects exactly two arguments' );
 
-  _.arrayAppendArray( includeFrame.usedIncludeFrames , fileFrame.usedIncludeFrames );
+  _.arrayAppendArray( includeFrame.usedIncludeFrames, fileFrame.usedIncludeFrames );
 
 }
 
@@ -1962,7 +1976,7 @@ let IncludeFrameBlueprint = _.Blueprint
   typed : _.trait.typed( true )
 })
 
-let IncludeFrame = IncludeFrameBlueprint.construct();
+let IncludeFrame = IncludeFrameBlueprint.Make();
 
 includeFrameBegin.defaults = IncludeFrame;
 includeFrameEnd.defaults = IncludeFrame;
@@ -2000,7 +2014,7 @@ let FileFrameBlueprint = _.Blueprint
 
 })
 
-let FileFrame = FileFrameBlueprint.construct();
+let FileFrame = FileFrameBlueprint.Make();
 
 fileFrameFor.defaults = FileFrame;
 
@@ -2022,7 +2036,7 @@ let ChunkFrameBlueprint = _.Blueprint
   typed : _.trait.typed( true )
 })
 
-let ChunkFrame = ChunkFrameBlueprint.construct();
+let ChunkFrame = ChunkFrameBlueprint.Make();
 
 chunkFrameFor.defaults = ChunkFrame;
 chunkExecute.defaults = ChunkFrame;
@@ -2101,79 +2115,79 @@ let Accessors =
 let Proto =
 {
 
-  init : init,
+  init,
 
-  languageFromFilePath : languageFromFilePath,
-  scriptExecute : scriptExecute,
+  languageFromFilePath,
+  scriptExecute,
 
-  ecmaExecute : ecmaExecute,
+  ecmaExecute,
 
-  coffeeCompile : coffeeCompile,
-  coffeeExecute : coffeeExecute,
+  coffeeCompile,
+  coffeeExecute,
 
   /* include */
 
-  sessionMake : sessionMake,
+  sessionMake,
 
-  includeFrameBegin : includeFrameBegin,
-  includeFrameEnd : includeFrameEnd,
+  includeFrameBegin,
+  includeFrameEnd,
 
-  _includeAct : _includeAct,
-  _includeFromChunk : _includeFromChunk,
-  include : include,
+  _includeAct,
+  _includeFromChunk,
+  include,
 
   /* file */
 
-  filesExecute : filesExecute,
+  filesExecute,
 
-  fileExecute : fileExecute,
-  _fileExecute : _fileExecute,
+  fileExecute,
+  _fileExecute,
 
-  filesFilter : filesFilter,
-  fileFrameFor : fileFrameFor,
+  filesFilter,
+  fileFrameFor,
 
   /* chunk */
 
-  chunkFrameFor : chunkFrameFor,
-  chunkExecute : chunkExecute,
-  _chunkExecute : _chunkExecute,
-  _chunkExpose : _chunkExpose,
-  _chunkTabulate : _chunkTabulate,
-  _chunksSplit : _chunksSplit,
-  _chunkConcat : _chunkConcat,
-  _chunkFormat : _chunkFormat,
+  chunkFrameFor,
+  chunkExecute,
+  _chunkExecute,
+  _chunkExpose,
+  _chunkTabulate,
+  _chunksSplit,
+  _chunkConcat,
+  _chunkFormat,
 
   /* etc */
 
-  categoriesForFile : categoriesForFile,
-  _categoriesForLink : _categoriesForLink,
-  _categoriesCheck : _categoriesCheck,
+  categoriesForFile,
+  _categoriesForLink,
+  _categoriesCheck,
 
-  formattersApply : formattersApply,
-  formatterTry : formatterTry,
-  formatterApply : formatterApply,
+  formattersApply,
+  formatterTry,
+  formatterApply,
 
-  linkFor : linkFor,
-  linkFormat : linkFormat,
-  linkFormatExplicit : linkFormatExplicit,
+  linkFor,
+  linkFormat,
+  linkFormatExplicit,
 
-  _fileCategorizersSet : _fileCategorizersSet,
-  _fileCategorizersChanged : _fileCategorizersChanged,
+  _fileCategorizersSet,
+  _fileCategorizersChanged,
 
   /* used */
 
-  filesUsedGet : filesUsedGet,
-  includesUsedInherit : includesUsedInherit,
+  filesUsedGet,
+  includesUsedInherit,
 
   /* relations */
 
-  Composes : Composes,
-  Aggregates : Aggregates,
-  Associates : Associates,
-  Restricts : Restricts,
-  Statics : Statics,
-  Forbids : Forbids,
-  Accessors : Accessors,
+  Composes,
+  Aggregates,
+  Associates,
+  Restricts,
+  Statics,
+  Forbids,
+  Accessors,
 
 }
 
