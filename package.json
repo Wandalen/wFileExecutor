@@ -1,29 +1,40 @@
 {
-  "name" : "wfileexecutor",
-  "version" : "0.3.287",
-  "description" : "Experimental. Class to execute a collection of templates with inlined JavaScript code to instantiate it. A collection of templates could be co-dependent in which case FileExecutor deduce dependencies and correct order of templates executions.",
-  "author" : "Kostiantyn Wandalen <wanalen@01.school>",
-  "license" : "MIT",
-  "main" : "proto/wtools/amid/l7/executor/FileExecutor.s",
-  "files" : [ "proto/wtools/amid/amid/l7/executor", "proto/wtools/Tools.s", "out" ],
-  "scripts" : { "test" : "wtest .run 'proto/**' rapidity:-3", "docgen" : "wdocgen proto" },
-  "repository" :
-  {
-    "type" : "git",
-    "url" : "https://github.com/Wandalen/wFileExecutor.git"
+  "name": "wfileexecutor",
+  "version": "0.3.288",
+  "description": "Experimental. Class to execute a collection of templates with inlined JavaScript code to instantiate it. A collection of templates could be co-dependent in which case FileExecutor deduce dependencies and correct order of templates executions.",
+  "author": "Kostiantyn Wandalen <wanalen@01.school>",
+  "license": "MIT",
+  "main": "proto/wtools/amid/l7/executor/FileExecutor.s",
+  "files": [
+    "proto/wtools/amid/amid/l7/executor",
+    "proto/wtools/Tools.s",
+    "out"
+  ],
+  "scripts": {
+    "test": "wtest .run 'proto/**' rapidity:-3",
+    "docgen": "wdocgen proto"
   },
-  "bugs" :
-  {
-    "url" : "https://github.com/Wandalen/wFileExecutor/issues"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wandalen/wFileExecutor.git"
   },
-  "dependencies" :
-  {
-    "wTools" : "alpha",
-    "wFiles" : "alpha",
-    "wprocess" : "alpha",
-    "wpathtranslator" : "alpha",
-    "wfilesarchive" : "alpha"
+  "bugs": {
+    "url": "https://github.com/Wandalen/wFileExecutor/issues"
   },
-  "devDependencies" : { "wfileexecutor" : "file:.", "eslint" : "7.1.0", "wTesting" : "alpha" },
-  "keywords" : [ "wTools", "File executor" ]
+  "dependencies": {
+    "wTools": "alpha",
+    "wFiles": "alpha",
+    "wprocess": "alpha",
+    "wpathtranslator": "alpha",
+    "wfilesarchive": "alpha"
+  },
+  "devDependencies": {
+    "eslint": "7.1.0",
+    "wTesting": "alpha",
+    "wfileexecutor": "file:."
+  },
+  "keywords": [
+    "wTools",
+    "File executor"
+  ]
 }
