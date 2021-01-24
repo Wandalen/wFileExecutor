@@ -8,7 +8,7 @@ Experimental. Class to execute a collection of templates with inlined JavaScript
 git clone https://github.com/Wandalen/wFileExecutor
 cd wFileExecutor
 npm install
-node sample/Sample.s
+node sample/trivial/Sample.s
 ```
 
 ## To add to your project
