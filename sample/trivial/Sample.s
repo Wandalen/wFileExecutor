@@ -6,6 +6,9 @@ if( typeof module !== 'undefined' )
 
 let _ = wTools;
 
+debugger
 var executor = new _.FileExecutor();
 
 console.log( executor );
+
+// console.log( 'not implemented' )

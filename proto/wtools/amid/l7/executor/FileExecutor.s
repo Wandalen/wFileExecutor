@@ -24,6 +24,7 @@ if( typeof module !== 'undefined' )
   _.include( 'wEventHandler' );
   _.include( 'wConsequence' );
   _.include( 'wPathTranslator' );
+  _.include( 'wBlueprint' );
 
   let VirtualMachine = require( 'vm' );
 
@@ -332,7 +333,7 @@ function includeFrameBegin( o )
   if( o.usedIncludeFrames === null )
   o.usedIncludeFrames = [];
 
-  let includeFrame = new IncludeFrameBlueprint.Make();
+  let includeFrame = IncludeFrameBlueprint.make();
 
   includeFrame.userIncludeFrame = o.userIncludeFrame;
   includeFrame.usedIncludeFrames = o.usedIncludeFrames
@@ -1059,7 +1060,7 @@ function fileFrameFor( fileFrame )
 
   /* */
 
-  fileFrame = new FileFrameBlueprint.Make( fileFrame );
+  fileFrame = new FileFrameBlueprint.make( fileFrame );
 
   if( !session.allowIncluding )
   throw _.err( 'can only reuse included files, but was attempt to include a new one', fileFrame.file.absolute );
@@ -1090,7 +1091,7 @@ function chunkFrameFor( o )
 {
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.mapIs( o ) );
-  o = ChunkFrameBlueprint.Make( o );
+  o = ChunkFrameBlueprint.make( o );
   return o;
 }
 
@@ -1976,7 +1977,7 @@ let IncludeFrameBlueprint = _.Blueprint
   typed : _.trait.typed( true )
 })
 
-let IncludeFrame = IncludeFrameBlueprint.Make();
+let IncludeFrame = IncludeFrameBlueprint.make();
 
 includeFrameBegin.defaults = IncludeFrame;
 includeFrameEnd.defaults = IncludeFrame;
@@ -2014,7 +2015,7 @@ let FileFrameBlueprint = _.Blueprint
 
 })
 
-let FileFrame = FileFrameBlueprint.Make();
+let FileFrame = FileFrameBlueprint.make();
 
 fileFrameFor.defaults = FileFrame;
 
@@ -2036,7 +2037,7 @@ let ChunkFrameBlueprint = _.Blueprint
   typed : _.trait.typed( true )
 })
 
-let ChunkFrame = ChunkFrameBlueprint.Make();
+let ChunkFrame = ChunkFrameBlueprint.make();
 
 chunkFrameFor.defaults = ChunkFrame;
 chunkExecute.defaults = ChunkFrame;
