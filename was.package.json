@@ -22,7 +22,8 @@
     "wFiles" : "",
     "wprocess" : "",
     "wpathtranslator" : "",
-    "wfilesarchive" : ""
+    "wfilesarchive" : "",
+    "wblueprint": ""
   },
   "devDependencies" : { "wTesting" : "", "wfileexecutor" : "file:.", "eslint" : "7.1.0" },
   "keywords" : [ "wTools", "File executor" ]
