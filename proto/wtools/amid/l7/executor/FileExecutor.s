@@ -333,7 +333,7 @@ function includeFrameBegin( o )
   if( o.usedIncludeFrames === null )
   o.usedIncludeFrames = [];
 
-  let includeFrame = new IncludeFrameBlueprint.make();
+  let includeFrame = IncludeFrameBlueprint.make();
 
   includeFrame.userIncludeFrame = o.userIncludeFrame;
   includeFrame.usedIncludeFrames = o.usedIncludeFrames
