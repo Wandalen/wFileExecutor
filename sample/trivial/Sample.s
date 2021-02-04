@@ -8,4 +8,4 @@ let _ = wTools;
 
 var executor = new _.FileExecutor();
 
-console.log( executor.archive );
+console.log( _.toStr( executor ) );
