@@ -48,7 +48,7 @@ function production( test )
   let context = this;
   let a = test.assetFor( 'production' );
   let runList = [];
-  debugger
+
   if( process.env.GITHUB_EVENT_NAME === 'pull_request' )
   {
     test.true( true );
@@ -115,7 +115,6 @@ function production( test )
   .catch( handleDownloadingError )
   .then( ( op ) =>
   {
-    debugger
     test.case = 'install module';
     test.identical( op.exitCode, 0 );
     return null;
@@ -132,7 +131,6 @@ function production( test )
 
   function run( name )
   {
-    debugger
     let filePath = `sample/trivial/${ name }`;
     if( !a.fileProvider.fileExists( a.abs( filePath ) ) )
     return null;
@@ -140,7 +138,6 @@ function production( test )
     a.shell( `node ${ filePath }` )
     .then( ( op ) =>
     {
-      debugger
       test.case = `running of sample ${filePath}`;
       test.identical( op.exitCode, 0 );
       test.ge( op.output.length, 3 );
@@ -170,7 +167,6 @@ function samples( test )
 {
   let context = this;
   let ready = _.take( null );
-  debugger
   let sampleDir = path.join( __dirname, '../sample' );
 
   let appStartNonThrowing = _.process.starter
@@ -203,7 +199,7 @@ function samples( test )
   {
     if( _.longHasAny( found[ i ].exts, [ 'browser', 'manual', 'experiment' ] ) )
     continue;
-    debugger
+
     let startTime;
 
     ready
@@ -219,7 +215,6 @@ function samples( test )
       appStartNonThrowing({ execPath : found[ i ].relative })
       .then( ( op ) =>
       {
-        debugger
         console.log( _.time.spent( startTime ) );
         test.description = 'nonzero exit code';
         test.notIdentical( op.exitCode, 0 );
@@ -231,7 +226,6 @@ function samples( test )
       appStartNonThrowing({ execPath : found[ i ].relative })
       .then( ( op ) =>
       {
-        debugger
         console.log( _.time.spent( startTime ) );
         test.description = 'good exit code';
         test.identical( op.exitCode, 0 );
