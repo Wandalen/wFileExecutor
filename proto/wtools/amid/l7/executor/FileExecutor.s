@@ -1400,10 +1400,10 @@ function _chunkConcat( chunkFrame )
       if( fileFrame.error )
       {
         debugger;
-        if( !err )
-        err = _.err( fileFrame.error );
-        else
+        if( err )
         _.errAttend( fileFrame.error );
+        else
+        err = _.err( fileFrame.error );
       }
       else
       {
