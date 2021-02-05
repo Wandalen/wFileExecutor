@@ -16,6 +16,9 @@ submodule :
   wFilesArchive :
     path : npm:///wfilesarchive
     enabled : 0 # submodule
+  wBlueprint :
+    path : npm:///wblueprint
+    enabled : 0 # submodule
   wfileexecutor :
     path : hd://.
     enabled : 0 # submodule
