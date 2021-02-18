@@ -461,7 +461,7 @@ function executorMakeFor( path )
   let srcPathGlobal = context.templateTreeProvider.path.globalFromPreferred( '/' );
   let dstPathGlobal = context.fileProvider.path.globalFromPreferred( context.dstPath );
 
-  context.fileProvider.filesDelete( context.dstPath  );
+  context.fileProvider.filesDelete( context.dstPath );
 
   context.hub.filesReflect({ reflectMap : { [ srcPathGlobal ] : dstPathGlobal } });
 
