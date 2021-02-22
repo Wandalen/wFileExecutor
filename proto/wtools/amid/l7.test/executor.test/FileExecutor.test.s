@@ -647,7 +647,7 @@ function chunksSplit( test )
     chunks : [ { line : 0, text : ``, index : 0, kind : 'static' } ]
   }
 
-  /*logger.log( _.toJs( chunks ) );*/
+  /*logger.log( _.entity.exportJs( chunks ) );*/
 
   test.identical( chunks, expected );
 
@@ -663,7 +663,7 @@ function chunksSplit( test )
     chunks : [ { line : 0, text : `abc`, index : 0, kind : 'static' } ]
   }
 
-  /*logger.log( _.toJs( chunks ) );*/
+  /*logger.log( _.entity.exportJs( chunks ) );*/
 
   test.identical( chunks, expected );
 
@@ -692,7 +692,7 @@ function chunksSplit( test )
     ]
   }
 
-  /*logger.log( _.toJs( chunks ) );*/
+  /*logger.log( _.entity.exportJs( chunks ) );*/
   test.identical( chunks, expected );
 
   /* */
@@ -721,7 +721,7 @@ function chunksSplit( test )
     ]
   }
 
-  /*logger.log( _.toJs( chunks ) );*/
+  /*logger.log( _.entity.exportJs( chunks ) );*/
   test.identical( chunks, expected );
 
   /* */
@@ -750,7 +750,7 @@ function chunksSplit( test )
     ]
   }
 
-  /*logger.log( _.toJs( chunks ) );*/
+  /*logger.log( _.entity.exportJs( chunks ) );*/
   test.identical( chunks, expected );
 
   /* */
@@ -789,7 +789,7 @@ function chunksSplit( test )
     ]
   }
 
-  /*logger.log( _.toJs( chunks ) );*/
+  /*logger.log( _.entity.exportJs( chunks ) );*/
   test.identical( chunks, expected );
 
   /* */
@@ -831,7 +831,7 @@ function chunksSplit( test )
     ]
   }
 
-  /*logger.log( _.toJs( chunks ) );*/
+  /*logger.log( _.entity.exportJs( chunks ) );*/
   test.identical( chunks, expected );
 
   debugger;
@@ -899,7 +899,7 @@ function samplesTest( test )
         {
           usedFiles[ used1[ u ] ] = used2[ u ];
         }
-        logger.log( 'usedFiles', _.toJs( usedFiles ) );
+        logger.log( 'usedFiles', _.entity.exportJs( usedFiles ) );
         test.identical( usedFiles, sample.usedFiles );
       }
 
@@ -920,7 +920,7 @@ function samplesTest( test )
       }
       test.identical( extract.filesTree.got, expected );
       logger.log( 'filesTreeRead', checkPath );
-      logger.log( _.toJson( extract.filesTree.got ) );
+      logger.log( _.entity.exportJson( extract.filesTree.got ) );
 
       extract.finit();
 

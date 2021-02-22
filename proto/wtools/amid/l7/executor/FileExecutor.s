@@ -436,7 +436,7 @@ function _includeAct( o )
   includeFrame.includeOptions = o;
   includeFrame.resolveOptions = o.resolveOptions || Object.create( null );
 
-  // logger.log( 'maskTerminal', _.toStr( maskTerminal,{ levels : 3 } ) );
+  // logger.log( 'maskTerminal', _.entity.exportString( maskTerminal,{ levels : 3 } ) );
 
   /* resolve */
 
@@ -930,7 +930,7 @@ function _fileExecute( o )
 
   let errorPrefix = '';
   if( o.file )
-  errorPrefix = _.toStrSimple( o.file.absolute + ' :', '\n' );
+  errorPrefix = _.entity.exportStringSimple( o.file.absolute + ' :', '\n' );
 
   /* read file */
 
@@ -1126,12 +1126,12 @@ function chunkExecute( o )
     return this.take( err, arg );
 
     if( _.numberIs( arg ) )
-    arg = _.toStr( arg );
+    arg = _.entity.exportString( arg );
 
     if( !_.strIs( arg ) )
     return this.error( _.err
     (
-      'chunk should return string, but returned', _.strType( arg ),
+      'chunk should return string, but returned', _.entity.strType( arg ),
       '\ncode :\n', _.strLinesNumber( o.chunk.text || o.chunk.code )
     ));
 
@@ -1235,7 +1235,7 @@ function _chunkExecute( o )
       debugger;
       throw _.err
       (
-        'Error executing chunk :\n', _.toStr( o.chunk ), '\n',
+        'Error executing chunk :\n', _.entity.exportString( o.chunk ), '\n',
         '\nat file', o.fileFrame.file.absolute,
         '\n', err
       );
@@ -1323,7 +1323,7 @@ function _chunkTabulate( chunkFrame )
   if( _.strIs( chunkFrame.result ) )
   ret = chunkFrame.result;
   else
-  ret = _.toStr( chunkFrame.result );
+  ret = _.entity.exportString( chunkFrame.result );
 
   ret = ret.split( '\n' );
 
@@ -1407,7 +1407,7 @@ function _chunkConcat( chunkFrame )
       }
       else
       {
-        _.assert( _.strIs( fileFrame.result ), 'Expects string, but got', _.strType( fileFrame.result ) );
+        _.assert( _.strIs( fileFrame.result ), 'Expects string, but got', _.entity.strType( fileFrame.result ) );
         let formatted = self.linkFormat
         ({
           userChunkFrame : chunkFrame,
