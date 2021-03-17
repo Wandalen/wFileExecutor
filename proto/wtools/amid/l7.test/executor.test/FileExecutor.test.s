@@ -530,7 +530,6 @@ function executorMakeFor( path )
       ifNone : [ 'in.release' ],
       format : function( o )
       {
-        debugger;
         o.frame.result = '<script src="' + o.frame.user.fileFrame.translator.virtualFor( o.frame.used.fileFrame.file.absolute ) + '" type="text/javascript" ></script>\n';
       },
     },
@@ -546,7 +545,6 @@ function executorMakeFor( path )
       ifAll : [ 'script', 'in.html', 'release' ],
       format : function( o )
       {
-        debugger;
         o.frame.result = '';
       },
     },
@@ -565,7 +563,6 @@ function executorMakeFor( path )
         var result = o.frame.result;
         o.frame.result = _.time.out( 1000, function()
         {
-          debugger;
           return result;
         });
       },
@@ -639,7 +636,6 @@ function chunksSplit( test )
   test.case = 'empty chunk';
 
   var executor = new wFileExecutor();
-  debugger;
   var chunks = executor._chunksSplit( '' );
 
   var expected =
@@ -834,7 +830,6 @@ function chunksSplit( test )
   /*logger.log( _.entity.exportJs( chunks ) );*/
   test.identical( chunks, expected );
 
-  debugger;
 }
 
 //
@@ -889,7 +884,6 @@ function samplesTest( test )
     executed.consequence.ifNoErrorThen( function( arg )
     {
 
-      debugger;
       if( sample.usedFiles )
       {
         var used1 = _.select( executed.fileFrames, '*/file/relative' );

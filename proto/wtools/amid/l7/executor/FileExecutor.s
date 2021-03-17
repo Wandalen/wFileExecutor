@@ -468,7 +468,6 @@ function _includeAct( o )
 
   if( !includeFrame.files.length && !o.optional )
   {
-    debugger;
     throw _.err( '\nnone file found for', includeFrame.resolveOptions.globPath, '\n' );
   }
 
@@ -672,7 +671,6 @@ function include( o )
   {
     if( err )
     {
-      debugger;
       err = _.err( 'Error including', o.path, '\n', err );
       throw _.errLogOnce( err );
     }
@@ -774,8 +772,8 @@ function fileExecute( o )
   _.assert( _.objectIs( session ) );
   _.assert( _.construction.isInstanceOf( fileFrame, FileFrameBlueprint ) );
 
-  if( !file.stat )
-  debugger;
+  // if( !file.stat )
+  // debugger;
 
   if( file.stat.size > o.maxSize )
   {
@@ -1232,7 +1230,6 @@ function _chunkExecute( o )
     catch( err )
     {
 
-      debugger;
       throw _.err
       (
         'Error executing chunk :\n', _.entity.exportString( o.chunk ), '\n',
@@ -1399,7 +1396,6 @@ function _chunkConcat( chunkFrame )
 
       if( fileFrame.error )
       {
-        debugger;
         if( err )
         _.errAttend( fileFrame.error );
         else
@@ -1557,8 +1553,8 @@ function _categoriesForLink( o )
 
   /* link categories */
 
-  if( _.mapKeys( self.linkCategorizers ).length )
-  debugger;
+  // if( _.mapKeys( self.linkCategorizers ).length )
+  // debugger;
   for( let c in self.linkCategorizers )
   {
     let categorizer = self.linkCategorizers[ c ];
@@ -1824,8 +1820,6 @@ linkFormat.defaults =
 function linkFormatExplicit( o )
 {
   let self = this;
-
-  debugger;
 
   if( !o.filePath )
   o.filePath = _.path.join( o.formatter.frame.fileFrame.file.dir, o.formatter.frame.fileFrame.file.name + '.manual.js' );
