@@ -16,7 +16,7 @@ if( typeof module !== 'undefined' )
 
 }
 
-let _ = _global_.wTools;
+const _ = _global_.wTools;
 
 if( typeof __dirname === 'undefined' )
 return;
@@ -951,7 +951,7 @@ samplesTest.timeOut = 500000;
 // declare
 // --
 
-let Self =
+const Proto =
 {
 
   name : 'Tools.mid.FileExecutor',
@@ -985,7 +985,7 @@ let Self =
 
 //
 
-Self = wTestSuite( Self );
+const Self = wTestSuite( Proto );
 if( typeof module !== 'undefined' && !module.parent )
 wTester.test( Self.name );
 

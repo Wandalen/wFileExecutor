@@ -40,9 +40,9 @@ if( typeof module !== 'undefined' )
 
 //
 
-let _ = _global_.wTools;
+const _ = _global_.wTools;
 let Parent = null;
-let Self = wFileExecutor;
+const Self = wFileExecutor;
 function wFileExecutor( o )
 {
   return _.workpiece.construct( Self, this, arguments );
@@ -261,7 +261,7 @@ function coffeeExecute( o )
 
   logger.log( 'coffeeExecute', o.filePath );
 
-  let optionsForCompile = _.mapOnly( o, this.coffeeCompile.defaults );
+  let optionsForCompile = _.mapOnly_( null, o, this.coffeeCompile.defaults );
   optionsForCompile.baring = o.isConfig;
   o.code = this.coffeeCompile( optionsForCompile );
   o.prependingReturn = 1;
@@ -457,7 +457,7 @@ function _includeAct( o )
   let filter = _.FileRecordFilter.TolerantFrom( includeFrame.resolveOptions, { defaultProvider : self.fileProvider } );
   includeFrame.resolveOptions.filter = filter;
 
-  includeFrame.resolveOptions = _.mapOnly( includeFrame.resolveOptions, self.fileProvider.filesResolve.defaults );
+  includeFrame.resolveOptions = _.mapOnly_( null, includeFrame.resolveOptions, self.fileProvider.filesResolve.defaults );
 
   if( includeFrame.resolveOptions.allowingMissed === undefined || includeFrame.resolveOptions.allowingMissed === null )
   includeFrame.resolveOptions.allowingMissed = 1;
@@ -576,8 +576,8 @@ function _includeFromChunk( bound, o, o2 )
     _.mapExtend( o, o2 );
   }
 
-  _.assertMapHasOnly( includeFile, _includeFromChunk.parameters );
-  let o3 = _.mapOnly( includeFile, _includeFromChunk.defaults );
+  _.map.assertHasOnly( includeFile, _includeFromChunk.parameters );
+  let o3 = _.mapOnly_( null, includeFile, _includeFromChunk.defaults );
 
   _.mapSupplement( o, o3 );
 
@@ -658,12 +658,12 @@ function include( o )
   }
 
   if( !o.session )
-  o.session = self.sessionMake( _.mapOnly( o, self.sessionMake.defaults ) );
+  o.session = self.sessionMake( _.mapOnly_( null, o, self.sessionMake.defaults ) );
   self.session = o.session;
 
   /* */
 
-  let includeFrame = self._includeAct( _.mapOnly( o, self._includeAct.defaults ) );
+  let includeFrame = self._includeAct( _.mapOnly_( null, o, self._includeAct.defaults ) );
 
   /* */
 
@@ -947,7 +947,7 @@ function _fileExecute( o )
 
   /* chunks */
 
-  let chunks = self._chunksSplit( o.code, _.mapOnly( o, _chunksSplit.defaults ) );
+  let chunks = self._chunksSplit( o.code, _.mapOnly_( null, o, _chunksSplit.defaults ) );
   if( chunks.error )
   o.error = _.err( errorPrefix, chunks.error, '\n' );
   o.chunks = chunks.chunks;
@@ -1209,7 +1209,7 @@ function _chunkExecute( o )
 
       /* */
 
-      let execution = _.mapOnly( o, ecmaExecute.defaults );
+      let execution = _.mapOnly_( null, o, ecmaExecute.defaults );
       execution.language = self.languageFromFilePath( o.fileFrame.file.absolute );
       execution.filePath = o.fileFrame.file.absolute + '{' + o.chunk.line + '-' + ( o.chunk.line + o.chunk.lines.length ) + '}';
 
