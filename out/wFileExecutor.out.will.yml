@@ -67,6 +67,7 @@ module:
       download:
         criterion:
           predefined: 1
+        path: ../
       repository:
         path: 'git+https:///github.com/Wandalen/wFileExecutor.git'
       bugtracker:
@@ -883,6 +884,7 @@ module:
       download:
         criterion:
           predefined: 1
+        path: ./
       repository:
         path: 'git+https:///github.com/Wandalen/wFileExecutor.git'
       bugtracker:
