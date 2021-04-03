@@ -1,41 +1,30 @@
 {
-  "name": "wfileexecutor",
-  "version": "0.3.318",
-  "description": "Experimental. Class to execute a collection of templates with inlined JavaScript code to instantiate it. A collection of templates could be co-dependent in which case FileExecutor deduce dependencies and correct order of templates executions.",
-  "author": "Kostiantyn Wandalen <wanalen@01.school>",
-  "license": "MIT",
-  "main": "proto/wtools/amid/l7/executor/FileExecutor.s",
-  "files": [
-    "proto/wtools/amid/amid/l7/executor",
-    "proto/wtools/Tools.s",
-    "out",
-    "proto/node_modules"
-  ],
-  "scripts": {
-    "test": "wtest .run 'proto/**' rapidity:-3",
-    "docgen": "wdocgen proto"
+  "name" : "wfileexecutor",
+  "version" : "0.3.319",
+  "description" : "Experimental. Class to execute a collection of templates with inlined JavaScript code to instantiate it. A collection of templates could be co-dependent in which case FileExecutor deduce dependencies and correct order of templates executions.",
+  "author" : "Kostiantyn Wandalen <wanalen@01.school>",
+  "license" : "MIT",
+  "main" : "/pro/module/wFileExecutor/proto/node_modules/wfileexecutor",
+  "files" : [ "proto/wtools/amid/amid/l7/executor", "proto/wtools/Tools.s", "out", "proto/node_modules" ],
+  "scripts" : { "test" : "wtest .run 'proto/**' rapidity:-3", "docgen" : "wdocgen proto" },
+  "repository" :
+  {
+    "type" : "git",
+    "url" : "https://github.com/Wandalen/wFileExecutor.git"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Wandalen/wFileExecutor.git"
+  "bugs" :
+  {
+    "url" : "https://github.com/Wandalen/wFileExecutor/issues"
   },
-  "bugs": {
-    "url": "https://github.com/Wandalen/wFileExecutor/issues"
+  "dependencies" :
+  {
+    "wTools" : "delta",
+    "wFiles" : "delta",
+    "wprocess" : "delta",
+    "wpathtranslator" : "delta",
+    "wfilesarchive" : "delta",
+    "wblueprint" : "delta"
   },
-  "dependencies": {
-    "wTools": "delta",
-    "wFiles": "delta",
-    "wprocess": "delta",
-    "wpathtranslator": "delta",
-    "wfilesarchive": "delta",
-    "wblueprint": "delta"
-  },
-  "devDependencies": {
-    "eslint": "7.1.0",
-    "wTesting": "delta"
-  },
-  "keywords": [
-    "wTools",
-    "File executor"
-  ]
+  "devDependencies" : { "eslint" : "7.1.0", "wTesting" : "delta" },
+  "keywords" : [ "wTools", "File executor" ]
 }
