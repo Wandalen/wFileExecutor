@@ -448,7 +448,7 @@ samples.dalays =
 
 function executorMakeFor( path )
 {
-  var context = this;
+  let context = this;
 
   _global_.asyncFormatterCallCounter = 0;
 
@@ -836,7 +836,7 @@ function chunksSplit( test )
 
 function samplesTest( test )
 {
-  var context = this;
+  let context = this;
   var con = new _.Consequence().take( null );
   var executed, expected
 
