@@ -88,8 +88,8 @@ path:
       raw: compiled
       content: prime
   npm.proto.entry:
-    - /pro/module/wFileExecutor/proto/wtools/amid/l7/executor/FileExecutor.s
-    - /pro/module/wFileExecutor/proto/node_modules/wfileexecutor
+    - proto/wtools/amid/l7/executor/FileExecutor.s
+    - proto/node_modules/wfileexecutor
 reflector:
   reflect.proto:
     inherit: predefined.*
