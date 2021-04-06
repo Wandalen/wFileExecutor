@@ -17,7 +17,7 @@ qqq : repair, please
 if( typeof module !== 'undefined' )
 {
 
-  let _ = require( '../../../../wtools/Tools.s' );
+  let _ = require( '../../../../node_modules/Tools' );
 
   _.include( 'wFiles' );
   _.include( 'wFilesArchive' );
