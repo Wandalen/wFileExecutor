@@ -94,7 +94,7 @@ function scriptExecute( o )
 {
 
   _.assert( arguments.length === 1, 'Expects single argument' );
-  _.routineOptions( scriptExecute, o );
+  _.routine.options_( scriptExecute, o );
 
   if( !o.language )
   o.language = languageFromFilePath( o.filePath );
@@ -134,7 +134,7 @@ function ecmaExecute( o )
 {
   let result;
 
-  _.routineOptions( ecmaExecute, o );
+  _.routine.options_( ecmaExecute, o );
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( o.code ) );
 
@@ -149,7 +149,7 @@ function ecmaExecute( o )
   }
 
   _.routineExec( execOptions );
-  _.mapExtend( o, execOptions );
+  _.props.extend( o, execOptions );
 
   return o;
 }
@@ -212,7 +212,7 @@ function coffeeCompile( o )
   let result = '';
 
   _.assert( arguments.length === 1, 'Expects single argument' );
-  _.routineOptions( coffeeCompile, o );
+  _.routine.options_( coffeeCompile, o );
 
   if( !_.strIs( o.code ) )
   throw _.err( 'coffeCompile', 'Expects (-o.code-)' );
@@ -250,13 +250,13 @@ function coffeeExecute( o )
   if( _.strIs( o ) )
   o = { code };
 
-  _.routineOptions( coffeeExecute, o );
+  _.routine.options_( coffeeExecute, o );
   _.assert( arguments.length === 1, 'Expects single argument' );
 
   if( !o.name )
   o.name = o.filePath ? _.path.name( o.filePath ) : 'unknown';
 
-  // let optionsForCompile = _.mapExtend( null, o );
+  // let optionsForCompile = _.props.extend( null, o );
   o.filePath = self.fileProvider.path.nativize( o.filePath );
 
   logger.log( 'coffeeExecute', o.filePath );
@@ -276,7 +276,7 @@ coffeeExecute.defaults =
   language : 'coffee',
 }
 
-// _.mapSupplement( coffeeExecute.defaults, coffeeCompile.defaults );
+// _.props.supplement( coffeeExecute.defaults, coffeeCompile.defaults );
 
 // coffeeExecute.defaults.__proto__ = scriptExecute.defaults;
 Object.setPrototypeOf( coffeeExecute.defaults, scriptExecute.defaults )
@@ -289,7 +289,7 @@ function sessionMake( o )
 {
   let self = this;
 
-  _.routineOptions( sessionMake, o );
+  _.routine.options_( sessionMake, o );
   _.assert( arguments.length === 1, 'Expects single argument' );
 
   let session = Object.create( null );
@@ -297,7 +297,7 @@ function sessionMake( o )
   session.fileFrames = [];
   session.onFileExec = null;
 
-  _.mapExtend( session, o );
+  _.props.extend( session, o );
 
   if( session.exposingInclude || session.exposingEnvironment || session.exposingTools )
   {
@@ -325,7 +325,7 @@ function includeFrameBegin( o )
 {
   let self = this;
 
-  _.routineOptions( includeFrameBegin, o );
+  _.routine.options_( includeFrameBegin, o );
   _.assert( arguments.length === 1, 'Expects single argument' );
 
   if( o.fileFrames === null )
@@ -389,7 +389,7 @@ function _includeAct( o )
   let self = this;
   let session = o.session;
 
-  _.routineOptions( _includeAct, o );
+  _.routine.options_( _includeAct, o );
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.objectIs( session ) );
   _.assert( _.objectIs( o.translator ) );
@@ -519,7 +519,7 @@ function _includeAct( o )
   {
     _.assert( arguments.length === 2, 'Expects exactly two arguments' );
 
-    _.mapSupplement( dst, src );
+    _.props.supplement( dst, src );
 
     dst.maskDirectory = _.RegexpObject.And
     (
@@ -573,13 +573,13 @@ function _includeFromChunk( bound, o, o2 )
 
   if( o2 )
   {
-    _.mapExtend( o, o2 );
+    _.props.extend( o, o2 );
   }
 
   _.map.assertHasOnly( includeFile, _includeFromChunk.parameters );
   let o3 = _.mapOnly_( null, includeFile, _includeFromChunk.defaults );
 
-  _.mapSupplement( o, o3 );
+  _.props.supplement( o, o3 );
 
   o.session = session;
   o.translator = chunkFrame.fileFrame.translator;
@@ -636,7 +636,7 @@ function include( o )
   if( self.verbosity > 1 )
   logger.log( 'include', o.path );
 
-  _.routineOptions( include, o );
+  _.routine.options_( include, o );
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( self.session === null, 'attempt to relaunch executor during execution' );
 
@@ -690,8 +690,8 @@ include.defaults =
   virtualCurrentDirPath : null,
 }
 
-_.mapExtend( include.defaults, sessionMake.defaults );
-_.mapExtend( include.defaults, _includeAct.defaults );
+_.props.extend( include.defaults, sessionMake.defaults );
+_.props.extend( include.defaults, _includeAct.defaults );
 
 // --
 // file
@@ -706,7 +706,7 @@ function filesExecute( o )
   let session = o.includeFrame.session;
   let files = o.includeFrame.files;
 
-  _.routineOptions( filesExecute, o );
+  _.routine.options_( filesExecute, o );
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.construction.isInstanceOf( o.includeFrame, IncludeFrameBlueprint ) );
   _.assert( _.objectIs( o.includeFrame ) );
@@ -767,7 +767,7 @@ function fileExecute( o )
   });
 
   _.assert( fileFrame.includeFrames.indexOf( includeFrame ) !== -1, 'Expects same includeFrame' );
-  _.routineOptions( fileExecute, o );
+  _.routine.options_( fileExecute, o );
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.objectIs( session ) );
   _.assert( _.construction.isInstanceOf( fileFrame, FileFrameBlueprint ) );
@@ -1074,7 +1074,7 @@ function fileFrameFor( fileFrame )
   fileFrame.context = includeFrame.context;
 
   if( fileFrame.externals === null )
-  fileFrame.externals = _.mapExtend( null, includeFrame.externals );
+  fileFrame.externals = _.props.extend( null, includeFrame.externals );
 
   fileFrame.categories = self.categoriesForFile( fileFrame );
 
@@ -1204,7 +1204,7 @@ function _chunkExecute( o )
       /* exposing */
 
       if( !o.externals && o.fileFrame.externals )
-      o.externals = _.mapExtend( null, o.fileFrame.externals );
+      o.externals = _.props.extend( null, o.fileFrame.externals );
       self._chunkExpose( o );
 
       /* */
@@ -1553,7 +1553,7 @@ function _categoriesForLink( o )
 
   /* link categories */
 
-  // if( _.mapKeys( self.linkCategorizers ).length )
+  // if( _.props.keys( self.linkCategorizers ).length )
   // debugger;
   for( let c in self.linkCategorizers )
   {
