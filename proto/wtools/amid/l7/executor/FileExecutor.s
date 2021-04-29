@@ -391,8 +391,8 @@ function _includeAct( o )
 
   _.routine.options_( _includeAct, o );
   _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.objectIs( session ) );
-  _.assert( _.objectIs( o.translator ) );
+  _.assert( _.object.isBasic( session ) );
+  _.assert( _.object.isBasic( o.translator ) );
 
   if( self.verbosity > 2 )
   logger.log( '_includeAct.begin', o.path );
@@ -589,10 +589,10 @@ function _includeFromChunk( bound, o, o2 )
   let included = self._includeAct( o );
 
   _.assert( _.consequenceIs( o.syncExternal ) );
-  _.assert( o2 === undefined || _.objectIs( o2 ) );
+  _.assert( o2 === undefined || _.object.isBasic( o2 ) );
   _.assert( arguments.length === 2 || arguments.length === 3, 'Expects two or three arguments' );
-  _.assert( _.objectIs( o.translator ) );
-  _.assert( _.objectIs( session ) );
+  _.assert( _.object.isBasic( o.translator ) );
+  _.assert( _.object.isBasic( session ) );
   _.assert( _.construction.isInstanceOf( included, IncludeFrameBlueprint ) );
 
   _.assert( included.files.length === included.fileFrames.length );
@@ -709,9 +709,9 @@ function filesExecute( o )
   _.routine.options_( filesExecute, o );
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.construction.isInstanceOf( o.includeFrame, IncludeFrameBlueprint ) );
-  _.assert( _.objectIs( o.includeFrame ) );
+  _.assert( _.object.isBasic( o.includeFrame ) );
   _.assert( _.arrayIs( o.includeFrame.files ) );
-  _.assert( _.objectIs( session ) );
+  _.assert( _.object.isBasic( session ) );
 
   /* prepare */
 
@@ -769,7 +769,7 @@ function fileExecute( o )
   _.assert( fileFrame.includeFrames.indexOf( includeFrame ) !== -1, 'Expects same includeFrame' );
   _.routine.options_( fileExecute, o );
   _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.objectIs( session ) );
+  _.assert( _.object.isBasic( session ) );
   _.assert( _.construction.isInstanceOf( fileFrame, FileFrameBlueprint ) );
 
   // if( !file.stat )
@@ -1041,8 +1041,8 @@ function fileFrameFor( fileFrame )
   let session = includeFrame.session;
 
   _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.objectIs( session ) );
-  _.assert( _.objectIs( includeFrame ) );
+  _.assert( _.object.isBasic( session ) );
+  _.assert( _.object.isBasic( includeFrame ) );
 
   if( self.verbosity > 4 )
   logger.log( 'fileFrameFor', fileFrame.file.absolute );
@@ -1184,7 +1184,7 @@ function _chunkExecute( o )
   let self = this;
   let session = o.fileFrame.includeFrame.session;
 
-  _.assert( _.objectIs( session ) );
+  _.assert( _.object.isBasic( session ) );
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.strIs( o.chunk.text ) || _.strIs( o.chunk.code ) );
   _.assert( _.construction.isInstanceOf( o, ChunkFrameBlueprint ) );
@@ -1392,7 +1392,7 @@ function _chunkConcat( chunkFrame )
       if( err && !fileFrame.consequence )
       return;
 
-      _.assert( _.objectIs( fileFrame ), 'unexpected' );
+      _.assert( _.object.isBasic( fileFrame ), 'unexpected' );
 
       if( fileFrame.error )
       {
@@ -1642,7 +1642,7 @@ function formatterTry( o )
   let self = this;
 
   _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.objectIs( o.formatter ) );
+  _.assert( _.object.isBasic( o.formatter ) );
 
   if( !self._categoriesCheck( o.categories, o.formatter ) )
   return false;
@@ -1657,7 +1657,7 @@ function formatterApply( o )
   let self = this;
 
   _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.objectIs( o.formatter ) );
+  _.assert( _.object.isBasic( o.formatter ) );
 
   if( !o.usedFileFrames )
   {
@@ -1759,7 +1759,7 @@ function linkFormat( o )
   if( !o.usedIncludeFrame )
   o.usedIncludeFrame = o.link.used.includeFrame;
 
-  _.assert( _.objectIs( o.usedIncludeFrame ) );
+  _.assert( _.object.isBasic( o.usedIncludeFrame ) );
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.construction.isInstanceOf( o.usedIncludeFrame, IncludeFrameBlueprint ) );
 
@@ -1867,7 +1867,7 @@ function _fileCategorizersSet( categorizers )
   let self = this;
 
   _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.objectIs( categorizers ), 'Expects object (-categorizers-)' );
+  _.assert( _.object.isBasic( categorizers ), 'Expects object (-categorizers-)' );
 
   self[ fileCategorizersSymbol ] = categorizers;
 
@@ -1884,7 +1884,7 @@ function _fileCategorizersChanged()
   let categorizers = self[ fileCategorizersSymbol ];
 
   _.assert( arguments.length === 0, 'Expects no arguments' );
-  _.assert( _.objectIs( categorizers ), 'Expects map {-categorizers-}' );
+  _.assert( _.object.isBasic( categorizers ), 'Expects map {-categorizers-}' );
 
   for( let c in categorizers )
   {
