@@ -2,12 +2,9 @@ format: outwillfile-2.0
 root:
   - wFileExecutor.out
 consistency:
-  ../.ex.will.yml: &ref_0
-    hash: 273df86f42530e3339b58a1e5972b3a9
-    size: 1949
-  ../.im.will.yml: &ref_1
-    hash: 88fe06ba15ddb6b3e48ca03a2e513d5a
-    size: 5249
+  ../will.yml: &ref_0
+    hash: 670544feebf06f44aa25b46b38730807
+    size: 6974
 module:
   wFileExecutor.out:
     about:
@@ -20,20 +17,20 @@ module:
         order of templates executions.
       enabled: 1
       version: 0.4.0
-      interpreters: &ref_2
-        - njs >= 10.0.0
-        - chrome >= 60.0.0
-        - firefox >= 60.0.0
-      keywords: &ref_3
+      license: MIT
+      npm.name: wfileexecutor
+      author: Kostiantyn Wandalen <wanalen@01.school>
+      keywords: &ref_1
         - wTools
         - File executor
         - template
-      license: MIT
-      author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors: &ref_4
+      contributors: &ref_2
         - Kostiantyn Wandalen <wanalen@01.school>
-      npm.name: wfileexecutor
-      npm.scripts: &ref_5
+      interpreters: &ref_3
+        - njs >= 10.0.0
+        - chrome >= 60.0.0
+        - firefox >= 60.0.0
+      npm.scripts: &ref_4
         test: wtest .run proto/**
         docgen: wdocgen .build proto
     path:
@@ -48,15 +45,11 @@ module:
       module.original.willfiles:
         criterion:
           predefined: 1
-        path:
-          - ../.ex.will.yml
-          - ../.im.will.yml
+        path: ../will.yml
       module.peer.willfiles:
         criterion:
           predefined: 1
-        path:
-          - ../.ex.will.yml
-          - ../.im.will.yml
+        path: ../will.yml
       module.peer.in:
         criterion:
           predefined: 1
@@ -182,19 +175,19 @@ module:
         path: 'npm:///wFiles'
         autoExporting: 0
         enabled: 0
-      wPathBasic:
+      wpathbasic:
         path: 'npm:///wpathbasic'
         autoExporting: 0
         enabled: 0
-      wPathTranslator:
+      wpathtranslator:
         path: 'npm:///wpathtranslator'
         autoExporting: 0
         enabled: 0
-      wFilesArchive:
+      wfilesarchive:
         path: 'npm:///wfilesarchive'
         autoExporting: 0
         enabled: 0
-      wBlueprint:
+      wblueprint:
         path: 'npm:///wblueprint'
         autoExporting: 0
         enabled: 0
@@ -811,8 +804,7 @@ module:
           content: proto
           export: 1
     consistency:
-      ../.ex.will.yml: *ref_0
-      ../.im.will.yml: *ref_1
+      ../will.yml: *ref_0
   ../:
     about:
       name: wFileExecutor
@@ -824,26 +816,22 @@ module:
         order of templates executions.
       enabled: 1
       version: 0.4.0
-      interpreters: *ref_2
-      keywords: *ref_3
       license: MIT
-      author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors: *ref_4
       npm.name: wfileexecutor
-      npm.scripts: *ref_5
+      author: Kostiantyn Wandalen <wanalen@01.school>
+      keywords: *ref_1
+      contributors: *ref_2
+      interpreters: *ref_3
+      npm.scripts: *ref_4
     path:
       module.willfiles:
         criterion:
           predefined: 1
-        path:
-          - .ex.will.yml
-          - .im.will.yml
+        path: will.yml
       module.original.willfiles:
         criterion:
           predefined: 1
-        path:
-          - .ex.will.yml
-          - .im.will.yml
+        path: will.yml
       module.peer.willfiles:
         criterion:
           predefined: 1
@@ -949,19 +937,19 @@ module:
         path: 'npm:///wFiles'
         autoExporting: 0
         enabled: 0
-      wPathBasic:
+      wpathbasic:
         path: 'npm:///wpathbasic'
         autoExporting: 0
         enabled: 0
-      wPathTranslator:
+      wpathtranslator:
         path: 'npm:///wpathtranslator'
         autoExporting: 0
         enabled: 0
-      wFilesArchive:
+      wfilesarchive:
         path: 'npm:///wfilesarchive'
         autoExporting: 0
         enabled: 0
-      wBlueprint:
+      wblueprint:
         path: 'npm:///wblueprint'
         autoExporting: 0
         enabled: 0
@@ -1514,9 +1502,6 @@ module:
           - 'build::release'
           - 'build::npm'
     consistency:
-      ../.ex.will.yml:
-        hash: 273df86f42530e3339b58a1e5972b3a9
-        size: 1949
-      ../.im.will.yml:
-        hash: 88fe06ba15ddb6b3e48ca03a2e513d5a
-        size: 5249
+      ../will.yml:
+        hash: 670544feebf06f44aa25b46b38730807
+        size: 6974
