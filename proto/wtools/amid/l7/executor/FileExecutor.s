@@ -454,7 +454,7 @@ function _includeAct( o )
   includeFrame.resolveOptions = _filesFilterMasksSupplement( includeFrame.resolveOptions, resolveOptions );
   // self.fileProvider._filesFilterMasksSupplement( includeFrame.resolveOptions, resolveOptions );
 
-  let filter = _.FileRecordFilter.TolerantFrom( includeFrame.resolveOptions, { defaultProvider : self.fileProvider } );
+  let filter = _.files.FileRecordFilter.TolerantFrom( includeFrame.resolveOptions, { defaultProvider : self.fileProvider } );
   includeFrame.resolveOptions.filter = filter;
 
   includeFrame.resolveOptions = _.mapOnly_( null, includeFrame.resolveOptions, self.fileProvider.filesResolve.defaults );
@@ -914,7 +914,7 @@ function _fileExecute( o )
   o = { code : o }
 
   _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( o.file instanceof _.FileRecord );
+  _.assert( o.file instanceof _.files.FileRecord );
   _.assert( _.construction.isInstanceOf( o, FileFrameBlueprint ) );
   _.assert( !o.consequence );
 
@@ -1484,7 +1484,7 @@ function categoriesForFile( fileFrame )
 
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.construction.isInstanceOf( fileFrame, FileFrameBlueprint ) );
-  _.assert( file instanceof _.FileRecord );
+  _.assert( file instanceof _.files.FileRecord );
 
   /* arbitrary categories */
 
@@ -1709,10 +1709,10 @@ function linkFor( userChunkFrame, usedFileFrame )
 
   _.assert( arguments.length === 2, 'Expects exactly two arguments' );
   _.assert( _.construction.isInstanceOf( userChunkFrame, ChunkFrameBlueprint ) );
-  _.assert( _.construction.isInstanceOf( usedFileFrame, FileFrameBlueprint ) || usedFileFrame instanceof _.FileRecord );
+  _.assert( _.construction.isInstanceOf( usedFileFrame, FileFrameBlueprint ) || usedFileFrame instanceof _.files.FileRecord );
 
   let usedFile;
-  if( usedFileFrame instanceof _.FileRecord )
+  if( usedFileFrame instanceof _.files.FileRecord )
   {
     usedFile = usedFileFrame;
     usedFileFrame = null;
