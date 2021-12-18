@@ -1,6 +1,6 @@
 {
   "name": "wfileexecutor",
-  "version": "0.3.383",
+  "version": "0.3.384",
   "description": "Experimental. Class to execute a collection of templates with inlined JavaScript code to instantiate it. A collection of templates could be co-dependent in which case FileExecutor deduce dependencies and correct order of templates executions.",
   "author": "Kostiantyn Wandalen <wandalen@obox.systems>",
   "license": "MIT",
@@ -24,15 +24,15 @@
     "url": "https://github.com/Wandalen/wFileExecutor/issues"
   },
   "dependencies": {
-    "wTools": "delta",
-    "wprocess": "delta",
-    "wpathtranslator": "delta",
-    "wfilesarchive": "delta",
-    "wFiles": "delta",
-    "wblueprint": "delta"
+    "wTools": "alpha",
+    "wprocess": "alpha",
+    "wpathtranslator": "alpha",
+    "wfilesarchive": "alpha",
+    "wFiles": "alpha",
+    "wblueprint": "alpha"
   },
   "devDependencies": {
-    "wTesting": "delta",
+    "wTesting": "alpha",
     "eslint": "7.32.0"
   },
   "keywords": [
